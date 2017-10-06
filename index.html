@@ -3,25 +3,126 @@
 <head>
 	<meta charset="UTF-8">
 	<title>UWallet</title>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link href='css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+
+	<link href='public/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+	<link href='public/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+	<link href='public/css/menu_navegacion.css' rel='stylesheet' type='text/css'>
+	<link href='public/css/style.css' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 
-	<p>Bienvenidos UWALLET</p>
+
+<nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+  <div class="navbar-toggler animate">
+    <span class="menu-icon"></span>
+  </div>
+  <ul class="navbar-menu animate">
+    <li>
+      <a class="animate" id="menu_creacion">
+        <span class="desc animate"> Enviar dinero  </span>
+        <i class="fa fa-money" arial-hidden="true"></i>
+      </a>
+    </li>
+
+    <li>
+      <a class="animate" id="menu_creacion">
+        <span class="desc animate"> Notificaciones  </span>
+        <i class="fa fa-bell " arial-hidden="true"></i>
+      </a>
+    </li>
+
+    <li>
+      <a class="animate" id="menu_informes">
+        <span class="desc animate"> lista de pagos</span>
+        <span class="fa fa-list-alt"></span>
+      </a>
+    </li>
+    <li>
+      <a class="animate" id="menu_informes">
+        <span class="desc animate"> Extractos</span>
+        <i class="fa fa-file-pdf-o"></i>
+      </a>
+    </li>
+    <li>
+      <a class="animate" id="menu_informes">
+        <span class="desc animate"> Mi perfil</span>
+        <span class="fa fa-user-circle"></span>
+      </a>
+    </li>
+
+    <li>
+      <a class="animate" id="menu_cerrar_sesion">
+        <span class="desc animate"> Cerrar sesion </span>
+        <span class="fa fa-power-off"></span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container">
+	<div class="row">
+    <div class="page-header">
+      <img src="public/img/logo_uwallet.png" alt="Logo UWallet">
+		</div>
+  </div>
+
+  <div class="row">
+		<h1>Bienvenido a UWallet</h1>
+    <div class="col-md-4" data-toggle="modal" data-target="#modal-aceptacion">
+      <h1>Enviar dinero</h1>
+      <center><img src="public/img/enviar_dinero.png" alt=""></center>
+    </div>
+
+    <div class="col-md-4">
+      <h1>Lista de pagos</h1>
+      <center><img src="public/img/lista_pago.png" alt=""></center>
+    </div>
+    <div class="col-md-4">
+      <h1>Extractos</h1>
+      <center><img src="public/img/pdf.png" alt=""></center>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Inicio de modal de aceptación-->
+<div class="modal fade" id="modal-aceptacion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+       <h4 class="modal-title text-center" id="myModalLabel"> <strong> Estado del registro </strong> </h4>
+     </div>
+
+     <div class="modal-body">
+       <h2 class="text-center"> Se ha enviado dinero! </h2>
+       <h3>Verifiquelo en la sección 'Mi resumen' en caso de no poder abrirlo intentelo de nuevo o consulte con el administrador</h3>
+       <img class="center-block" src="public/img/confirmacion.png" alt="">
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal">Listo</button>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- Fin modal de aceptación-->
+
 
 
 	<!-- ========= -->
 	<!-- Librerias -->
 	<!-- ========= -->
-	<script src = "public/js/vendor/utils.js"></script>
+	<!-- <script src = "public/js/vendor/utils.js"></script> -->
 	<script src = "public/js/vendor/jquery-3.2.1.min.js" type = "text/javascript"></script>
 	<script src = "public/js/vendor/underscore-min.js" type = "text/javascript"></script>
-	<script src = "public/js/vendor/backbone-min.js" type = "text/javascript"></script
-
+	<script src = "public/js/vendor/backbone-min.js" type = "text/javascript"></script>
 	<script src = "public/js/vendor/bootstrap.min.js" type = "text/javascript"></script>
 
-	<script src = "public/js/backbone/models/libro.js" type="text/javascript"></script>
+	<script src="public/js/vendor/menu_navegacion.js" type="text/javascript">
+
+	</script>
+	<!-- <script src = "public/js/backbone/models/libro.js" type="text/javascript"></script>-->
 </body>
 </html>
