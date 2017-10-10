@@ -1,11 +1,15 @@
-Userregs = Backbone.Collection.extend({
-  Model: Userreg,
-  url: "/users"
+var app = app || {};
+
+var UserregCollecion = Backbone.Collection.extend({
+  Model: app.Userreg,
+  url: "http://192.168.99.101:4000/users/register"
 });
 
-userregs = new Userregs();
+app.userregs = new UserregCollecion();
 
+//userregs = new Userregs();
 
+/*
 userreg = new Userreg(){
   firstName:'jonatan',
   lastName: 'parra',
@@ -19,3 +23,4 @@ userreg = new Userreg(){
 userregs.add( userreg );
 
 console.log( userregs.toJSON() );
+*/
