@@ -14,11 +14,13 @@ var options = {
 		success: function () {
 			alert('Thanks for the feedback!');
 		},
-		error: function (model, error) {
-			console.log(error);
+		error: function (model, r) {
+			console.log(r);
+			console.log(r.responseText);
+			console.log("Status:" + r.status);
 			console.log(model);
 		}
-	};
+}
 
 function mostrar_errores_modelo(errores){
 	lista_errores = "<ul>";

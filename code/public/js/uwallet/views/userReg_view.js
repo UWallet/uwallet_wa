@@ -27,17 +27,33 @@ app.Userreg_view = Backbone.View.extend({
 		if (is_error) {
 			mostrar_errores_modelo(is_error)
 		} else {
-				model_errors = nuevo_usuario.save({}, options);
+				model_errors = nuevo_usuario.save({}, {
+				    error: function (model, respuesta, options) {
+								//console.log(model); console.log(options);
+								console.log(respuesta.status);
+								if (respuesta.status == 201){
+									self.mostrar_correcto_registro();
+									$('#form_userreg')[0].reset();
+								} else if(respuesta.status == 422) {
+									self.mostrar_email_ya_existe();
+									console.log(respuesta.responseText);
+								}
+
+				    }
+				});
 
 				// Verificar que fue creado
-				self.mostrar_correcto_registro();
-				$('#form_userreg')[0].reset();
+
 			}
 		},
 
 
 	mostrar_correcto_registro: function(errores){
 		mostrar_modal_generico('Creación de cuenta ', 'Gracias por registrarte en uwallet', 'Te hemos enviado un correo de verificación para terminar el proceso.', 'confirmacion.png'  );
+	},
+
+	mostrar_email_ya_existe: function(){
+		mostrar_modal_generico('Creación de cuenta ', 'Tenemos problemas', 'Este email ya existe en nuestra base de datos, intenta con otro.', 'fallo.png'  );
 	}
 
 });
