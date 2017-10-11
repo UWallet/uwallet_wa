@@ -27,25 +27,22 @@ app.Userreg_view = Backbone.View.extend({
 		if (is_error) {
 			mostrar_errores_modelo(is_error)
 		} else {
-				model_errors = nuevo_usuario.save({}, {
-				    error: function (model, respuesta, options) {
-								//console.log(model); console.log(options);
-								console.log(respuesta.status);
-								if (respuesta.status == 201){
-									self.mostrar_correcto_registro();
-									$('#form_userreg')[0].reset();
-								} else if(respuesta.status == 422) {
-									self.mostrar_email_ya_existe();
-									console.log(respuesta.responseText);
-								}
-
-				    }
-				});
-
-				// Verificar que fue creado
-
-			}
-		},
+			model_errors = nuevo_usuario.save({}, {
+		    error: function (model, respuesta, options) {
+					//console.log(model); console.log(options);console.log(respuesta);
+					if (respuesta.status == 201){
+						self.mostrar_correcto_registro();
+						$('#form_userreg')[0].reset();
+					} else if(respuesta.status == 422) {
+						self.mostrar_email_ya_existe();
+					} else {
+						alert("Respuesta desconocida");
+						console.log(respuesta.status + " - " + respuesta.responseText);
+					}
+		    }
+			});
+		}
+	},
 
 
 	mostrar_correcto_registro: function(errores){
