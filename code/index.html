@@ -25,12 +25,12 @@
 
 	<div id="div_registrar_usuario"></div>
 
-	<div id="div_login"></div
+	<div id="div_login"></div>	
 
-	<div id="div_menu_inicial"></div>
+	<div id="div_menu_inicio"></div>
 
 
-	<!--  login    -->
+	<!--  Template registro de usuario    -->
 	<script type="text/template" id="tpl_registrar_usuario">
 		<div class="row">
 			<div class="col-md-12">
@@ -74,7 +74,7 @@
 							</div>
 						</div>
 					</div>
-					<input type="submit" class="btn btn-default" id="btn_registrar_usuario1" value="Registrar" form="form_userreg" />
+					<input type="submit" class="btn btn-default" value="Registrar" form="form_userreg" />
 
 				</form>
 			</div>
@@ -82,10 +82,35 @@
 			</div>
 		</div>
 	</script>
-	<!-- Fin login -->
+	<!--  Fin template registro de usuario    -->
 
-  <!-- Template menu principal-->
-	<script type="text/template" id="tpl_menu_principal">
+  <!-- Template login-->
+	<script type="text/template" id="tpl_login">
+		<br> <br>
+		<form role="form" id="form_userlogin">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="input_email"> Email </label>
+						<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required  value="jonatan@gmail.com" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="input_password">	Contraseña </label>
+						<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required  value="12345"/>
+					</div>
+				</div>
+
+			</div>
+			<input type="submit" class="btn btn-default" value="Iniciar sesión" form="form_userlogin" />
+
+		</form>
+	</script>
+	<!-- Template login-->
+
+  <!-- Template menu inicio-->
+	<script type="text/template" id="tpl_menu_inicio">
 	  <div class="row">
 			<h1>Bienvenido a UWallet</h1>
 	    <div class="col-md-4" data-toggle="modal" data-target="#modal-aceptacion">
@@ -106,47 +131,54 @@
 	<!-- Fin template menu principal-->
 
  <!-- Template menu de navegación -->
-	<script type="text/template" id="tpl_menu_principal">
+	<script type="text/template" id="tpl_menu_navegacion">
 		<nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
 		  <div class="navbar-toggler animate">
 		    <span class="menu-icon"></span>
 		  </div>
 		  <ul class="navbar-menu animate">
-		    <li>
-		      <a class="animate" id="menu_creacion">
+				<li>
+		      <a class="animate" id="opc_inicio">
+		        <span class="desc animate"> Inicio </span>
+		        <i class="fa fa-money" arial-hidden="true"></i>
+		      </a>
+		    </li>
+
+				<li>
+		      <a class="animate" id="opc_enviar_dinero">
 		        <span class="desc animate"> Enviar dinero  </span>
 		        <i class="fa fa-money" arial-hidden="true"></i>
 		      </a>
 		    </li>
 
 		    <li>
-		      <a class="animate" id="menu_creacion">
+		      <a class="animate" id="opc_notificaciones">
 		        <span class="desc animate"> Notificaciones  </span>
 		        <i class="fa fa-bell " arial-hidden="true"></i>
 		      </a>
 		    </li>
 
 		    <li>
-		      <a class="animate" id="menu_informes">
+		      <a class="animate" id="opc_lista_pagos">
 		        <span class="desc animate"> lista de pagos</span>
 		        <span class="fa fa-list-alt"></span>
 		      </a>
 		    </li>
 		    <li>
-		      <a class="animate" id="menu_informes">
+		      <a class="animate" id="opc_extractos">
 		        <span class="desc animate"> Extractos</span>
 		        <i class="fa fa-file-pdf-o"></i>
 		      </a>
 		    </li>
 		    <li>
-		      <a class="animate" id="menu_informes">
+		      <a class="animate" id="opc_mi_perfil">
 		        <span class="desc animate"> Mi perfil</span>
 		        <span class="fa fa-user-circle"></span>
 		      </a>
 		    </li>
 
 		    <li>
-		      <a class="animate" id="menu_cerrar_sesion">
+		      <a class="animate" id="opc_cerrar_sesion">
 		        <span class="desc animate"> Cerrar sesion </span>
 		        <span class="fa fa-power-off"></span>
 		      </a>
@@ -183,7 +215,7 @@
 <!-- Fin modal de aceptación-->
 
 
-<!-- Inicio de modal generico. Uso: mensajes de error -->
+<!-- Inicio de modal generico. -->
 <div class="modal fade" id="modal_generico" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  <div class="modal-dialog">
    <div class="modal-content">
@@ -218,9 +250,16 @@
 	<!-- ========================-->
 	<!-- Logica de la aplicacion -->
 	<!-- ========================-->
-	<script src="public/js/uwallet/models/userreg_model.js"></script>
-	<script src="public/js/uwallet/collections/userregs_collection.js"></script>
-	<script src="public/js/uwallet/views/userreg_view.js"></script>
+	<script src="public/js/uwallet/views/menuNavegacion_view.js"></script>
+	<script src="public/js/uwallet/views/menuInicio_view.js"></script>
+
+	<script src="public/js/uwallet/models/userReg_model.js"></script>
+	<script src="public/js/uwallet/collections/userRegs_collection.js"></script>
+	<script src="public/js/uwallet/views/userReg_view.js"></script>
+
+	<script src="public/js/uwallet/models/userLogin_model.js"></script>
+	<script src="public/js/uwallet/collections/userLogin_collection.js"></script>
+	<script src="public/js/uwallet/views/userLogin_view.js"></script>
 
 	<script src="public/js/uwallet/models/notification.js"></script>
 	<script src="public/js/uwallet/collections/notifications.js"></script>

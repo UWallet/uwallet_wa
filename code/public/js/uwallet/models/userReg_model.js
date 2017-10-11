@@ -23,8 +23,6 @@ app.Userreg_model = Backbone.Model.extend({
     } else if (attrs.user.password != attrs.user.password_confirmation){
       errors.push({name: 'Las constraseñas no coincide', message: 'Es necesario que las contraseñas coincidan'});
     }
-
-
     return errors.length > 0 ? errors : false;
   },
 

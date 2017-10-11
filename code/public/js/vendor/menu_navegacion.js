@@ -17,3 +17,10 @@ $(function () {
 		$(this).closest('.navbar-minimal').toggleClass('open');
 	})
 });
+
+function iniciar_menu_navegacion(){
+  $('.navbar-toggler').on('click', function(event) {
+    event.preventDefault();
+    $(this).closest('.navbar-minimal').toggleClass('open');
+  })
+}

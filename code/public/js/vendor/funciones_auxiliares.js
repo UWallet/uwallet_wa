@@ -20,6 +20,15 @@ var options = {
 		}
 	};
 
+function mostrar_errores_modelo(errores){
+	lista_errores = "<ul>";
+	for (var i = 0; i < errores.length; i++) {
+		lista_errores += "<li><strong>" + errores[i]['name'] + ":</strong> "+ errores[i]['message'] + "</li>"
+	}
+	lista_errores += "</ul>"
+	mostrar_modal_generico('Error en el formulario', 'No es posible enviar tu formulario debido a que:', lista_errores, 'fallo.png' )
+}
+
 function mostrar_modal_generico(contenido_header, titulo, contenido, imagen){
 	// Limpiar el contenido del modal
 	$("#modal_generico_body").empty();
