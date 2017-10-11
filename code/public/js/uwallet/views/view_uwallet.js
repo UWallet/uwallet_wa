@@ -40,6 +40,7 @@ app.RegisterView = Backbone.View.extend({
 
 		},
 */
+
 	crear_usuario: function(e){
     e.preventDefault();
   //  console.log("Entro en crear usuario");
@@ -79,19 +80,39 @@ userreg = new Userreg(){
 			password_confirmation: '1234567'
 		 });
 */
+
+		options = {
+			success: function () {
+					alert('Thanks for the feedback!');
+			},
+			error: function (model, error) {
+					console.log("Error en validacion:");
+					console.log(error);
+					console.log(model);
+				}
+		};
+
+
 		 var user_prueba = new app.Userreg({
 			"user" : {
-				"email": "japarrat@unal.edu.co",
-				"identification": 123456789,
-				"firstName": "asdasd",
+				"email": "japarrat3@unal.edu.co",
+				"identification": 1434567820,
+				"firstName": "JONATAN",
 				"lastName": "asd",
 				"password": "foobar",
 				"password_confirmation": "foobar"
 			}
 		});
 
+		//console.log(user_prueba.attributes);
+    validate1 = user_prueba.validate(user_prueba.attributes);
+		console.log(validate1);
+		model_errors = user_prueba.save({}, options);
+		//console.log("La respuesta es: " + model_errors);
+
+
 		// La funcion save() hace el POST
-		user_prueba.save({}, {
+		/*user_prueba.save({}, {
 		    success: function (model, respose, options) {
 		        console.log("The model has been saved to the server");
 		    },
@@ -101,7 +122,8 @@ userreg = new Userreg(){
 						console.log(options);
 		        console.log("Something went wrong while saving the model");
 		    }
-		});
+		});*/
+
 
 	}
 });

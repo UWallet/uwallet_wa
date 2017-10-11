@@ -67,29 +67,62 @@
 		</div>
   </div>
 
+	<div id="div_registrar_usuario"></div>
 
-	<div id="div_registrar_usuario">
-		<button type="button" class="btn btn-default" id="btn_registrar_usuario">	Registrar	usando post2</button>
+
+	<!--  login    -->
+	<script type="text/template" id="tpl_registrar_usuario">
 		<div class="row">
-			<div class="col-md-8">
-				<form role="form">
-					<div class="form-group">
-						<label for="exampleInputEmail1"> Email address </label>
-						<input class="form-control" id="exampleInputEmail1" type="email" />
+			<div class="col-md-12">
+				<form role="form" id="form_userreg">
+					<div class="row">
+						<div class="col-md-8">
+							<div class="form-group">
+								<label for="input_email"> Email </label>
+								<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required />
+							</div>
+						</div>
+						<div class="col-md-4"></div>
 					</div>
 
-					<div class="form-group">
-						<label for="exampleInputPassword1">	Password </label>
-						<input class="form-control" id="exampleInputPassword1" type="password" />
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="input_nombre"> Nombres </label>
+								<input class="form-control" name="firstName" id="input_nombre" type="text" placeholder="Nombre" required />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="input"> Apellidos </label>
+								<input class="form-control" name="lastName" id="input_nombre" type="text" placeholder="Apellido" required />
+							</div>
+						</div>
 					</div>
 
-					<button type="submit" class="btn btn-default btn_registrar_usuario">	Registrar	</button>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="input_password">	Contraseña </label>
+								<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="input_confirmation">	Confirmar contraseña </label>
+								<input class="form-control" name="password_confirmation" id="input_confirmation" type="password" placeholder="Confirmación de contraseña" required />
+							</div>
+						</div>
+					</div>
+					<input type="submit" class="btn btn-default" id="btn_registrar_usuario1" value="Registrar" form="form_userreg" />
+
 				</form>
 			</div>
 			<div class="col-md-4">
 			</div>
 		</div>
-	</div>
+	</script>
+	<!-- Fin login -->
 
 
 
@@ -151,17 +184,18 @@
 
 	<script src="public/js/vendor/menu_navegacion.js" type="text/javascript">	</script>
 
-	<!-- ========= -->
+	<!-- ========================-->
 	<!-- Logica de la aplicacion -->
-	<!-- ========= -->
-	<script src="public/js/uwallet/models/userreg.js"></script>
-	<script src="public/js/uwallet/collections/userregs.js"></script>
+	<!-- ========================-->
+	<script src="public/js/uwallet/models/userreg_model.js"></script>
+	<script src="public/js/uwallet/collections/userregs_collection.js"></script>
+	<script src="public/js/uwallet/views/userreg_view.js"></script>
 
 	<script src="public/js/uwallet/models/notification.js"></script>
 	<script src="public/js/uwallet/collections/notifications.js"></script>
 
 
-	<script src="public/js/uwallet/views/view_uwallet.js"></script>
+
 	<!-- <script src = "public/js/backbone/models/libro.js" type="text/javascript"></script>-->
 </body>
 </html>
