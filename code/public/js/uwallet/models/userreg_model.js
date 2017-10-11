@@ -21,7 +21,7 @@ app.Userreg_model = Backbone.Model.extend({
     if (!attrs.user.password || !attrs.user.password_confirmation) {
       errors.push({name: 'Contraseña', message: 'Es necesario que esté el campo contraseña'});
     } else if (attrs.user.password != attrs.user.password_confirmation){
-      errors.push({name: 'Contraseña no coindiente', message: 'Es necesario que las contraseñas coincidan'});
+      errors.push({name: 'Las constraseñas no coincide', message: 'Es necesario que las contraseñas coincidan'});
     }
 
 
@@ -29,7 +29,7 @@ app.Userreg_model = Backbone.Model.extend({
   },
 
 	initialize: function() {
-		console.log('Se ha creado una nueva instancia del Modelo Userreg.');
+		//console.log('Se ha creado una nueva instancia del Modelo Userreg.');
 
 		this.on('change', function(){
 			console.log('El modelo ha sido modificado.');
