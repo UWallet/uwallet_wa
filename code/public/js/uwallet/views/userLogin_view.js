@@ -6,6 +6,8 @@ app.Userreg_view = Backbone.View.extend({
 
 	events: {
 		'submit #form_userlogin': 'loguear_usuario'
+
+		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
 
 	initialize: function() {
@@ -60,7 +62,7 @@ app.Userreg_view = Backbone.View.extend({
 
 		var menuNavegacion_view = new app.MenuNavegacion_view();
 		var menuInicio_view = new app.MenuInicio_view();
-		console.log(sessionStorage.getItem("token"));
+		//console.log(sessionStorage.getItem("token"));
 	}
 
 });
