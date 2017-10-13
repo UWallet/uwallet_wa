@@ -2,7 +2,26 @@ var app = app || {};
 
 app.Userreg_view = Backbone.View.extend({
 	el: '#div_login',
-	template: _.template($('#tpl_login').html()),
+	template:  '\
+		<br> <br> \
+		<form role="form" id="form_userlogin">\
+			<div class="row">\
+				<div class="col-md-6">\
+					<div class="form-group">\
+						<label for="input_email"> Email </label>\
+						<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required  value="jonatan10@gmail.com" />\
+					</div>\
+				</div>\
+				<div class="col-md-6">\
+					<div class="form-group">\
+						<label for="input_password">	Contraseña </label>\
+						<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required  value="foobar"/>\
+					</div>\
+				</div>\
+			</div>\
+			<input type="submit" class="btn btn-default" value="Iniciar sesión" form="form_userlogin" />\
+		</form>\
+	',
 
 	events: {
 		'submit #form_userlogin': 'loguear_usuario'
@@ -18,10 +37,35 @@ app.Userreg_view = Backbone.View.extend({
 
 	render: function() {
 		this.$el.show();
-		this.$el.html(this.template());
+		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
+		this.$el.html(this.template);
 	},
 
 	loguear_usuario: function(e){
+
+		// Cuando funciona la peticion se buscan en 'options'
+		var onDataHandler = function(collection, response, options) {
+			if (options.xhr.status == 200){
+				token = JSON.parse(options.xhr.responseText).auth_token;
+  			self.loguear(token);
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+	};
+
+		// Cuando falla la peticion se buscan en 'response'
+		var onErrorHandler = function(collection, response, options) {
+			console.log("Entro en error handle");
+			if(response.status == 401) {
+				$('#form_userlogin input[name=password]').val("");
+				self.mostrar_error_login();
+			} else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + responses.responseText);
+			}
+		};
+
 		console.log("Entro en loguear");
 		var self = this;
     e.preventDefault();
@@ -31,23 +75,7 @@ app.Userreg_view = Backbone.View.extend({
 		if (is_error) {
 			mostrar_errores_modelo(is_error)
 		} else {
-				login_usuario.save({}, {
-					dataType: 'text',
-					success: function (model, respuesta, options) {
-							token = respuesta.substr(15,147);
-							self.loguear(token);
-					},
-			    error: function (model, respuesta, options) {
-						//console.log(model); console.log(options);
-						if(respuesta.status == 401) {
-							$('#form_userlogin input[name=password]').val("");
-		          self.mostrar_error_login();
-						} else {
-							alert("Respuesta desconocida");
-							console.log(respuesta.status + " - " + respuesta.responseText);
-						}
-			    }
-				});
+				login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
 			}
 		},
 
@@ -62,7 +90,7 @@ app.Userreg_view = Backbone.View.extend({
 
 		var menuNavegacion_view = new app.MenuNavegacion_view();
 		var menuInicio_view = new app.MenuInicio_view();
-		//console.log(sessionStorage.getItem("token"));
+		console.log(sessionStorage.getItem("token"));
 	}
 
 });

@@ -2,7 +2,9 @@ var app = app || {};
 
 app.Notificaciones_view = Backbone.View.extend({
 	el: '#div_menu_notificaciones',
-	template: _.template($('#tpl_notificaciones').html()),
+	template: '\
+		<h1> Notificaciones </h1>\
+	',
 
 	events: {
 		'click .ver_notificacion': 'put_notificacion'
@@ -19,7 +21,7 @@ app.Notificaciones_view = Backbone.View.extend({
 	render: function() {
 		console.log("renderizando menuNotificaciones_view");
 		this.$el.show();
-		this.$el.html(this.template());
+		this.$el.html(this.template);
 	},
 
 	put_notificacion: function(e){

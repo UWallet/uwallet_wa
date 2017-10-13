@@ -2,7 +2,10 @@ var app = app || {};
 
 app.Extractos_view = Backbone.View.extend({
 	el: '#div_menu_extractos',
-	template: _.template($('#tpl_extractos').html()),
+	template: '\
+		<h1> Extractos </h1>\
+	',
+
 
 	events: {
 		'click #btn_cualquiera': 'funcion1111'
@@ -17,7 +20,8 @@ app.Extractos_view = Backbone.View.extend({
 
 	render: function() {
 		this.$el.show();
-		this.$el.html(this.template());
+		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
+		this.$el.html(this.template);
 	},
 
 	funcion1111: function(){

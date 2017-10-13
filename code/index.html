@@ -23,6 +23,10 @@
 
 	<div id="div_menu_navegacion"></div>
 
+	<div class="" id="div_transaccion"></div>
+
+	</div>
+
 	<div id="div_registrar_usuario"></div>
 
 	<div id="div_login"></div>
@@ -37,130 +41,6 @@
 
 	<div id="div_menu_mi_perfil"></div>
 
-	<!--  Template registro de usuario    -->
-	<script type="text/template" id="tpl_registrar_usuario">
-		<div class="row">
-			<div class="col-md-12">
-				<form role="form" id="form_userreg">
-					<div class="row">
-						<div class="col-md-8">
-							<div class="form-group">
-								<label for="input_email"> Email </label>
-								<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required value="jonatan@gmail.com" />
-							</div>
-						</div>
-						<div class="col-md-4"></div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="input_nombre"> Nombres </label>
-								<input class="form-control" name="firstName" id="input_nombre" type="text" placeholder="Nombre" required value="jonatan"/>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="input"> Apellidos </label>
-								<input class="form-control" name="lastName" id="input_apellido" type="text" placeholder="Apellido" required value="parra"/>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="input_password">	Contraseña </label>
-								<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required value="foobar" />
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="input_confirmation">	Confirmar contraseña </label>
-								<input class="form-control" name="password_confirmation" id="input_confirmation" type="password" placeholder="Confirmación de contraseña" required value="foobar"/>
-							</div>
-						</div>
-					</div>
-					<input type="submit" class="btn btn-default" value="Registrar" form="form_userreg" />
-
-				</form>
-			</div>
-			<div class="col-md-4">
-			</div>
-		</div>
-	</script>
-	<!--  Fin template registro de usuario    -->
-
-  <!-- Template login-->
-	<script type="text/template" id="tpl_login">
-		<br> <br>
-		<form role="form" id="form_userlogin">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="input_email"> Email </label>
-						<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required  value="jonatan10@gmail.com" />
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="input_password">	Contraseña </label>
-						<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required  value="foobar"/>
-					</div>
-				</div>
-
-			</div>
-			<input type="submit" class="btn btn-default" value="Iniciar sesión" form="form_userlogin" />
-
-		</form>
-	</script>
-	<!-- Template login-->
-
-  <!-- Template menu inicio-->
-	<script type="text/template" id="tpl_menu_inicio">
-	  <div class="row">
-			<h1>Bienvenido a UWallet</h1>
-	    <div class="col-md-4" data-toggle="modal" data-target="#modal-aceptacion">
-	      <h1>Enviar dinero</h1>
-	      <center><img src="public/img/enviar_dinero.png" alt=""></center>
-	    </div>
-
-	    <div class="col-md-4">
-	      <h1>Lista de pagos</h1>
-	      <center><img src="public/img/lista_pago.png" alt=""></center>
-	    </div>
-	    <div class="col-md-4">
-	      <h1>Extractos</h1>
-	      <center><img src="public/img/pdf.png" alt=""></center>
-	    </div>
-	  </div>
-	</script>
-	<!-- Fin template menu principal-->
-
-
-	<!-- Template notificaciones-->
-	<script type="text/template" id="tpl_notificaciones" src="public/js/uwallet/template/tpl_notificaciones.js">
-		<h1>Notificaciones</h1>
-	</script>
-	<!-- Template notificaciones-->
-
-	<!-- Template lista de pagos-->
-	<script type="text/template" id="tpl_lista_de_pagos">
-		<h1>Lista de pagos</h1>
-	</script>
-	<!-- Template lista de pagos-->
-
-	<!-- Template extractos-->
-	<script type="text/template" id="tpl_extractos">
-		<h1>Extractos</h1>
-	</script>
-	<!-- Template extractos-->
-
-	<!-- Template mi perfil-->
-	<script type="text/template" id="tpl_mi_perfil">
-		<h1>Mi perfil</h1>
-	</script>
-	<!-- Template mi perfil-->
 
  <!-- Template menu de navegación -->
 	<script type="text/template" id="tpl_menu_navegacion">
@@ -284,11 +164,15 @@
 	<!-- ========================-->
 	<script src="public/js/uwallet/views/menuNavegacion_view.js"></script>
 	<script src="public/js/uwallet/views/menuInicio_view.js"></script>
-	<script src="public/js/uwallet/views/menuNotificaciones_view.js"></script>
-	<script src="public/js/uwallet/views/menuListaPagos_view.js"></script>
-	<script src="public/js/uwallet/views/menuExtractos_view.js"></script>
-	<script src="public/js/uwallet/views/menuMiPerfil_view.js"></script>
 
+
+
+
+  <!-- ========================-->
+	<!--La idea es tener un vista por cada servicio, excepto que se tenga demasiado html  -->
+	<!-- ========================-->
+
+	<!-- Servicio login -->
 	<script src="public/js/uwallet/models/userReg_model.js"></script>
 	<script src="public/js/uwallet/collections/userRegs_collection.js"></script>
 	<script src="public/js/uwallet/views/userReg_view.js"></script>
@@ -297,12 +181,33 @@
 	<script src="public/js/uwallet/collections/userLogin_collection.js"></script>
 	<script src="public/js/uwallet/views/userLogin_view.js"></script>
 
+	<!-- Servicio de transacciones -->
+	<script src="public/js/uwallet/models/transaction_model.js"></script>
+	<script src="public/js/uwallet/collections/transaction_collection.js"></script>
+
+	<script src="public/js/uwallet/models/transactionById_model.js"></script>
+	<script src="public/js/uwallet/collections/transactionById_collection.js"></script>
+
+	<script src="public/js/uwallet/models/transactionByUser_model.js"></script>
+	<script src="public/js/uwallet/collections/transactionByUser_collection.js"></script>
+
+	<script src="public/js/uwallet/views/transaction_view.js"></script>
+
+	<!-- Servicio de notificaciones -->
 	<script src="public/js/uwallet/models/notification.js"></script>
 	<script src="public/js/uwallet/collections/notifications.js"></script>
+	<script src="public/js/uwallet/views/notificaciones_view.js"></script>
+
+	<!-- Servicio de lista de pagos -->
+	<script src="public/js/uwallet/views/listaPagos_view.js"></script>
+
+	<!-- Servicio de extractos -->
+	<script src="public/js/uwallet/views/extractos_view.js"></script>
+
+	<!-- Mi perfil -->
+	<script src="public/js/uwallet/views/miPerfil_view.js"></script>
 
 
-
-	<!-- <script src = "public/js/backbone/models/libro.js" type="text/javascript"></script>-->
 </body>
 </html>
 

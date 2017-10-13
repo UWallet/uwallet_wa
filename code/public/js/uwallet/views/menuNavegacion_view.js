@@ -22,7 +22,7 @@ app.MenuNavegacion_view = Backbone.View.extend({
 
 	render: function() {
     this.$el.show();
-		this.$el.html(this.template());
+		this.$el.html(this.template()); // Como se importa desde el html, se usa la template como funcion
     iniciar_menu_navegacion();
 
 	},

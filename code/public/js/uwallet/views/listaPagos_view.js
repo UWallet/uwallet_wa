@@ -1,8 +1,10 @@
 var app = app || {};
 
-app.MiPerfil_view = Backbone.View.extend({
-	el: '#div_menu_mi_perfil',
-	template: _.template($('#tpl_mi_perfil').html()),
+app.ListaPagos_view = Backbone.View.extend({
+	el: '#div_menu_lista_pagos',
+	template: '\
+		<h1> Extractos </h1>\
+	',
 
 	events: {
 		'click #btn_cualquiera': 'funcion1111'
@@ -17,7 +19,7 @@ app.MiPerfil_view = Backbone.View.extend({
 
 	render: function() {
 		this.$el.show();
-		this.$el.html(this.template());
+		this.$el.html(this.template);
 	},
 
 	funcion1111: function(){

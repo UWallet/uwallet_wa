@@ -2,7 +2,23 @@ var app = app || {};
 
 app.MenuInicio_view = Backbone.View.extend({
 	el: '#div_menu_inicio',
-	template: _.template($('#tpl_menu_inicio').html()),
+	template: '\
+		<div class="row">\
+			<h1>Bienvenido a UWallet</h1>\
+			<div class="col-md-4" data-toggle="modal" data-target="#modal-aceptacion">\
+				<h1>Enviar dinero</h1>\
+				<center><img src="public/img/enviar_dinero.png" alt=""></center>\
+			</div>\
+			<div class="col-md-4">\
+				<h1>Lista de pagos</h1>\
+				<center><img src="public/img/lista_pago.png" alt=""></center>\
+			</div>\
+			<div class="col-md-4">\
+				<h1>Extractos</h1>\
+				<center><img src="public/img/pdf.png" alt=""></center>\
+			</div>\
+		</div>\
+	',
 
 	events: {
     'click #opc_inicio': 'opc_inicio',
@@ -18,9 +34,10 @@ app.MenuInicio_view = Backbone.View.extend({
 	},
 
 	render: function() {
+		this.$el.show();
+		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
+		this.$el.html(this.template);
 
-		this.$el.html(this.template());
-    this.$el.show();
 	},
 
   opc_inicio: function(){
