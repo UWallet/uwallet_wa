@@ -6,14 +6,17 @@ app.Transaction_model = Backbone.Model.extend({
   validate: function (attrs) {
     var errors = [];
 
-    if(Object.keys(attrs).length != 2){
+    if(Object.keys(attrs).length != 3){
       errors.push({name: 'Cantidad de atributos', message: 'La cantidad de atributos es incorrecta.'});
     }
-    if (!attrs.userid) {
+    if (!attrs.account) {
       errors.push({name: 'Usuario destinatario', message: 'Es necesario que esté el campo usuario destinatario.'});
     }
     if (!attrs.amount) {
       errors.push({name: 'Monto', message: 'Es necesario que esté el campo monto.'});
+    }
+    if (!attrs.password) {
+      errors.push({name: 'Monto', message: 'Es necesario que esté el campo de la contraseña.'});
     }
     return errors.length > 0 ? errors : false;
   },

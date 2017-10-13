@@ -18,12 +18,54 @@ app.MenuInicio_view = Backbone.View.extend({
 				<center><img src="public/img/pdf.png" alt=""></center>\
 			</div>\
 		</div>\
+		<div class="modal fade" id="modal_aceptacion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+ <div class="modal-dialog">\
+   <div class="modal-content">\
+     <div class="modal-header">\
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+       <h4 class="modal-title text-center" id="myModalLabel"> <strong>Transacción</strong> </h4>\
+     </div>\
+		 \
+     <div class="modal-body">\
+       <h2 class="text-center">Envio de dinero</h2>\
+			 <form role="form" id="form_transaction">\
+				 <div class="form-group">\
+					 <label for="input_email"> Monto: </label>\
+					 <input class="form-control" name="amount" min="1" id="input_amount" type="number" placeholder="Monto a enviar" required value="100"/>\
+				 </div>\
+				 <div class="form-group">\
+					 <label for="input_email"> Cuenta: </label>\
+					 <input class="form-control" name="account" id="input_account" type="number" placeholder="Cuenta a enviar" required value="2"/>\
+				 </div>\
+				 <div id="div_btn_transaccion_1">\
+				 	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+					<button type="button" class="btn btn-default" id="btn_aceptar_valores">Continuar</button>\
+				 </div>\
+				 <div id="div_btn_transaccion_2" style="display : none;">\
+					 <div class="form-group">\
+	 					 <label for="input_password"> Contraseña: </label>\
+	 					 <input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required value="foobar"/>\
+	 				 </div>\
+					   <input type="submit" class="btn btn-default" value="Enviar" form="form_transaction" />\
+						 <button type="button" class="btn btn-default" id="btn_cancelar_valores">Atrás</button>\
+					</div>\
+			 </form>\
+     </div>\
+     <div class="modal-footer">\
+		 	<h4> Una frase chevere :v  </h4>\
+     </div>\
+   </div>\
+ </div>\
+</div>\
 	',
 
 	events: {
     'click #opc_inicio': 'opc_inicio',
 		'click #opc_enviar_dinero': 'opc_enviar_dinero',
-    'click #opc_cerrar_sesion': 'opc_cerrar_sesion'
+    'click #opc_cerrar_sesion': 'opc_cerrar_sesion',
+		'click #btn_aceptar_valores': 'pedir_contraseña',
+		'click #btn_cancelar_valores': 'liberar_campos',
+		'submit #form_transaction': 'opc_enviar_dinero'
   //  'click #': '',
 	},
 
@@ -40,12 +82,52 @@ app.MenuInicio_view = Backbone.View.extend({
 
 	},
 
+	pedir_contraseña: function(){
+		console.log("entro a pedir contraseña");
+
+		$("#div_btn_transaccion_1").hide();
+		$("#div_btn_transaccion_2").fadeIn('slow');
+	//	$('#form_transaction input[name=password]').val("");
+		$('#form_transaction input[name=account]').attr('disabled', 'disabled');
+		$('#form_transaction input[name=amount]').attr('disabled', 'disabled');
+		//$("#campo").attr('disabled', 'disabled');
+  },
+
+	liberar_campos: function(){
+		console.log("entro a liberar campos");
+		$("#div_btn_transaccion_1").fadeIn('slow');
+		$("#div_btn_transaccion_2").fadeOut('slow');
+		$('#form_transaction input[name=password]').val("");
+		$('#form_transaction input[name=account]').removeAttr("disabled");
+		$('#form_transaction input[name=amount]').removeAttr("disabled");
+
+	},
+
   opc_inicio: function(){
 
   },
 
-	opc_enviar_dinero: function(){
+	opc_enviar_dinero: function(e){
+		e.preventDefault();
+		console.log("Entro a enviar dinero");
+		$('#form_transaction input[name=account]').removeAttr("disabled");  // Se reactivan los campos para poder obtener sus valores
+		$('#form_transaction input[name=amount]').removeAttr("disabled");
 
+		transaccion1 = objectifyForm( $('#form_transaction').serializeArray());  // Convierte todos los datos del formulario en un objeto
+		$('#form_transaction')[0].reset();
+
+		console.log(transaccion1);
+
+		var transaccion2 = new app.Transaction_model(transaccion1);
+    is_error = transaccion2.validate(transaccion2.attributes);
+		$('#modal_aceptacion').modal('hide');
+		console.log(is_error);
+		if (is_error) {
+			mostrar_errores_modelo(is_error)
+		} else {
+				//login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
+				// Haga su magia :v
+			}
 	},
 
   opc_cerrar_sesion: function(){

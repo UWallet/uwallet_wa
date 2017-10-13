@@ -77,7 +77,7 @@ app.Userreg_view = Backbone.View.extend({
 		} else {
 				login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
 			}
-		},
+	},
 
 	mostrar_error_login: function(errores){
 		mostrar_modal_generico('Login ', 'No fue posible iniciar sesión', 'El usuario y la contraseña no coinciden.', 'fallo.png'  );
