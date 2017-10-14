@@ -5,7 +5,7 @@ app.MenuInicio_view = Backbone.View.extend({
 	template: '\
 		<div class="row">\
 			<h1>Bienvenido a UWallet</h1>\
-			<div class="col-md-4" data-toggle="modal" data-target="#modal_aceptacion">\
+			<div class="col-md-4" id="div_iniciar_transaccion">\
 				<h1>Enviar dinero</h1>\
 				<center><img src="public/img/enviar_dinero.png" alt=""></center>\
 			</div>\
@@ -57,6 +57,25 @@ app.MenuInicio_view = Backbone.View.extend({
    </div>\
  </div>\
 </div>\
+<!-- Inicio de modal generico. -->\
+<div class="modal fade" id="modal_error_transaccion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+ <div class="modal-dialog">\
+   <div class="modal-content">\
+     <div class="modal-header">\
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+       <h4 class="modal-title text-center" id="modal_error_transaccion_header"> </h4>\
+     </div>\
+\
+     <div class="modal-body" id="modal_error_transaccion_body"> sin contenido</div>\
+\
+     <div class="modal-footer">\
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+			  <button type="button" class="btn btn-default" id="btn_reintentar_transaccion">Reintentar</button>\
+     </div>\
+   </div>\
+ </div>\
+</div>\
+<!-- Fin modal de  modal generico .-->\
 	',
 
 	events: {
@@ -65,6 +84,8 @@ app.MenuInicio_view = Backbone.View.extend({
     'click #opc_cerrar_sesion': 'opc_cerrar_sesion',
 		'click #btn_aceptar_valores': 'pedir_contraseña',
 		'click #btn_cancelar_valores': 'liberar_campos',
+		'click #div_iniciar_transaccion': 'mostrar_modal_transaccion',
+		'click #btn_reintentar_transaccion': 'mostrar_modal_transaccion',
 		'submit #form_transaction': 'opc_enviar_dinero'
   //  'click #': '',
 	},
@@ -79,6 +100,15 @@ app.MenuInicio_view = Backbone.View.extend({
 		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
 		this.$el.html(this.template);
 
+	},
+
+	mostrar_modal_transaccion: function(){
+		$("#div_btn_transaccion_2").fadeOut('slow');
+		$("#div_btn_transaccion_1").fadeIn('slow');
+		$('#modal_error_transaccion').modal('hide');
+		$('#modal_aceptacion').modal('show');
+		$('#form_transaction input[name=password]').val("");
+		//$('#modal_error_transaccion').modal('show');
 	},
 
 	pedir_contraseña: function(){
@@ -148,20 +178,34 @@ app.MenuInicio_view = Backbone.View.extend({
 		    });
 			}
 	},
+
 	mostrar_error_400: function(errores){
-		mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No tienes suficiente saldo.', 'fallo.png'  );
+		var self = this;
+		this.mostrar_modal_error_transaccion('Transacción ', 'No es posible hacer la transacción', 'No tienes suficiente saldo.', 'fallo.png'  );
 	},
 
 	mostrar_error_404: function(errores){
-		mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
+		var self = this;
+		this.mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
 	},
 	mostrar_correcto_transaccion: function(errores){
-		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
+		var self = this;
+		this.mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
 	},
 
-  opc_cerrar_sesion: function(){
+	mostrar_modal_error_transaccion: function(contenido_header, titulo, contenido, imagen){
+	  // Limpiar el contenido del modal
+	  $("#modal_error_transaccion_body").empty();
+	  $("#modal_error_transaccion_header").empty();
 
-  }
+	  $('#modal_error_transaccion').modal('show');   // Muestra el modal
+	  // Mostrar contenido
+	  $("#modal_error_transaccion_header").append("<strong>"+ contenido_header + "</strong>");
+	  $('#modal_error_transaccion_body').append("<h1>"+ titulo+ "</h1>")
+	  $('#modal_error_transaccion_body').append("<h3>" + contenido + "</h3>")
+	  $('#modal_error_transaccion_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
+
+	}
 
 });
 
