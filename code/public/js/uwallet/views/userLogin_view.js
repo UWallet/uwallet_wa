@@ -1,6 +1,6 @@
 var app = app || {};
 
-app.Userreg_view = Backbone.View.extend({
+app.UserLogin_view = Backbone.View.extend({
 	el: '#div_login',
 	template:  '\
 		<br> <br> \
@@ -30,7 +30,6 @@ app.Userreg_view = Backbone.View.extend({
 	},
 
 	initialize: function() {
-
 		var self = this;
 		self.render();
 	},
@@ -66,7 +65,6 @@ app.Userreg_view = Backbone.View.extend({
 			}
 		};
 
-		console.log("Entro en loguear");
 		var self = this;
     e.preventDefault();
 		user = objectifyForm( $('#form_userlogin').serializeArray());  // Convierte todos los datos del formulario en un objeto
@@ -76,13 +74,14 @@ app.Userreg_view = Backbone.View.extend({
 			mostrar_errores_modelo(is_error)
 		} else {
 				login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
-			}
+		}
 	},
 
 	mostrar_error_login: function(errores){
 		mostrar_modal_generico('Login ', 'No fue posible iniciar sesión', 'El usuario y la contraseña no coinciden.', 'fallo.png'  );
 	},
 	loguear: function(token){
+		console.log("Entro en loguear");
 		sessionStorage.setItem('token', token);
 		$("#div_login").hide();
 		$("#div_registrar_usuario").hide();
@@ -91,8 +90,12 @@ app.Userreg_view = Backbone.View.extend({
 		var menuNavegacion_view = new app.MenuNavegacion_view();
 		var menuInicio_view = new app.MenuInicio_view();
 		console.log(sessionStorage.getItem("token"));
+	},
+
+	verificar_token: function(){
+		console.log("Entro en verificar token");
 	}
 
 });
 
-var userreg_view = new app.Userreg_view();
+var userLogin_view = new app.UserLogin_view();

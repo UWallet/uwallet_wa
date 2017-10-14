@@ -70,7 +70,6 @@ app.MenuInicio_view = Backbone.View.extend({
 	},
 
 	initialize: function() {
-    console.log("Entro en menu inicio");
 		var self = this;
 		self.render();
 	},

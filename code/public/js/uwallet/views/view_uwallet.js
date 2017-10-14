@@ -2,7 +2,7 @@ var app = app || {};
 
 
 app.RegisterView = Backbone.View.extend({
-	el: '#div_registrar_usuario',
+	el: '#div_registrar_usuario111',
 
 	events: {
 		'click #btn_registrar_usuario': 'crear_usuario'

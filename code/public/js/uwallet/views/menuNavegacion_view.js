@@ -24,7 +24,6 @@ app.MenuNavegacion_view = Backbone.View.extend({
     this.$el.show();
 		this.$el.html(this.template()); // Como se importa desde el html, se usa la template como funcion
     iniciar_menu_navegacion();
-
 	},
 
   opc_inicio: function(){
@@ -67,7 +66,9 @@ app.MenuNavegacion_view = Backbone.View.extend({
   },
 
   opc_cerrar_sesion: function(){
-
+		//sessionStorage.setItem('token', '');
+		sessionStorage.clear();
+		 location.reload(true);
   },
 
 	ocultar_menus: function(){

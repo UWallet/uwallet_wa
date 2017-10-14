@@ -1,7 +1,7 @@
 var app = app || {};
 
-app.Userreg_view = Backbone.View.extend({
-	el: '#div_login',
+app.Transaction_view = Backbone.View.extend({
+	el: '#div_transaction',
 	//template: _.template($('#tpl_login').html()),
 
 	events: {
@@ -100,7 +100,7 @@ app.Userreg_view = Backbone.View.extend({
 
 });
 
-var userreg_view = new app.Userreg_view();
+var transaction_view = new app.Transaction_view();
 
 /*
 

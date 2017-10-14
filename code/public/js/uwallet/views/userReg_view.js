@@ -58,6 +58,7 @@ app.Userreg_view = Backbone.View.extend({
 	},
 
 	initialize: function() {
+		console.log("Entro en userReg_view");
 		var self = this;
 		self.render();
 	},
