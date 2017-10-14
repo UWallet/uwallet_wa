@@ -43,7 +43,7 @@ app.Transaction_view = Backbone.View.extend({
 				//
 			} else {
 				alert("Respuesta desconocida");
-				console.log(response.status + " - " + responses.responseText);
+				console.log(response.status + " - " + response.responseText);
 			}
 		};
 
@@ -78,7 +78,7 @@ app.Transaction_view = Backbone.View.extend({
 				//
 			} else {
 				alert("Respuesta desconocida");
-				console.log(response.status + " - " + responses.responseText);
+				console.log(response.status + " - " + response.responseText);
 			}
 		};
 		var self = this;

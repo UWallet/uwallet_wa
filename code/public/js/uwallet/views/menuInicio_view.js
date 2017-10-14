@@ -186,11 +186,11 @@ app.MenuInicio_view = Backbone.View.extend({
 
 	mostrar_error_404: function(errores){
 		var self = this;
-		this.mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
+		mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
 	},
 	mostrar_correcto_transaccion: function(errores){
 		var self = this;
-		this.mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
+		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
 	},
 
 	mostrar_modal_error_transaccion: function(contenido_header, titulo, contenido, imagen){

@@ -19,10 +19,23 @@ app.MiPerfil_view = Backbone.View.extend({
 			</div>\
 		</div>\
 	</div>\
+	<h2> Mis tarjetas </h2>\
+	<table class="flat-table" id="tarjetas">\
+  <tbody>\
+    <tr>\
+      <th>Número de tarjeta</th>\
+      <th>Saldo</th>\
+      <th>Mes de expiración</th>\
+      <th>Año de expiración</th>\
+      <th>Operaciones</th>\
+    </tr>\
+  </tbody>\
+	</table>\
+	<input type="submit" class="btn btn-default" value="Agregar tarjeta" id="create_card"/>\
 	',
 
 	events: {
-		'click #btn_cualquiera': 'funcion1111'
+		'click #create_card': 'create_card'
 
 		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
@@ -30,7 +43,8 @@ app.MiPerfil_view = Backbone.View.extend({
 	initialize: function() {
 		var self = this;
 		self.render();
-		self.peticion();
+		self.peticionusuario();
+		self.peticiontarjetas();
 	},
 
 	render: function() {
@@ -39,7 +53,7 @@ app.MiPerfil_view = Backbone.View.extend({
 		this.$el.html(this.template);
 	},
 
-	peticion: function(e){money
+	peticionusuario: function(e){
 		// Cuando funciona la peticion se buscan en 'options'
 		var onDataHandler = function(collection, response, options) {
 			if (options.xhr.status == 200){
@@ -53,7 +67,6 @@ app.MiPerfil_view = Backbone.View.extend({
 			 console.log(response.status + " - " + response.responseText);
 		 }
 	};
-
 		// Cuando falla la peticion se buscan en 'response'
 		var onErrorHandler = function(collection, response, options) {
 			console.log("Entro en error handle");
@@ -61,22 +74,61 @@ app.MiPerfil_view = Backbone.View.extend({
 				//
 			} else {
 				alert("Respuesta desconocida");
-				console.log(response.status + " - " + responses.responseText);
+				console.log(response.status + " - " + response.responseText);
 			}
 		};
 		console.log("Entro en profile");
 
 		var self = this;
 		var perfil = new app.Profile_model();
-		var response = perfil.fetch({
+		perfil.fetch({
       headers: {
         'Authorization': sessionStorage.getItem("token")
       },success: onDataHandler,
 					error: onErrorHandler
     });
-		console.log(response);
-	}
+	},
 
+	peticiontarjetas: function(e){
+
+		var onDataHandler = function(collection, response, options) {
+			if (options.xhr.status == 200){
+				tarjetas = JSON.parse(options.xhr.responseText);
+				console.log(tarjetas[0])
+				for (var i = 0; i < tarjetas.length; i++){
+						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td>"+ tarjetas[i].amount +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td>Pending</td></tr>");
+				}
+
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+		 };
+		 // Cuando falla la peticion se buscan en 'response'
+ 		var onErrorHandler = function(collection, response, options) {
+ 			console.log("Entro en error handle");
+ 			if(response.status == 401) {
+ 				//
+ 			} else {
+ 				alert("Respuesta desconocida");
+ 				console.log(response.status + " - " + response.responseText);
+ 			}
+ 		};
+ 		console.log("Entro en tarjetas");
+
+ 		var self = this;
+ 		var tajetas = new app.Cards_model();
+ 		tajetas.fetch({
+       headers: {
+         'Authorization': sessionStorage.getItem("token")
+       },success: onDataHandler,
+ 					error: onErrorHandler
+     });
+	},
+
+	create_card: function(e){
+		console.log("entro a crear tarjeta");
+	}
 });
 
 //var noficaciones_view = new app.Noficaciones_view();
