@@ -5,7 +5,7 @@ app.MenuInicio_view = Backbone.View.extend({
 	template: '\
 		<div class="row">\
 			<h1>Bienvenido a UWallet</h1>\
-			<div class="col-md-4" data-toggle="modal" data-target="#modal-aceptacion">\
+			<div class="col-md-4" data-toggle="modal" data-target="#modal_aceptacion">\
 				<h1>Enviar dinero</h1>\
 				<center><img src="public/img/enviar_dinero.png" alt=""></center>\
 			</div>\

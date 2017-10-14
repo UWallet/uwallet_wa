@@ -6,3 +6,43 @@ body, html {
 h1, h2{
   text-align: center;
 }
+
+.item-dpp {
+    display: table-cell;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: 5px 20px;
+    padding-top: 5px;
+    padding-bottom: 9px;
+}
+.personal-state {
+    border: 1px solid #d1d1d1;
+    min-height: 200px;
+    min-width: 400px;
+    width: auto;
+    position: relative;
+    top: -70px;
+    padding-top: 65px;
+    padding: 18px 35px;
+}
+.user_name_and_online {
+    border-bottom: 1px solid #d1d1d1;
+}
+.user_name {
+  font-size: 30px;
+  color: black;
+}
+.span-state {
+  font-size: 25px;
+  float: left;
+}
+.span-state-2 {
+  font-size: 23px;
+  color: #777;
+  margin-left: auto;
+  margin-right: auto;
+}
+.one-info {
+    margin: 15px;
+    display: block;
+}

@@ -5,7 +5,7 @@ app.Userreg_view = Backbone.View.extend({
 	//template: _.template($('#tpl_login').html()),
 
 	events: {
-		'submit #form_transaction_by_id': 'transaction_by_id'
+		'submit #form_transaction': 'create_transaction'
 
 		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
@@ -91,9 +91,10 @@ app.Userreg_view = Backbone.View.extend({
 					}
 				});
 	},
-
-	funcion_cualquiera: function(errores){
-		//mostrar_modal_generico('Login ', 'No fue posible iniciar sesión', 'El usuario y la contraseña no coinciden.', 'fallo.png'  );
+	create_transaction: function(e){
+		e.preventDefault();
+		console.log("casi");
+		$("#input_amount").prop('disabled', true);
 	}
 
 

@@ -5,6 +5,20 @@ app.MiPerfil_view = Backbone.View.extend({
 	//template: _.template($('#tpl_mi_perfil').html()),
 	template: '\
 		<h1> Mi perfil </h1>\
+		<div class="item-dpp">\
+			<div class="personal-state">\
+				<div class="user_name_and_online">\
+					<span class="user_name" id="firstName"></span><span class="user_name"> </span><span class="user_name" id="lastName"></span><br>\
+				</div>\
+				<div class="one-info">\
+					<span class="span-state">Email: <span class="span-state-2"  id="email"></span></span>\
+				</div>\
+				<div class="one-info">\
+					<span class="span-state">Dinero: $<span class="span-state-2" id="money"></span></span>\
+				</div>\
+			</div>\
+		</div>\
+	</div>\
 	',
 
 	events: {
@@ -16,6 +30,7 @@ app.MiPerfil_view = Backbone.View.extend({
 	initialize: function() {
 		var self = this;
 		self.render();
+		self.peticion();
 	},
 
 	render: function() {
@@ -24,8 +39,42 @@ app.MiPerfil_view = Backbone.View.extend({
 		this.$el.html(this.template);
 	},
 
-	funcion1111: function(){
+	peticion: function(e){money
+		// Cuando funciona la peticion se buscan en 'options'
+		var onDataHandler = function(collection, response, options) {
+			if (options.xhr.status == 200){
+				usuario = JSON.parse(options.xhr.responseText);
+				$('#firstName').text(usuario.firstName);
+				$('#lastName').text(usuario.lastName);
+				$('#email').text(usuario.email);
+				$('#money').text(usuario.money);
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+	};
 
+		// Cuando falla la peticion se buscan en 'response'
+		var onErrorHandler = function(collection, response, options) {
+			console.log("Entro en error handle");
+			if(response.status == 401) {
+				//
+			} else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + responses.responseText);
+			}
+		};
+		console.log("Entro en profile");
+
+		var self = this;
+		var perfil = new app.Profile_model();
+		var response = perfil.fetch({
+      headers: {
+        'Authorization': sessionStorage.getItem("token")
+      },success: onDataHandler,
+					error: onErrorHandler
+    });
+		console.log(response);
 	}
 
 });
