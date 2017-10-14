@@ -47,50 +47,54 @@ app.Transaction_view = Backbone.View.extend({
 			}
 		};
 
-		console.log("Entro en transaction_by_id");
-		var self = this;
-    //e.preventDefault();
-		//user = objectifyForm( $('#form_transaction_by_id').serializeArray());  // Convierte todos los datos del formulario en un objeto
 
+		var self = this;
 
 		var transaction = new app.TransactionById_model({id:"2"}); // Se le pasa el id para el getById
 
 		transaction.fetch({
       headers: {
-        'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1MDY3MTk0MzcsImlzcyI6IndhbGxldCIsImF1ZCI6ImNsaWVudCJ9.wTd9PVAetlaOfgC9ce-zKb_VEMCX6UiS5Kw_Xl2BvD0'
+        'Authorization':  sessionStorage.getItem("token")
       }
     },{ dataType:'text', success : onDataHandler, error: onErrorHandler });
+		console.log(transaction);
 	},
 
 	transaction_by_user: function(){
-		console.log("Entro en transaction_by_user");
+		// Cuando funciona la peticion se buscan en 'options'
+		var onDataHandler = function(collection, response, options) {
+			if (options.xhr.status == 200){
+
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+	};
+
+		// Cuando falla la peticion se buscan en 'response'
+		var onErrorHandler = function(collection, response, options) {
+			console.log("Entro en error handle");
+			if(response.status == 401) {
+				//
+			} else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + responses.responseText);
+			}
+		};
 		var self = this;
 		//e.preventDefault();
 		//user = objectifyForm( $('#form_transaction_by_id').serializeArray());  // Convierte todos los datos del formulario en un objeto
 
 		var transaction = new app.TransactionByUser_model(); // Se le pasa el id para el getById
 
-				transaction.fetch({
+				var response = transaction.fetch({
 					headers: {
-						'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1MDY3MTk0MzcsImlzcyI6IndhbGxldCIsImF1ZCI6ImNsaWVudCJ9.wTd9PVAetlaOfgC9ce-zKb_VEMCX6UiS5Kw_Xl2BvD0'
-					}
-				},
-				{
-					//dataType: 'text',
-					//success: function (model, respuesta, options) {
-					//		console.log("success"); // Por lo general no funciona el success a menos que mande 200, por eso los status se miran desde el 'error'
-					//},
-					error: function (model, respuesta, options) {
-						console.log(model); console.log(options); console.log(respuesta);
-						if(respuesta.status == 401) {
-
-						} else {
-							alert("Respuesta desconocida");
-							console.log(respuesta.status + " - " + respuesta.responseText);
-						}
-					}
+						'Authorization': sessionStorage.getItem("token")
+					},success: onDataHandler,	error: onErrorHandler
 				});
+				console.log(response);
 	},
+
 	create_transaction: function(e){
 		e.preventDefault();
 		console.log("casi");

@@ -6,6 +6,7 @@ app.TransactionById_model = Backbone.Model.extend({
 	initialize: function() {
 		this.on('change', function(){
 			console.log('El modelo TransactionById_model ha sido modificado.');
+      console.log(this);
 		});
 	}
 });
