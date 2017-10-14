@@ -35,7 +35,7 @@ app.MenuInicio_view = Backbone.View.extend({
 				 </div>\
 				 <div class="form-group">\
 					 <label for="input_email"> Cuenta: </label>\
-					 <input class="form-control" name="account" id="input_account" type="number" placeholder="Cuenta a enviar" required value="2"/>\
+					 <input class="form-control" name="userid" id="input_userid" type="number" placeholder="Cuenta a enviar" required value="2"/>\
 				 </div>\
 				 <div id="div_btn_transaccion_1">\
 				 	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
@@ -88,7 +88,7 @@ app.MenuInicio_view = Backbone.View.extend({
 		$("#div_btn_transaccion_1").hide();
 		$("#div_btn_transaccion_2").fadeIn('slow');
 	//	$('#form_transaction input[name=password]').val("");
-		$('#form_transaction input[name=account]').attr('disabled', 'disabled');
+		$('#form_transaction input[name=userid]').attr('disabled', 'disabled');
 		$('#form_transaction input[name=amount]').attr('disabled', 'disabled');
 		//$("#campo").attr('disabled', 'disabled');
   },
@@ -98,7 +98,7 @@ app.MenuInicio_view = Backbone.View.extend({
 		$("#div_btn_transaccion_1").fadeIn('slow');
 		$("#div_btn_transaccion_2").fadeOut('slow');
 		$('#form_transaction input[name=password]').val("");
-		$('#form_transaction input[name=account]').removeAttr("disabled");
+		$('#form_transaction input[name=userid]').removeAttr("disabled");
 		$('#form_transaction input[name=amount]').removeAttr("disabled");
 
 	},
@@ -108,9 +108,25 @@ app.MenuInicio_view = Backbone.View.extend({
   },
 
 	opc_enviar_dinero: function(e){
+
+		// Cuando falla la peticion se buscan en 'response'
+		var onErrorHandler = function(collection, response, options) {
+			if (options.xhr.status == 201){
+				self.mostrar_correcto_transaccion();
+		 }else if(response.status == 400) {
+				self.mostrar_error_400();
+			} else if(response.status == 404){
+				self.mostrar_error_404();
+			}else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + response.responseText);
+			}
+		};
+		var self = this;
+
 		e.preventDefault();
 		console.log("Entro a enviar dinero");
-		$('#form_transaction input[name=account]').removeAttr("disabled");  // Se reactivan los campos para poder obtener sus valores
+		$('#form_transaction input[name=userid]').removeAttr("disabled");  // Se reactivan los campos para poder obtener sus valores
 		$('#form_transaction input[name=amount]').removeAttr("disabled");
 
 		transaccion1 = objectifyForm( $('#form_transaction').serializeArray());  // Convierte todos los datos del formulario en un objeto
@@ -126,8 +142,22 @@ app.MenuInicio_view = Backbone.View.extend({
 			mostrar_errores_modelo(is_error)
 		} else {
 				//login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
-				// Haga su magia :v
+				transaccion2.save({},{
+		      headers: {
+		        'Authorization': sessionStorage.getItem("token")
+		      },error: onErrorHandler
+		    });
 			}
+	},
+	mostrar_error_400: function(errores){
+		mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No tienes suficiente saldo.', 'fallo.png'  );
+	},
+
+	mostrar_error_404: function(errores){
+		mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
+	},
+	mostrar_correcto_transaccion: function(errores){
+		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
 	},
 
   opc_cerrar_sesion: function(){

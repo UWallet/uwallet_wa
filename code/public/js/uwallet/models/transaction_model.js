@@ -9,14 +9,11 @@ app.Transaction_model = Backbone.Model.extend({
     if(Object.keys(attrs).length != 3){
       errors.push({name: 'Cantidad de atributos', message: 'La cantidad de atributos es incorrecta.'});
     }
-    if (!attrs.account) {
+    if (!attrs.userid) {
       errors.push({name: 'Usuario destinatario', message: 'Es necesario que esté el campo usuario destinatario.'});
     }
     if (!attrs.amount) {
       errors.push({name: 'Monto', message: 'Es necesario que esté el campo monto.'});
-    }
-    if (!attrs.password) {
-      errors.push({name: 'Monto', message: 'Es necesario que esté el campo de la contraseña.'});
     }
     return errors.length > 0 ? errors : false;
   },

@@ -62,7 +62,7 @@ app.Userreg_view = Backbone.View.extend({
 				self.mostrar_error_login();
 			} else {
 				alert("Respuesta desconocida");
-				console.log(response.status + " - " + responses.responseText);
+				console.log(response.status + " - " + response.responseText);
 			}
 		};
 
