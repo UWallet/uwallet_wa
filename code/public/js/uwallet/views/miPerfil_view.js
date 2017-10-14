@@ -1,5 +1,4 @@
 var app = app || {};
-
 app.MiPerfil_view = Backbone.View.extend({
 	el: '#div_menu_mi_perfil',
 	//template: _.template($('#tpl_mi_perfil').html()),
@@ -22,20 +21,50 @@ app.MiPerfil_view = Backbone.View.extend({
 	<h2> Mis tarjetas </h2>\
 	<table class="flat-table" id="tarjetas">\
   <tbody>\
-    <tr>\
-      <th>Número de tarjeta</th>\
-      <th>Saldo</th>\
-      <th>Mes de expiración</th>\
-      <th>Año de expiración</th>\
-      <th>Operaciones</th>\
-    </tr>\
   </tbody>\
 	</table>\
 	<input type="submit" class="btn btn-default" value="Agregar tarjeta" id="create_card"/>\
+	\
+	<div class="modal fade" id="modal_cards" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+<div class="modal-dialog">\
+ <div class="modal-content">\
+	 <div class="modal-header">\
+		 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+		 <h4 class="modal-title text-center" id="myModalLabel"> <strong>Agregar Tarjeta de credito</strong> </h4>\
+	 </div>\
+	 \
+	 <div class="modal-body">\
+		 <h2 class="text-center">Datos de tarjeta</h2>\
+	 </div>\
+	 <form role="form" id="form_card">\
+		 <div class="form-group">\
+			 <label for="input_number"> Número de tarjeta: </label>\
+			 <input class="form-control" name="number" min="1" id="input_number" type="number" placeholder="Número de tarjeta" required value="1"/>\
+		 </div>\
+		 <div class="form-group">\
+			 <label for="input_mes"> Mes de expiración: </label>\
+			 <input class="form-control" name="expiration_month" id="input_mes" type="number" placeholder="Mes de expiración" required value="2"/>\
+		 </div>\
+		 <div class="form-group">\
+			 <label for="input_año"> Año de expiración: </label>\
+			 <input class="form-control" name="expiration_year" id="input_año" type="number" placeholder="Año de expiración" required value="2"/>\
+		 </div>\
+		 <div id="div_btn_transaccion_1">\
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+			<button type="submit" class="btn btn-default" form="form_card">Agregar</button>\
+		 </div>\
+	 </form>\
+	 <div class="modal-footer">\
+		<h4> Una frase chevere :v  </h4>\
+	 </div>\
+ </div>\
+</div>\
+</div>\
 	',
 
 	events: {
-		'click #create_card': 'create_card'
+		'click #create_card': 'modal_card',
+		'submit #form_card': 'create_card'
 
 		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
@@ -62,6 +91,7 @@ app.MiPerfil_view = Backbone.View.extend({
 				$('#lastName').text(usuario.lastName);
 				$('#email').text(usuario.email);
 				$('#money').text(usuario.money);
+				userid = usuario.id;
 		 } else {
 			 alert("Respuesta desconocida");
 			 console.log(response.status + " - " + response.responseText);
@@ -93,10 +123,12 @@ app.MiPerfil_view = Backbone.View.extend({
 
 		var onDataHandler = function(collection, response, options) {
 			if (options.xhr.status == 200){
+				$("#tarjetas").html("");
+				$("#tarjetas").append("<tr><th>Número de tarjeta</th><th>Saldo</th><th>Mes de expiración</th><th>Año de expiración</th><th>Operaciones</th>/tr>");
 				tarjetas = JSON.parse(options.xhr.responseText);
 				console.log(tarjetas[0])
 				for (var i = 0; i < tarjetas.length; i++){
-						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td>"+ tarjetas[i].amount +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td>Pending</td></tr>");
+						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td>Pending</td></tr>");
 				}
 
 		 } else {
@@ -126,8 +158,63 @@ app.MiPerfil_view = Backbone.View.extend({
      });
 	},
 
+	modal_card: function(e){
+		console.log("entro a modal tarjeta");
+		$('#modal_cards').modal('show');
+	},
+
 	create_card: function(e){
+		var self = this;
+		// Cuando falla la peticion se buscan en 'response'
+		var onErrorHandler = function(collection, response, options) {
+			if (options.xhr.status == 201){
+				self.peticiontarjetas();
+				mostrar_modal_generico('Agregar Tarjeta ', 'Se agrego esta tarjeta a tu cuenta.', 'Ya puede usar esta tarjeta para añadir dinero a tu cuenta en UWallet.', 'confirmacion.png'  );
+		 }else if(response.status == 400) {
+				self.mostrar_error_400();
+			} else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + response.responseText);
+			}
+		};
+
+		e.preventDefault();
 		console.log("entro a crear tarjeta");
+		var card = $('#form_card').serializeArray();
+		card.push({name: "amount", value:Math.floor(Math.random() * 5000000) + 100})
+
+		var card2 = new app.Cards_create_model(objectifyForm(card));
+    is_error = card2.validate(card2.attributes);
+		$('#modal_cards').modal('hide');
+		console.log(is_error);
+		if (is_error) {
+			mostrar_errores_modelo(is_error)
+		} else {
+				//login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
+				card2.save({},{
+		      headers: {
+		        'Authorization': sessionStorage.getItem("token")
+		      },error: onErrorHandler
+		    });
+			}
+	},
+
+	mostrar_error_400: function(errores){
+		var self = this;
+		this.mostrar_modal_error_card('Agregar Tarjeta ', 'No es posible agregar tarjeta'," ", 'fallo.png'  );
+	},
+	mostrar_modal_error_card: function(contenido_header, titulo, contenido, imagen){
+	  // Limpiar el contenido del modal
+	  $("#modal_error_transaccion_body").empty();
+	  $("#modal_error_transaccion_header").empty();
+
+	  $('#modal_error_transaccion').modal('show');   // Muestra el modal
+	  // Mostrar contenido
+	  $("#modal_error_transaccion_header").append("<strong>"+ contenido_header + "</strong>");
+	  $('#modal_error_transaccion_body').append("<h1>"+ titulo+ "</h1>")
+	  $('#modal_error_transaccion_body').append("<h3>" + contenido + "</h3>")
+	  $('#modal_error_transaccion_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
+
 	}
 });
 
