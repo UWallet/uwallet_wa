@@ -37,6 +37,9 @@ app.MenuInicio_view = Backbone.View.extend({
 					 <label for="input_email"> Cuenta: </label>\
 					 <input class="form-control" name="userid" id="input_userid" type="number" placeholder="Cuenta a enviar" required value="2"/>\
 				 </div>\
+				  <div id="div_mensaje_campos_incompletos" class="alert alert-danger" style="display:none">\
+						<p> Llene los campos requeridos</p>\
+					</div>\
 				 <div id="div_btn_transaccion_1">\
 				 	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
 					<button type="button" class="btn btn-default" id="btn_aceptar_valores">Continuar</button>\
@@ -57,7 +60,7 @@ app.MenuInicio_view = Backbone.View.extend({
    </div>\
  </div>\
 </div>\
-<!-- Inicio de modal generico. -->\
+<!-- Inicio de modal error_transaccion. -->\
 <div class="modal fade" id="modal_error_transaccion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
  <div class="modal-dialog">\
    <div class="modal-content">\
@@ -75,7 +78,7 @@ app.MenuInicio_view = Backbone.View.extend({
    </div>\
  </div>\
 </div>\
-<!-- Fin modal de  modal generico .-->\
+<!-- Fin modal de  modal error_transaccion .-->\
 	',
 
 	events: {
@@ -112,14 +115,19 @@ app.MenuInicio_view = Backbone.View.extend({
 	},
 
 	pedir_contraseña: function(){
-		console.log("entro a pedir contraseña");
+		if( $('#form_transaction input[name=userid]').val() != "" && $('#form_transaction input[name=amount]').val() != ""  ){
+			$("#div_btn_transaccion_1").hide();
+			$("#div_btn_transaccion_2").fadeIn('slow');
+		//	$('#form_transaction input[name=password]').val("");
+			$('#form_transaction input[name=userid]').attr('disabled', 'disabled');
+			$('#form_transaction input[name=amount]').attr('disabled', 'disabled');
+			$("#div_mensaje_campos_incompletos").fadeOut('slow');
+			//$("#campo").attr('disabled', 'disabled');
+		} else {
+			$("#div_mensaje_campos_incompletos").fadeIn('slow');
+		}
 
-		$("#div_btn_transaccion_1").hide();
-		$("#div_btn_transaccion_2").fadeIn('slow');
-	//	$('#form_transaction input[name=password]').val("");
-		$('#form_transaction input[name=userid]').attr('disabled', 'disabled');
-		$('#form_transaction input[name=amount]').attr('disabled', 'disabled');
-		//$("#campo").attr('disabled', 'disabled');
+
   },
 
 	liberar_campos: function(){
@@ -186,11 +194,11 @@ app.MenuInicio_view = Backbone.View.extend({
 
 	mostrar_error_404: function(errores){
 		var self = this;
-		mostrar_modal_generico('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
+		mostrar_modal_error_transaccion('Transacción ', 'No es posible hacer la transacción', 'No existe la cuenta a la que deseas enviar.', 'fallo.png'  );
 	},
 	mostrar_correcto_transaccion: function(errores){
 		var self = this;
-		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
+		mostrar_modal_error_transaccion('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
 	},
 
 	mostrar_modal_error_transaccion: function(contenido_header, titulo, contenido, imagen){

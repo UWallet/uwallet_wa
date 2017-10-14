@@ -7,6 +7,10 @@ h1, h2{
   text-align: center;
 }
 
+.select_uwallet_30{
+  width: 30%;
+}
+
 .item-dpp {
     display: table-cell;
     text-align: center;

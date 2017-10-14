@@ -12,12 +12,18 @@ app.Cards_create_model = Backbone.Model.extend({
     }
     if (!attrs.number) {
       errors.push({name: 'Número de tarjeta', message: 'Es necesario que esté el campo número de tarjeta.'});
+    } else if (attrs.number.length < 15 || attrs.number.length > 20){
+        cant = attrs.number.length;
+        errors.push({name: 'Número de tarjeta', message: 'Es necesario que el número sea de entre 15 y 20 digitos. Ha digitado ' + cant + ' números de su tarjeta'});
     }
+
     if (!attrs.amount) {
       errors.push({name: 'Monto', message: 'Es necesario que esté el campo monto.'});
     }
     if (!attrs.expiration_month) {
       errors.push({name: 'Mes de expiración', message: 'Es necesario que esté el campo mes de expiración.'});
+    }  else if (attrs.expiration_month.length < 1 || attrs.expiration_month.length > 12){
+        errors.push({name: 'Mes de expiración', message: 'Debe seleccionar un mes válido.'});
     }
     if (!attrs.expiration_year) {
       errors.push({name: 'Año de expiración', message: 'Es necesario que esté el campo año de expiración.'});
