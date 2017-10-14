@@ -3,7 +3,7 @@ var app = app || {};
 app.ListaPagos_view = Backbone.View.extend({
 	el: '#div_menu_lista_pagos',
 	template: '\
-		<h1> Extractos </h1>\
+		<h1> Lista de pagos </h1>\
 	',
 
 	events: {

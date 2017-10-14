@@ -9,11 +9,11 @@ app.MenuInicio_view = Backbone.View.extend({
 				<h1>Enviar dinero</h1>\
 				<center><img src="public/img/enviar_dinero.png" alt=""></center>\
 			</div>\
-			<div class="col-md-4">\
+			<div class="col-md-4" id="div_ir_lista_pagos">\
 				<h1>Lista de pagos</h1>\
 				<center><img src="public/img/lista_pago.png" alt=""></center>\
 			</div>\
-			<div class="col-md-4">\
+			<div class="col-md-4" id="div_ir_extractos">\
 				<h1>Extractos</h1>\
 				<center><img src="public/img/pdf.png" alt=""></center>\
 			</div>\
@@ -82,14 +82,16 @@ app.MenuInicio_view = Backbone.View.extend({
 	',
 
 	events: {
-    'click #opc_inicio': 'opc_inicio',
 		'click #opc_enviar_dinero': 'opc_enviar_dinero',
     'click #opc_cerrar_sesion': 'opc_cerrar_sesion',
 		'click #btn_aceptar_valores': 'pedir_contraseña',
 		'click #btn_cancelar_valores': 'liberar_campos',
 		'click #div_iniciar_transaccion': 'mostrar_modal_transaccion',
 		'click #btn_reintentar_transaccion': 'mostrar_modal_transaccion',
-		'submit #form_transaction': 'opc_enviar_dinero'
+		'submit #form_transaction': 'opc_enviar_dinero',
+		'click #div_ir_lista_pagos': 'opc_lista_pagos1',
+		'click #div_ir_extractos': 'opc_extractos1'
+
   //  'click #': '',
 	},
 
@@ -140,9 +142,15 @@ app.MenuInicio_view = Backbone.View.extend({
 
 	},
 
-  opc_inicio: function(){
-
+  opc_lista_pagos1: function(){
+		var menuNavegacion_view = new app.MenuNavegacion_view();
+		menuNavegacion_view.opc_lista_pagos();
   },
+
+	opc_extractos1: function(){
+		var menuNavegacion_view = new app.MenuNavegacion_view();
+		menuNavegacion_view.opc_extractos();
+	},
 
 	opc_enviar_dinero: function(e){
 
