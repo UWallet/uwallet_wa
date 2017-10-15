@@ -22,12 +22,12 @@ app.Cards_create_model = Backbone.Model.extend({
     }
     if (!attrs.expiration_month) {
       errors.push({name: 'Mes de expiración', message: 'Es necesario que esté el campo mes de expiración.'});
-    }  else if (attrs.expiration_month.length < 1 || attrs.expiration_month.length > 12){
+    }  else if (attrs.expiration_month < 1 || attrs.expiration_month > 12){
         errors.push({name: 'Mes de expiración', message: 'Debe seleccionar un mes válido.'});
     }
     if (!attrs.expiration_year) {
       errors.push({name: 'Año de expiración', message: 'Es necesario que esté el campo año de expiración.'});
-    } else if (attrs.expiration_year.length < 2017 || attrs.expiration_month.expiration_year > 2100){
+    } else if (attrs.expiration_year < 2017 || attrs.expiration_month.expiration_year > 2100){
         errors.push({name: 'Año de expiración', message: 'Debe seleccionar un año válido.'});
     }
     return errors.length > 0 ? errors : false;
