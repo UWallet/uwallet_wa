@@ -19,11 +19,11 @@ app.MiPerfil_view = Backbone.View.extend({
 		</div>\
 	</div>\
 	<h2> Mis tarjetas </h2>\
+	<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
 	<table class="flat-table" id="tarjetas">\
   <tbody>\
   </tbody>\
 	</table>\
-	<input type="submit" class="btn btn-default" value="Agregar tarjeta" id="create_card"/>\
 	\
 	<div class="modal fade" id="modal_cards" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
 <div class="modal-dialog">\
@@ -38,7 +38,7 @@ app.MiPerfil_view = Backbone.View.extend({
 	 </div>\
 	 <form role="form" id="form_card">\
 		 <div class="form-group">\
-			 <label for="input_number"> Número de tarjeta 1: </label>\
+			 <label for="input_number"> Número de tarjeta: </label>\
 			 <input class="form-control" name="number" title="El número debe estar entre 15 y 20 digitos" id="input_number" type="number" placeholder="Número de tarjeta" required value="1234567890123456"  />\
 		 </div>\
 		 <div class="form-group">\
@@ -245,10 +245,12 @@ app.MiPerfil_view = Backbone.View.extend({
 		    });
 			}
 	},
-	
+
 	funcion_eliminar: function(e){
 		var onDataHandler = function(collection, response, options) {
-			console.log("bien")
+			console.log("bien");
+			console.log(options)
+			console.log(response)
 			if (options.xhr.status == 200){
 				//
 		 } else {
@@ -259,24 +261,31 @@ app.MiPerfil_view = Backbone.View.extend({
 		 // Cuando falla la peticion se buscan en 'response'
  		var onErrorHandler = function(collection, response, options) {
  			console.log("Entro en error handle");
- 			if(response.status == 500) {
-				//
+			console.log(response);
+			console.log(response.status);
+			console.log(options);
+ 			if(response.status == 200) {
+				console.log(" Aqui puede llamar a la funcion para que renderice la tabla.");
  			} else {
  				alert("Respuesta desconocida");
  				console.log(response.status + " - " + response.responseText);
  			}
  		};
+		//traditional: true,
+		 //processData: true,
 		var self = this;
 		console.log(e.target.id);
-		var tajetadel = new app.Cards_model();
- 		tajetadel.destroy({
-			traditional: true,
-			data: {id: e.target.id},
+		var tajetadel = new app.Cards_model({id: e.target.id}); //{id: e.target.id}
+	//thisDeal.destroy({data: { program_id: dealProgram.id }, processData: true})
+ 		au = tajetadel.destroy({
+			 //data: { id2: e.target.id },
+			 // processData: true,
        headers: {
          'Authorization': sessionStorage.getItem("token")
        },success: onDataHandler,
  					error: onErrorHandler
      });
+		 console.log(au);
 	},
 
 	mostrar_error_400: function(errores){
