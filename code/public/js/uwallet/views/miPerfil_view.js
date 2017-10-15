@@ -97,11 +97,8 @@ app.MiPerfil_view = Backbone.View.extend({
 	events: {
 		'click #create_card': 'modal_card',
 		'click #btn_reintentar_agregar_card': 'modal_card',
-		'submit #form_card': 'create_card'
-
-
-
-
+		'submit #form_card': 'create_card',
+		'click .borrar-tarjeta': 'funcion_eliminar'
 		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
 
@@ -164,7 +161,7 @@ app.MiPerfil_view = Backbone.View.extend({
 				tarjetas = JSON.parse(options.xhr.responseText);
 				console.log(tarjetas[0])
 				for (var i = 0; i < tarjetas.length; i++){
-						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td>Pending</td></tr>");
+						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td><button type='button' class='borrar-tarjeta btn btn-danger' id='"+tarjetas[i].id +"'>Peligro</button></td></tr>");
 				}
 
 		 } else {
@@ -247,6 +244,39 @@ app.MiPerfil_view = Backbone.View.extend({
 		      },error: onErrorHandler
 		    });
 			}
+	},
+	
+	funcion_eliminar: function(e){
+		var onDataHandler = function(collection, response, options) {
+			console.log("bien")
+			if (options.xhr.status == 200){
+				//
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+		 };
+		 // Cuando falla la peticion se buscan en 'response'
+ 		var onErrorHandler = function(collection, response, options) {
+ 			console.log("Entro en error handle");
+ 			if(response.status == 500) {
+				//
+ 			} else {
+ 				alert("Respuesta desconocida");
+ 				console.log(response.status + " - " + response.responseText);
+ 			}
+ 		};
+		var self = this;
+		console.log(e.target.id);
+		var tajetadel = new app.Cards_model();
+ 		tajetadel.destroy({
+			traditional: true,
+			data: {id: e.target.id},
+       headers: {
+         'Authorization': sessionStorage.getItem("token")
+       },success: onDataHandler,
+ 					error: onErrorHandler
+     });
 	},
 
 	mostrar_error_400: function(errores){
