@@ -8,6 +8,8 @@
 	<link href='public/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 	<link href='public/css/menu_navegacion.css' rel='stylesheet' type='text/css'>
 	<link href='public/css/style.css' rel='stylesheet' type='text/css'>
+	<link href='public/css/landing_page.css' rel='stylesheet' type='text/css'>
+	<link href='public/css/ionicons.css' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
@@ -15,20 +17,17 @@
 
 
 
-<div class="container">
-	<div class="row">
-    <div class="page-header">
-      <img src="public/img/logo_uwallet.png" alt="Logo UWallet">
-		</div>
-  </div>
+
 
 	<div id="div_menu_navegacion"></div>
 
+	<div id="div_registrar_usuario"></div>
+
+	<div class="container">
+
 	<div class="" id="div_transaccion"></div>
 
-	</div>
 
-	<div id="div_registrar_usuario"></div>
 
 	<div id="div_login"></div>
 
@@ -43,60 +42,308 @@
 	<div id="div_menu_mi_perfil"></div>
 
 
- <!-- Template menu de navegación -->
-	<script type="text/template" id="tpl_menu_navegacion">
-		<nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
-		  <div class="navbar-toggler animate">
-		    <span class="menu-icon"></span>
-		  </div>
-		  <ul class="navbar-menu animate">
-				<li>
-		      <a class="animate" id="opc_inicio">
-		        <span class="desc animate"> Inicio </span>
-		        <i class="fa fa-home" arial-hidden="true"></i>
-		      </a>
-		    </li>
-
-		    <li>
-		      <a class="animate" id="opc_notificaciones">
-		        <span class="desc animate"> Notificaciones  </span>
-		        <i class="fa fa-bell " arial-hidden="true"></i>
-		      </a>
-		    </li>
-
-		    <li>
-		      <a class="animate" id="opc_lista_pagos">
-		        <span class="desc animate"> lista de pagos</span>
-		        <i class="fa fa-list-alt" arial-hidden="true"></i>
-		      </a>
-		    </li>
-		    <li>
-		      <a class="animate" id="opc_extractos">
-		        <span class="desc animate"> Extractos</span>
-		        <i class="fa fa-file-pdf-o" arial-hidden="true"></i>
-		      </a>
-		    </li>
-		    <li>
-		      <a class="animate" id="opc_mi_perfil">
-		        <span class="desc animate"> Mi perfil</span>
-		        <i class="fa fa-user-circle" arial-hidden="true"></i>
-		      </a>
-		    </li>
-
-		    <li>
-		      <a class="animate" id="opc_cerrar_sesion">
-		        <span class="desc animate"> Cerrar sesion </span>
-		        <i class="fa fa-power-off" arial-hidden="true"></i>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-	</script>
-	<!-- Fin template menu de navegacion -->
 
 </div> <!-- Fin del div container-->
 
+<!-- Template menu de navegación -->
+<script type="text/template" id="tpl_login_register">
+	<!-- HEADER-->
+ <header id="header">
+			<div class="container" >
+							<div class="row"  >
+									 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo-wrapper">
+											 <img src="public/img/logo_uwallet.png" alt="" />
+									 </div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >
+												<div class="menu-links scroll-me">
+														<a href="#header"> <i class="ion-ios-home-outline"></i> </a>
+												<a href="#about"> <i class="ion-ios-camera-outline"></i> </a>
+												<a href="#clients"> <i class="ion-ios-grid-view-outline"></i> </a>
+												<a href="#contact"> <i class="ion-ios-chatboxes-outline"></i> </a>
+												</div>
+							</div>
+							</div>
+					</div>
+ </header>
+	<!-- HEADER SECTION END-->
+	<!--HOME SECTION START  -->
+	<div id="home">
+			<div class="overlay">
+					<div class="container">
+							<div class="row scroll-me" >
+								 <div class="col-md-6 col-sm-6 col-xs-12">
+									 <h1 >UWallet</h1>
+									 <h4>\  Consectetur adipiscing elit felis dolor felis dolor vitae.
+									     Eelit felis dolor vitae  adipiscing elit felis dolor felis dolor vitae.
+									     Eelit felis dolor vitae
+										</h4>
+									   <a href="#about" class="btn btn-custom btn-two" >Explore Template</a>
+									 <a href="#email-subscribe" class="btn btn-custom btn-one" >Subscribe Right Now </a>
+								</div>	<div class="col-md-6 col-sm-6 col-xs-12">
+								<h1>Inicia sesión</h1>
+								<form role="form" id="form_userlogin">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="input_email"> Email </label>
+												<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required  value="jonatan10@gmail.com" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="input_password">	Contraseña </label>
+												<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required  value="foobar"/>
+											</div>
+										</div>
+									</div>
+									<input type="submit" class="btn btn-default" value="Iniciar sesión" form="form_userlogin" />
+								</form>
 
+								<h1>Registrate</h1>
+								<form role="form" id="form_userreg">
+									<div class="row">
+										<div class="col-md-8">
+											<div class="form-group">
+												<label for="input_email"> Email </label>
+												<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required value="jonatan@gmail.com" />
+											</div>
+										</div>
+										<div class="col-md-4"></div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="input_nombre"> Nombres </label>
+												<input class="form-control" name="firstName" id="input_nombre" type="text" placeholder="Nombre" required value="jonatan"/>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="input"> Apellidos </label>
+												<input class="form-control" name="lastName" id="input_apellido" type="text" placeholder="Apellido" required value="parra"/>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="input_password">	Contraseña </label>
+												<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required value="foobar" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="input_confirmation">	Confirmar contraseña </label>
+												<input class="form-control" name="password_confirmation" id="input_confirmation" type="password" placeholder="Confirmación de contraseña" required value="foobar"/>
+											</div>
+										</div>
+										</div>
+										<input type="submit" class="btn btn-default" value="Registrar" form="form_userreg" />
+										</form>
+									</div>
+							</div>
+
+
+					</div>
+			</div>
+
+	</div>
+	<!--HOME SECTION END  -->
+<!-- ABOUT SECTION START-->
+<section id="about">
+	 <div class="container">
+			 <div class="row">
+					 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							 <h2 class="head-line">What Worth Here & Why  ?</h2>
+							 <p >
+									Morbi mollis lectus et ipsum sollicitudin varius.
+										Aliquam tempus ante placerat, consectetur tellus nec, porttitor nulla.
+										Maecenas a quam erat. Praesent vehicula ut magna sit amet ultrices.
+							 </p>
+							 <div class="row text-center">
+					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							 <div class="row pad-bottom">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+												<div class="icon-wrapper">
+														 <i class="ion-tshirt-outline"></i>
+												</div>
+							 <h4>Responsive Design </h4>
+																	 Consectetur adipiscing elit felis dolor .
+
+					 </div>
+					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+							 <div class="icon-wrapper">
+							 <i class="ion-monitor"></i>
+									 </div>
+							 <h4>Awesome Features  </h4>
+																 Consectetur adipiscing elit felis dolor .
+
+					 </div>
+					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+							 <div class="icon-wrapper">
+							 <i class="ion-clipboard"></i>
+									 </div>
+							 <h4>Multipurpose Use</h4>
+							 Consectetur adipiscing elit felis dolor .
+					 </div>
+									 </div>
+
+			 </div>
+
+	 </div>
+
+					 </div>
+
+					 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+							 <img src="public/img/phone.png" class="img-side" alt="" />
+					 </div>
+			 </div>
+	 </div>
+</section>
+<!-- ABOUT SECTION END-->
+<!-- CLIENTS SECTION START-->
+<section id="clients">
+	 <div class="overlay">
+	 <div class="container">
+			 <div class="row text-center">
+					 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+					 </div>
+					 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  client-cover" >
+								<div id="carousel-example" class="carousel slide" data-ride="carousel">
+
+							 <div class="carousel-inner">
+									 <div class="item active">
+											 <div class="testimonial-section">
+											Pellentesque posuere malesuada venenatis.
+													 Donec laoreet dapibus nulla,
+														vitae feugiat metus aliquet sed.
+									 </div>
+									 <div class="testimonial-section-name">
+											 <img src="public/img/client1.jpg" alt="" class="img-circle" />
+											 -  Justine Goliyad
+									 </div>
+
+									 </div>
+									 <div class="item">
+											<div class="testimonial-section">
+												Pellentesque posuere malesuada venenatis.
+													 Donec laoreet dapibus nulla,
+														vitae feugiat metus aliquet sed.
+									 </div>
+									 <div class="testimonial-section-name">
+											 <img src="public/img/client2.jpg" alt="" class="img-circle" />
+											 -  Justine Goliyad
+									 </div>
+
+									 </div>
+									 <div class="item">
+										 <div class="testimonial-section">
+												Pellentesque posuere malesuada venenatis.
+													 Donec laoreet dapibus nulla,
+														vitae feugiat metus aliquet sed.
+									 </div>
+									 <div class="testimonial-section-name">
+											 <img src="public/img/client3.jpg" alt="" class="img-circle" />
+											 -  Justine Goliyad
+									 </div>
+
+									 </div>
+										<!--INDICATORS-->
+							 <ol class="carousel-indicators carousel-indicators-set">
+									 <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+									 <li data-target="#carousel-example" data-slide-to="1"></li>
+									 <li data-target="#carousel-example" data-slide-to="2"></li>
+							 </ol>
+
+							 </div>
+
+					 </div>
+					 </div>
+			 </div>
+
+	 </div>
+				</div>
+</section>
+<!-- CLIENTS SECTION END-->
+<!-- FEATURES SECTION START-->
+<section id="features">
+	 <div class="container">
+
+			 <div class="row text-center">
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+								<div class="icon-wrapper">
+
+
+								<i class="ion-chatboxes"></i>
+										 </div>
+							 <h4>Stable relaese  </h4>
+																 Consectetur adipiscing elit felis dolor .
+
+
+			 </div>
+					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 scroll-me">
+									<h2 class="head-line">Great Resource Found</h2>
+							 <p>
+									 Integer vehicula efficitur dictum. Integer pharetra venenatis enim non porta.
+
+							 </p>
+								<a href="#header" class="btn btn-custom btn-three" >Nothing To Hide Here</a>
+					 </div>
+					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<div class="icon-wrapper">
+							 <i class="ion-email-unread"></i>
+										</div>
+							 <h4>Stable relaese  </h4>
+																 Consectetur adipiscing elit felis dolor .
+
+			 </div>
+
+	 </div>
+</div>
+
+</section>
+<!-- FEATURES SECTION END-->
+<!-- CONTACT SECTION START-->
+<section id="contact">
+	 <div class="overlay">
+	 <div class="container">
+			 <div class="row text-center">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover" >
+								<h2>Physical Location</h2>
+								<h3>345, New Street ,</h3>
+								<h3>United States </h3>
+								<div class="space"> </div>
+								 <div class="social">
+									 <a href="#"><i class="fa fa-facebook "></i></a>
+									 <a href="#"><i class="fa fa-twitter"></i></a>
+									 <a href="#"><i class="fa fa-google-plus "></i></a>
+
+									 <a href="#"><i class="fa fa-linkedin "></i></a>
+							 </div>
+					 </div>
+
+
+			 </div>
+
+	 </div>
+				</div>
+</section>
+<!-- CONATCT SECTION END-->
+<!-- FOOTER SECTION START-->
+<footer>
+	 <div class="container">
+<div class="row text-center">
+<div class="col-lg-12 col-md-12 col-sm-12">
+												&copy; 2015 YourDomain.com | by <a href="http://www.designbootstrap.com/" target="_blank"> DesignBootstrap </a>
+										</div>
+
+</div>
+			 </div>
+</footer>
+<!-- FOOTER SECTION END-->
+
+</script>
 
 
 
@@ -133,6 +380,8 @@
 	<script src="public/js/vendor/menu_navegacion.js" type="text/javascript">	</script>
 	<script src="public/js/vendor/funciones_auxiliares.js" type="text/javascript">	</script>
 	<script src="public/js/vendor/backbonefire.min.js" type="text/javascript">	</script>
+	<script src="public/js/vendor/custom.js" type="text/javascript">	</script>
+
 
 	<!-- ========================-->
 	<!-- Logica de la aplicacion -->
@@ -143,14 +392,14 @@
 
 
 
-  <!-- ========================-->
-	<!--La idea es tener un vista por cada servicio, excepto que se tenga demasiado html  -->
-	<!-- ========================-->
+  <!-- ===========================================-->
+	<!--La idea es tener un vista por cada servicio -->
+	<!-- ===========================================-->
 
 	<!-- Servicio login -->
 	<script src="public/js/uwallet/models/userReg_model.js"></script>
 	<script src="public/js/uwallet/collections/userRegs_collection.js"></script>
-	<script src="public/js/uwallet/views/userReg_view.js"></script>
+	<!-- <script src="public/js/uwallet/views/userReg_view.js"></script> -->
 
 	<script src="public/js/uwallet/models/userLogin_model.js"></script>
 	<script src="public/js/uwallet/collections/userLogin_collection.js"></script>

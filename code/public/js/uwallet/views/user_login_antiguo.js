@@ -1,66 +1,43 @@
 var app = app || {};
 
 app.UserLogin_view = Backbone.View.extend({
-	el: '#div_registrar_usuario',
-	template:  _.template($('#tpl_login_register').html()),
+	el: '#div_login',
+	template:  '\
+		<br> <br> \
+		<form role="form" id="form_userlogin">\
+			<div class="row">\
+				<div class="col-md-6">\
+					<div class="form-group">\
+						<label for="input_email"> Email </label>\
+						<input class="form-control" name="email" id="input_email" type="email" placeholder="Email" required  value="jonatan10@gmail.com" />\
+					</div>\
+				</div>\
+				<div class="col-md-6">\
+					<div class="form-group">\
+						<label for="input_password">	Contraseña </label>\
+						<input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required  value="foobar"/>\
+					</div>\
+				</div>\
+			</div>\
+			<input type="submit" class="btn btn-default" value="Iniciar sesión" form="form_userlogin" />\
+		</form>\
+	',
 
 	events: {
-		'submit #form_userreg': 'crear_usuario',
 		'submit #form_userlogin': 'loguear_usuario'
+
+		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
 
 	initialize: function() {
-		console.log("Entro en userReg_view");
 		var self = this;
 		self.render();
 	},
 
 	render: function() {
 		this.$el.show();
+		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
 		this.$el.html(this.template);
-	},
-
-	crear_usuario: function(e){
-
-		var onDataHandler = function(collection, response, options) {
-		  if (options.xhr.status == 201){
-				self.mostrar_correcto_registro();
-				$('#form_userreg')[0].reset();
-			} else {
-				alert("Respuesta desconocida");
-				console.log(response.status + " - " + response.responseText);
-			}
-		};
-
-		var onErrorHandler = function(collection, response, options) {
-			if(response.status == 422) {
-				self.mostrar_email_ya_existe();
-			} else {
-				alert("Respuesta desconocida");
-				console.log(response.status + " - " + response.responseText);
-			}
-		};
-
-
-
-		var self = this; // Self se usa para poder hacer llamados a otras funciones de la view
-    e.preventDefault(); // Detiene la ejecución de redireccionamiento del formulario
-		user = objectifyForm( $('#form_userreg').serializeArray());  // Convierte todos los datos del formulario en un objeto
-		var nuevo_usuario = new app.Userreg_model({ user	}) // La variable  en este caso 'user' tiene que tener el mismo nombre que la primera pareja llave valor de postman
-    is_error = nuevo_usuario.validate(nuevo_usuario.attributes);
-		if (is_error) {
-			mostrar_errores_modelo(is_error);
-		} else {
-			model_errors = nuevo_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler });
-		}
-	},
-
-	mostrar_correcto_registro: function(errores){
-		mostrar_modal_generico('Creación de cuenta ', 'Gracias por registrarte en uwallet', 'Te hemos enviado un correo de verificación para terminar el proceso.', 'confirmacion.png'  );
-	},
-
-	mostrar_email_ya_existe: function(){
-		mostrar_modal_generico('Creación de cuenta ', 'Tenemos problemas', 'Este email ya existe en nuestra base de datos, intenta con otro.', 'fallo.png'  );
 	},
 
 	loguear_usuario: function(e){
@@ -121,8 +98,6 @@ app.UserLogin_view = Backbone.View.extend({
 	}
 
 });
-
-//var userreg_view = new app.Userreg_view();
 
 var userLogin_view = new app.UserLogin_view();
 var notificaciones_view;

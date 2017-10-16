@@ -11,6 +11,11 @@ h1, h2{
   width: 30%;
 }
 
+#form_userreg, #form_userlogin{
+  background-color: rgba(227, 227, 227, 0.39);
+  padding: 25px;
+}
+
 .item-dpp {
     display: table-cell;
     text-align: center;

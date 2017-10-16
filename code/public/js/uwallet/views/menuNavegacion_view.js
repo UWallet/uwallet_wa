@@ -2,7 +2,71 @@ var app = app || {};
 
 app.MenuNavegacion_view = Backbone.View.extend({
 	el: '#div_menu_navegacion',
-	template: _.template($('#tpl_menu_navegacion').html()),
+	template: '<!-- Template menu de navegación -->\
+	<!-- HEADER-->\
+	<header id="header">\
+							<div class="row"  >\
+									 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
+											 <img src="public/img/logo_uwallet.png" alt="" />\
+									 </div>\
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >\
+												<div class="menu-links scroll-me">\
+														<a href="#header"> <i class="ion-ios-home-outline"></i> </a>\
+												<a href="#about"> <i class="ion-ios-camera-outline"></i> </a>\
+												<a href="#clients"> <i class="ion-ios-grid-view-outline"></i> </a>\
+												<a href="#contact"> <i class="ion-ios-chatboxes-outline"></i> </a>\
+												</div>\
+							</div>\
+							</div>\
+	</header>\
+ 		<nav class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">\
+ 		  <div class="navbar-toggler animate">\
+ 		    <span class="menu-icon"></span>\
+ 		  </div>\
+ 		  <ul class="navbar-menu animate">\
+ 				<li>\
+ 		      <a class="animate" id="opc_inicio">\
+ 		        <span class="desc animate"> Inicio </span>\
+ 		        <i class="fa fa-home" arial-hidden="true"></i>\
+ 		      </a>\
+ 		    </li>\
+\
+ 		    <li>\
+ 		      <a class="animate" id="opc_notificaciones">\
+ 		        <span class="desc animate"> Notificaciones  </span>\
+ 		        <i class="fa fa-bell " arial-hidden="true"></i>\
+ 		      </a>\
+ 		    </li>\
+\
+ 		    <li>\
+ 		      <a class="animate" id="opc_lista_pagos">\
+ 		        <span class="desc animate"> lista de pagos</span>\
+ 		        <i class="fa fa-list-alt" arial-hidden="true"></i>\
+ 		      </a>\
+ 		    </li>\
+ 		    <li>\
+ 		      <a class="animate" id="opc_extractos">\
+ 		        <span class="desc animate"> Extractos</span>\
+ 		        <i class="fa fa-file-pdf-o" arial-hidden="true"></i>\
+ 		      </a>\
+ 		    </li>\
+ 		    <li>\
+ 		      <a class="animate" id="opc_mi_perfil">\
+ 		        <span class="desc animate"> Mi perfil</span>\
+ 		        <i class="fa fa-user-circle" arial-hidden="true"></i>\
+ 		      </a>\
+ 		    </li>\
+\
+ 		    <li>\
+ 		      <a class="animate" id="opc_cerrar_sesion">\
+ 		        <span class="desc animate"> Cerrar sesion </span>\
+ 		        <i class="fa fa-power-off" arial-hidden="true"></i>\
+ 		      </a>\
+ 		    </li>\
+ 		  </ul>\
+ 		</nav>\
+ 	<!-- Fin template menu de navegacion -->\
+',
 
 	events: {
     'click #opc_inicio': 'opc_inicio',
@@ -22,7 +86,7 @@ app.MenuNavegacion_view = Backbone.View.extend({
 
 	render: function() {
     this.$el.show();
-		this.$el.html(this.template()); // Como se importa desde el html, se usa la template como funcion
+		this.$el.html(this.template); // Como se importa desde el html, se usa la template como funcion
     iniciar_menu_navegacion();
 	},
 

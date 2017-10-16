@@ -4,7 +4,7 @@ app.Notification_model = Backbone.Model.extend({
 
   defaults: {
       id:"",
-      read:"",  
+      read:"",
       id_user: "",
       subject: "",
       content: "",
