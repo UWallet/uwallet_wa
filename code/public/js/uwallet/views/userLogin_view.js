@@ -34,14 +34,12 @@ app.UserLogin_view = Backbone.View.extend({
 
 		var onErrorHandler = function(collection, response, options) {
 			if(response.status == 422) {
-				self.mostrar_email_ya_existe();
+				self.mostrar_error_422_registro(response.responseText);
 			} else {
 				alert("Respuesta desconocida");
 				console.log(response.status + " - " + response.responseText);
 			}
 		};
-
-
 
 		var self = this; // Self se usa para poder hacer llamados a otras funciones de la view
     e.preventDefault(); // Detiene la ejecución de redireccionamiento del formulario
@@ -49,23 +47,13 @@ app.UserLogin_view = Backbone.View.extend({
 		var nuevo_usuario = new app.Userreg_model({ user	}) // La variable  en este caso 'user' tiene que tener el mismo nombre que la primera pareja llave valor de postman
     is_error = nuevo_usuario.validate(nuevo_usuario.attributes);
 		if (is_error) {
-			mostrar_errores_modelo(is_error);
+			mostrar_errores_modelo_2(is_error, "#form_userreg_error");
 		} else {
 			model_errors = nuevo_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler });
 		}
 	},
 
-	mostrar_correcto_registro: function(errores){
-		mostrar_modal_generico('Creación de cuenta ', 'Gracias por registrarte en uwallet', 'Te hemos enviado un correo de verificación para terminar el proceso.', 'confirmacion.png'  );
-	},
-
-	mostrar_email_ya_existe: function(){
-		mostrar_modal_generico('Creación de cuenta ', 'Tenemos problemas', 'Este email ya existe en nuestra base de datos, intenta con otro.', 'fallo.png'  );
-	},
-
 	loguear_usuario: function(e){
-
-		// Cuando funciona la peticion se buscan en 'options'
 		var onDataHandler = function(collection, response, options) {
 			if (options.xhr.status == 200){
 				token = JSON.parse(options.xhr.responseText).auth_token;
@@ -74,9 +62,8 @@ app.UserLogin_view = Backbone.View.extend({
 			 alert("Respuesta desconocida");
 			 console.log(response.status + " - " + response.responseText);
 		 }
-	};
+		};
 
-		// Cuando falla la peticion se buscan en 'response'
 		var onErrorHandler = function(collection, response, options) {
 			console.log("Entro en error handle");
 			if(response.status == 401) {
@@ -94,15 +81,13 @@ app.UserLogin_view = Backbone.View.extend({
 		var login_usuario = new app.Userlogin_model(user);
     is_error = login_usuario.validate(login_usuario.attributes);
 		if (is_error) {
-			mostrar_errores_modelo(is_error)
+			mostrar_errores_modelo_2(is_error, '#form_userlogin_error');
+			console.log("Error en atributos login");
 		} else {
 				login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
 		}
 	},
 
-	mostrar_error_login: function(errores){
-		mostrar_modal_generico('Login ', 'No fue posible iniciar sesión', 'El usuario y la contraseña no coinciden.', 'fallo.png'  );
-	},
 	loguear: function(token){
 		console.log("Entro en loguear");
 		sessionStorage.setItem('token', token);
@@ -114,6 +99,27 @@ app.UserLogin_view = Backbone.View.extend({
 		var menuInicio_view = new app.MenuInicio_view();
 		notificaciones_view = new app.Notificaciones_view();
 		console.log(sessionStorage.getItem("token"));
+	},
+
+	mostrar_error_login: function(errores){
+		$("#form_userlogin_error").empty();
+		$("#form_userlogin_error").fadeIn('slow');
+		$("#form_userlogin_error").append("<strong>"+ "El usuario y la contraseña no coinciden." + "</strong>");
+	},
+
+	mostrar_correcto_registro: function(errores){
+		$("#form_userreg_error").fadeOut('slow');
+		mostrar_modal_generico('Creación de cuenta ', 'Gracias por registrarte en uwallet', 'Te hemos enviado un correo de verificación para terminar el proceso.', 'confirmacion.png'  );
+	},
+
+	// Se podria genera un error 422 generico
+	mostrar_error_422_registro: function(error){
+		if (error.length == 36){
+			error = "Este email ya existe en nuestra base de datos, intenta con otro";
+		}
+		$("#form_userreg_error").empty();
+		$("#form_userreg_error").fadeIn('slow');
+		$("#form_userreg_error").append("<strong>"+ error + "</strong>");
 	},
 
 	verificar_token: function(){

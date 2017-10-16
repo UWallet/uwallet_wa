@@ -31,6 +31,24 @@ function mostrar_errores_modelo(errores){
 	mostrar_modal_generico('Error en el formulario', 'No es posible enviar tu formulario debido a que:', lista_errores, 'fallo.png' )
 }
 
+// Reemplaza a los modales de los errores del modelo para todos los modelos, necesita el ID del div donde se va a mostrar
+ function mostrar_errores_modelo_2 (error, id_div){
+	 codigo = armar_lista_errores_modelo(error);
+	 console.log(codigo);
+	 $(id_div).empty();
+	 $(id_div).fadeIn('slow');
+	 $(id_div).append(codigo);
+ };
+
+function armar_lista_errores_modelo(errores){
+	lista_errores = "<ul>";
+	for (var i = 0; i < errores.length; i++) {
+		lista_errores += "<li><strong>" + errores[i]['name'] + ":</strong> "+ errores[i]['message'] + "</li>"
+	}
+	lista_errores += "</ul>"
+	return lista_errores;
+}
+
 function mostrar_modal_generico(contenido_header, titulo, contenido, imagen){
 	// Limpiar el contenido del modal
 	$("#modal_generico_body").empty();
