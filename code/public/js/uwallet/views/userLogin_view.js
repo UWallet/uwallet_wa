@@ -110,7 +110,7 @@ app.UserLogin_view = Backbone.View.extend({
 		$("#div_registrar_usuario").hide();
 		$('#form_userlogin')[0].reset();
 
-		var menuNavegacion_view = new app.MenuNavegacion_view();
+		menuNavegacion_view.render();
 		var menuInicio_view = new app.MenuInicio_view();
 		notificaciones_view = new app.Notificaciones_view();
 		console.log(sessionStorage.getItem("token"));

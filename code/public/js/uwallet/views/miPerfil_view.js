@@ -139,12 +139,14 @@ app.MiPerfil_view = Backbone.View.extend({
 
 	initialize: function() {
 		var self = this;
-		self.render();
-		self.peticionusuario();
-		self.peticiontarjetas();
+		//self.render();
+
 	},
 
 	render: function() {
+		var self = this;
+		self.peticionusuario();  /// Las cambie aqui para poder cuadrar otras cosas en la barra de datos superior
+		self.peticiontarjetas();
 		this.$el.show();
 		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
 		this.$el.html(this.template);
@@ -153,6 +155,7 @@ app.MiPerfil_view = Backbone.View.extend({
 	peticionusuario: function(e){
 		// Cuando funciona la peticion se buscan en 'options'
 		var onDataHandler = function(collection, response, options) {
+			menuNavegacion_view.peticionusuario();  // Esta linea es mia es para actualizar los datos de la barra superior
 			if (options.xhr.status == 200){
 				usuario = JSON.parse(options.xhr.responseText);
 				$('#firstName').text(usuario.firstName);
@@ -404,26 +407,4 @@ app.MiPerfil_view = Backbone.View.extend({
 	}
 });
 
-//var noficaciones_view = new app.Noficaciones_view();
-/*
-'\
-        <form>\
-            <legend>Share the feedback</legend>\
-            <div class="control-group email">\
-                <label>Email</label>\
-                <input type="text" id="email" placeholder="Your email address...">\
-                <span class="help-inline"></span>\
-            </div>\
-            <div class="control-group website">\
-                <label>Web site</label>\
-                <input type="text" id="website" placeholder="Your website...">\
-                <span class="help-inline"></span>\
-            </div>\
-            <div class="control-group feedback">\
-                <label>Feedback</label>\
-                <textarea id="feedback" class="input-xxlarge" placeholder="Feedback text..." rows="6"></textarea>\
-                <span class="help-inline"></span>\
-            </div>\
-            <button type="submit" id="submit" class="btn">Submit</button>\
-        </form>\
-    '*/
+var miPerfil_view = new app.MiPerfil_view();

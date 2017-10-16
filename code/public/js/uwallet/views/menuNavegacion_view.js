@@ -11,10 +11,10 @@ app.MenuNavegacion_view = Backbone.View.extend({
 									 </div>\
 										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >\
 												<div class="menu-links scroll-me">\
-														<a href="#header"> <i class="ion-ios-home-outline"></i> </a>\
-												<a href="#about"> <i class="ion-ios-camera-outline"></i> </a>\
-												<a href="#clients"> <i class="ion-ios-grid-view-outline"></i> </a>\
-												<a href="#contact"> <i class="ion-ios-chatboxes-outline"></i> </a>\
+												<a id="firstName"> Nombre </a>\
+												<a id="money"> <i class="ion-ios-camera-outline"></i> </a>\
+												<!-- <a href="#clients"> <i class="ion-ios-grid-view-outline"></i> </a>\
+												<a href="#contact"> <i class="ion-ios-chatboxes-outline"></i> </a> -->\
 												</div>\
 							</div>\
 							</div>\
@@ -81,10 +81,13 @@ app.MenuNavegacion_view = Backbone.View.extend({
 
 	initialize: function() {
 		var self = this;
-		self.render();
+		//self.render();
+
 	},
 
 	render: function() {
+		var self = this;
+		self.peticionusuario();
     this.$el.show();
 		this.$el.html(this.template); // Como se importa desde el html, se usa la template como funcion
     iniciar_menu_navegacion();
@@ -125,7 +128,8 @@ app.MenuNavegacion_view = Backbone.View.extend({
   opc_mi_perfil: function(){
 		var self = this;
 		self.ocultar_menus();
-		var miPerfil_view = new app.MiPerfil_view();
+		//var miPerfil_view = new app.MiPerfil_view();
+		miPerfil_view.render();
 		$('#div_menu_mi_perfil').show('slow');
   },
 
@@ -142,8 +146,55 @@ app.MenuNavegacion_view = Backbone.View.extend({
 		$('#div_menu_extractos').hide('slow');
 		$('#div_menu_mi_perfil').hide('slow');
 		$('#div_menu_inicio').hide('slow');
+	},
+
+	peticionusuario: function(e){
+
+		var onDataHandler = function(collection, response, options) {
+			if (options.xhr.status == 200){
+				usuario = JSON.parse(options.xhr.responseText);
+				name = usuario.firstName + " "+ usuario.lastName;
+				$('#firstName').text(name);
+				//$('#lastName').text(usuario.lastName);
+				//$('#email').text(usuario.email);
+				money = "$" + usuario.money.toLocaleString();
+				$('#money').text("");
+				$('#money').text(money);
+				var cuenta='';
+				for (var i = 0; i < 8 - ((usuario.id.toString()).length); i++){
+					cuenta+='0';
+				}
+				cuenta+=(usuario.id.toString());
+				$('#cuenta').text(cuenta);
+				userid = usuario.id;
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+	};
+
+		var onErrorHandler = function(collection, response, options) {
+			console.log("Entro en error handle");
+			if(response.status == 401) {
+				//
+			} else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + response.responseText);
+			}
+		};
+		console.log("Entro en profile");
+
+		var self = this;
+		var perfil = new app.Profile_model();
+		perfil.fetch({
+      headers: {
+        'Authorization': sessionStorage.getItem("token")
+      },success: onDataHandler,
+					error: onErrorHandler
+    });
 	}
+
 
 });
 
-//var menuNavegacion_view = new app.MenuNavegacion_view();
+var menuNavegacion_view = new app.MenuNavegacion_view();

@@ -201,6 +201,7 @@ app.MenuInicio_view = Backbone.View.extend({
 	},
 	mostrar_correcto_transaccion: function(errores){
 		var self = this;
+		menuNavegacion_view.peticionusuario();  // Esta linea es mia es para actualizar los datos de la barra superior
 		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
 	},
 
