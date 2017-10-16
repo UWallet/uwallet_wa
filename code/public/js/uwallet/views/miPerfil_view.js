@@ -1,4 +1,5 @@
 var app = app || {};
+var idcard;
 app.MiPerfil_view = Backbone.View.extend({
 	el: '#div_menu_mi_perfil',
 	//template: _.template($('#tpl_mi_perfil').html()),
@@ -8,6 +9,9 @@ app.MiPerfil_view = Backbone.View.extend({
 			<div class="personal-state">\
 				<div class="user_name_and_online">\
 					<span class="user_name" id="firstName"></span><span class="user_name"> </span><span class="user_name" id="lastName"></span><br>\
+				</div>\
+				<div class="one-info">\
+					<span class="span-state">Cuenta: <span class="span-state-2"  id="cuenta"></span></span>\
 				</div>\
 				<div class="one-info">\
 					<span class="span-state">Email: <span class="span-state-2"  id="email"></span></span>\
@@ -92,13 +96,44 @@ app.MiPerfil_view = Backbone.View.extend({
  </div>\
 </div>\
 <!-- Fin modal de  modal error_transaccion .-->\
+\
+<!-- inicio modal de  modal load money from card .-->\
+<div class="modal fade" id="modal_load" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+<div class="modal-dialog">\
+<div class="modal-content">\
+ <div class="modal-header">\
+	 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+	 <h4 class="modal-title text-center" id="myModalLabel"> <strong>Agregar Dinero a cuenta</strong> </h4>\
+ </div>\
+ \
+ <div class="modal-body">\
+	 <h2 class="text-center">Monto</h2>\
+ </div>\
+ <form role="form" id="form_load">\
+	 <div class="form-group">\
+		 <label for="input_monto"> Monto a cargar: </label>\
+		 <input class="form-control" name="money" id="input_monto" type="number" placeholder="Monto" required value="500"  />\
+	 </div>\
+	 <div id="div_btn_transaccion_1">\
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+		<input type="submit" class="btn btn-default" form="form_load" value="Agregar dinero">\
+	 </div>\
+ </form>\
+ <div class="modal-footer">\
+	<h4> Una frase chevere :v  </h4>\
+ </div>\
+</div>\
+</div>\
+</div>\
 	',
 
 	events: {
 		'click #create_card': 'modal_card',
 		'click #btn_reintentar_agregar_card': 'modal_card',
 		'submit #form_card': 'create_card',
-		'click .borrar-tarjeta': 'funcion_eliminar'
+		'click .borrar-tarjeta': 'funcion_eliminar',
+		'click .saldo': 'funcion_saldo',
+		'submit #form_load': 'funcion_load',
 		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
 	},
 
@@ -123,7 +158,13 @@ app.MiPerfil_view = Backbone.View.extend({
 				$('#firstName').text(usuario.firstName);
 				$('#lastName').text(usuario.lastName);
 				$('#email').text(usuario.email);
-				$('#money').text(usuario.money);
+				$('#money').text(usuario.money.toLocaleString());
+				var cuenta='';
+				for (var i = 0; i < 8 - ((usuario.id.toString()).length); i++){
+					cuenta+='0';
+				}
+				cuenta+=(usuario.id.toString());
+				$('#cuenta').text(cuenta);
 				userid = usuario.id;
 		 } else {
 			 alert("Respuesta desconocida");
@@ -161,7 +202,7 @@ app.MiPerfil_view = Backbone.View.extend({
 				tarjetas = JSON.parse(options.xhr.responseText);
 				console.log(tarjetas[0])
 				for (var i = 0; i < tarjetas.length; i++){
-						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td><button type='button' class='borrar-tarjeta btn btn-danger' id='"+tarjetas[i].id +"'>Peligro</button></td></tr>");
+						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td><button type='button' class='saldo btn btn-primary' id='"+tarjetas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+tarjetas[i].id +"'>Eliminar</button></td></tr>");
 				}
 
 		 } else {
@@ -260,12 +301,9 @@ app.MiPerfil_view = Backbone.View.extend({
 		 };
 		 // Cuando falla la peticion se buscan en 'response'
  		var onErrorHandler = function(collection, response, options) {
- 			console.log("Entro en error handle");
-			console.log(response);
-			console.log(response.status);
-			console.log(options);
  			if(response.status == 200) {
-				console.log(" Aqui puede llamar a la funcion para que renderice la tabla.");
+				self.peticiontarjetas();
+				mostrar_modal_generico('Eliminar Tarjeta ', 'Se ha eliminado la tarjeta de tu cuenta.', 'Ya no podras usar esta tarjeta con UWallet.', 'confirmacion.png'  );
  			} else {
  				alert("Respuesta desconocida");
  				console.log(response.status + " - " + response.responseText);
@@ -286,6 +324,54 @@ app.MiPerfil_view = Backbone.View.extend({
  					error: onErrorHandler
      });
 		 console.log(au);
+	},
+
+	funcion_saldo(e){
+		var self = this;
+		$('#modal_load').modal('show');
+		idcard=e.target.id;
+		console.log(idcard);
+	},
+
+	funcion_load(e){
+		var self = this;
+		// Cuando falla la peticion se buscan en 'response'
+		var onErrorHandler = function(collection, response, options) {
+			if (options.xhr.status == 201){
+				self.peticionusuario();
+				self.peticiontarjetas();
+				mostrar_modal_generico('Agregar Saldo a cuenta', 'Se agrego saldo a tu cuenta.', 'Ya puedes disfrutar de los beneficios de usar UWallet.', 'confirmacion.png'  );
+		  } else if(response.status == 400) {
+				self.mostrar_error_400();
+			}	else if(response.status == 422) {
+	 			self.mostrar_error_422(response.responseJSON);
+				console.log(response.responseJSON);
+			} else {
+				alert("Respuesta desconocida");
+				console.log(response.status + " - " + response.responseText);
+			}
+		};
+
+		e.preventDefault();
+		console.log("entro a agregar saldo");
+		var card = $('#form_load').serializeArray();
+		card.push({name: "cardId", value: idcard})
+
+		var card2 = new app.Cards_load_model(objectifyForm(card));
+    is_error = card2.validate(card2.attributes);
+		console.log(card2);
+		$('#modal_load').modal('hide');
+		console.log(is_error);
+		if (is_error) {
+			mostrar_errores_modelo(is_error)
+		} else {
+				//login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
+				card2.save({},{
+		      headers: {
+		        'Authorization': sessionStorage.getItem("token")
+		      },error: onErrorHandler
+		    });
+			}
 	},
 
 	mostrar_error_400: function(errores){
