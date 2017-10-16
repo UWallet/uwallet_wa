@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.Notification_model = Backbone.Model.extend({
-
+  autoSync: true,
   defaults: {
       id:"",
       read:"",

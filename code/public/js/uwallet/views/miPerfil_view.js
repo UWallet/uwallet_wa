@@ -205,7 +205,7 @@ app.MiPerfil_view = Backbone.View.extend({
 				tarjetas = JSON.parse(options.xhr.responseText);
 				console.log(tarjetas[0])
 				for (var i = 0; i < tarjetas.length; i++){
-						$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td><button type='button' class='saldo btn btn-primary' id='"+tarjetas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+tarjetas[i].id +"'>Eliminar</button></td></tr>");
+							$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td><button type='button' class='saldo btn btn-primary' id='"+tarjetas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+tarjetas[i].id +"'>Eliminar</button></td></tr>");
 				}
 
 		 } else {

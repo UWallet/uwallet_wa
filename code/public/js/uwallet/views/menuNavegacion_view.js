@@ -135,7 +135,7 @@ app.MenuNavegacion_view = Backbone.View.extend({
 
   opc_cerrar_sesion: function(){
 		//sessionStorage.setItem('token', '');
-		sessionStorage.clear();
+		 sessionStorage.clear();
 		 location.reload(true);
   },
 
@@ -167,6 +167,10 @@ app.MenuNavegacion_view = Backbone.View.extend({
 				cuenta+=(usuario.id.toString());
 				$('#cuenta').text(cuenta);
 				userid = usuario.id;
+
+				sessionStorage.setItem('id_user', usuario.id.toString());
+
+
 		 } else {
 			 alert("Respuesta desconocida");
 			 console.log(response.status + " - " + response.responseText);

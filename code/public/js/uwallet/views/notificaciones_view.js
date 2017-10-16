@@ -12,37 +12,54 @@ var TodoView = Backbone.View.extend({
 
 app.Notificaciones_view = Backbone.View.extend({
 	el: '#div_menu_notificaciones',
-	template: _.template("<%= attributes.content %>"),
+  template: '\
+  	<h1> Notificaciones </h1>\
+  	<table class="flat-table" >\
+      <tr>\
+        <th>Asunto</th>  <th>Contenido</th>  <th>Estado</th>\
+      </tr>\
+  	<tbody id="tbl_notificaciones">\
+  	</tbody>\
+  	</table>\
+  ',
 
 	events: {
 		'click .ver_notificacion': 'put_notificacion'
-
-		// añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
-	},
+  },
 
 	initialize: function() {
 		console.log("initialize de menuNotificaciones_view");
-		this.listenTo(app.notifications_collection, "change", this.render);
-		console.log(app.notifications_collection.models);
-
-		//a3 = new app.Notification_model(app.notifications.models);
-		//console.log(a3);
-
-
-
 		var self = this;
-		//self.render();
-		//self.iniciar_notificaciones_firebase;
+    //this.$el.hide()
+    //this.$el.html(this.template);
+
 	},
+
+  consola_simple(){
+    console.log("Entro en consola simple");
+  },
 
 	render: function() {
-		//console.log("renderizando menuNotificaciones_view");
-		//this.$el.show();
-		//this.$el.html(this.template);
-		//a = new NotificationCollection();
-		this.$el.html(this.template(app.notifications_collection.models.toJSON()));
-    return this;
+    this.$el.show()
+    this.$el.html(this.template);
+    var self = this;
+    self.pintar_notificacion()
 	},
+
+  pintar_notificacion: function(){
+  //  console.log("Entro en pintar_notificacion", notificacion);
+    for (var i = 0; i < arreglo_notificaciones.length; i++){
+      notificacion = arreglo_notificaciones[i];
+      $("#tbl_notificaciones").append("<tr><td>"+ notificacion.subject +"</td>  <td> $"+ notificacion.content +
+                  "</td><td><button type='button' class='saldo btn btn-primary' id='"+notificacion.id +"'>Leer</button></td></tr>");
+    }
+  },
+
+ nueva_notificacion: function(notificacion){
+    arreglo_notificaciones.push(notificacion);
+    var self = this;
+    self.pintar_notificacion();
+  },
 
 	put_notificacion: function(e){
 		var self = this;
@@ -78,7 +95,7 @@ app.Notificaciones_view = Backbone.View.extend({
 	}
 
 });
-
+var arreglo_notificaciones = [];
 //var noficaciones_view = new app.Noficaciones_view();
 
 /*
