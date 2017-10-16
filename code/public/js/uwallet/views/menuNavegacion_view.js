@@ -40,7 +40,7 @@ app.MenuNavegacion_view = Backbone.View.extend({
   opc_notificaciones: function(){
 		var self = this;
 		self.ocultar_menus();
-		var notificaciones_view = new app.Notificaciones_view();
+		notificaciones_view.render();
 		$('#div_menu_notificaciones').show('slow');
   },
 

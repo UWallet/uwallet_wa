@@ -1,10 +1,18 @@
 var app = app || {};
 
+var TodoView = Backbone.View.extend({
+  initialize: function() {
+    this.listenTo(this.model, "change", this.render);
+  },
+  render: function() {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  },
+});
+
 app.Notificaciones_view = Backbone.View.extend({
 	el: '#div_menu_notificaciones',
-	template: '\
-		<h1> Notificaciones </h1>\
-	',
+	template: _.template("<%= attributes.content %>"),
 
 	events: {
 		'click .ver_notificacion': 'put_notificacion'
@@ -14,14 +22,26 @@ app.Notificaciones_view = Backbone.View.extend({
 
 	initialize: function() {
 		console.log("initialize de menuNotificaciones_view");
+		this.listenTo(app.notifications_collection, "change", this.render);
+		console.log(app.notifications_collection.models);
+
+		//a3 = new app.Notification_model(app.notifications.models);
+		//console.log(a3);
+
+
+
 		var self = this;
-		self.render();
+		//self.render();
+		//self.iniciar_notificaciones_firebase;
 	},
 
 	render: function() {
-		console.log("renderizando menuNotificaciones_view");
-		this.$el.show();
-		this.$el.html(this.template);
+		//console.log("renderizando menuNotificaciones_view");
+		//this.$el.show();
+		//this.$el.html(this.template);
+		//a = new NotificationCollection();
+		this.$el.html(this.template(app.notifications_collection.models.toJSON()));
+    return this;
 	},
 
 	put_notificacion: function(e){
@@ -60,3 +80,15 @@ app.Notificaciones_view = Backbone.View.extend({
 });
 
 //var noficaciones_view = new app.Noficaciones_view();
+
+/*
+
+template: '\
+	<h1> Notificaciones </h1>\
+	<table class="flat-table" id="tarjetas">\
+	<tbody>\
+	</tbody>\
+	</table>\
+',
+
+*/

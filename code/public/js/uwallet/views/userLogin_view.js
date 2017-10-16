@@ -89,6 +89,7 @@ app.UserLogin_view = Backbone.View.extend({
 
 		var menuNavegacion_view = new app.MenuNavegacion_view();
 		var menuInicio_view = new app.MenuInicio_view();
+		notificaciones_view = new app.Notificaciones_view();
 		console.log(sessionStorage.getItem("token"));
 	},
 
@@ -99,3 +100,4 @@ app.UserLogin_view = Backbone.View.extend({
 });
 
 var userLogin_view = new app.UserLogin_view();
+var notificaciones_view;
