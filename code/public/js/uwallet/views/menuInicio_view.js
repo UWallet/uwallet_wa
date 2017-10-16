@@ -1,5 +1,4 @@
 var app = app || {};
-
 app.MenuInicio_view = Backbone.View.extend({
 	el: '#div_menu_inicio',
 	template: '\
@@ -153,16 +152,38 @@ app.MenuInicio_view = Backbone.View.extend({
 	},
 
 	opc_enviar_dinero: function(e){
+		var onDataHandler = function(collection, response, options) {
+			if (options.xhr.status == 200){
+				var transaccion2 = new app.Transaction_model(transaccion1);
+		    is_error = transaccion2.validate(transaccion2.attributes);
+				$('#modal_aceptacion').modal('hide');
+				if (is_error) {
+					mostrar_errores_modelo(is_error)
+				} else {
+						//login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
+						transaccion2.save({},{
+				      headers: {
+				        'Authorization': sessionStorage.getItem("token")
+				      },error: onErrorHandler
+				    });
+					}
+		 } else {
+			 alert("Respuesta desconocida");
+			 console.log(response.status + " - " + response.responseText);
+		 }
+		 };
 
 		// Cuando falla la peticion se buscan en 'response'
 		var onErrorHandler = function(collection, response, options) {
-			if (options.xhr.status == 201){
+			if(response.status == 401){
+				self.mostrar_error_401();
+			}else if (options.xhr.status == 201){
 				self.mostrar_correcto_transaccion();
 		 }else if(response.status == 400) {
 				self.mostrar_error_400();
 			} else if(response.status == 404){
 				self.mostrar_error_404();
-			}else {
+			}else{
 				alert("Respuesta desconocida");
 				console.log(response.status + " - " + response.responseText);
 			}
@@ -177,27 +198,27 @@ app.MenuInicio_view = Backbone.View.extend({
 		transaccion1 = objectifyForm( $('#form_transaction').serializeArray());  // Convierte todos los datos del formulario en un objeto
 		$('#form_transaction')[0].reset();
 
-		console.log(transaccion1);
-
-		var transaccion2 = new app.Transaction_model(transaccion1);
-    is_error = transaccion2.validate(transaccion2.attributes);
-		$('#modal_aceptacion').modal('hide');
-		console.log(is_error);
-		if (is_error) {
-			mostrar_errores_modelo(is_error)
+		var verify = new app.Userverify_model({password: transaccion1.password});
+		is_error2 = verify.validate(verify.attributes);
+		if (is_error2) {
+			mostrar_errores_modelo(is_error2)
 		} else {
-				//login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
-				transaccion2.save({},{
-		      headers: {
-		        'Authorization': sessionStorage.getItem("token")
-		      },error: onErrorHandler
-		    });
-			}
+			verify.save({},{
+				headers: {
+					'Authorization': sessionStorage.getItem("token")
+				},success: onDataHandler,
+  					error: onErrorHandler
+			});
+		}
 	},
 
 	mostrar_error_400: function(errores){
 		var self = this;
 		this.mostrar_modal_error_transaccion('Transacción ', 'No es posible hacer la transacción', 'No tienes suficiente saldo.', 'fallo.png'  );
+	},
+	mostrar_error_401: function(errores){
+		var self = this;
+		this.mostrar_modal_error_transaccion('Transacción ', 'No es posible hacer la transacción', 'Es necesario poner tu contraseña.', 'fallo.png'  );
 	},
 	mostrar_correcto_transaccion: function(errores){
 		var self = this;
