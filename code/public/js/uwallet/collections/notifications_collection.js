@@ -9,5 +9,8 @@ var Notification_collection = Backbone.Firebase.Collection.extend({
 app.notifications_collection = new Notification_collection();
 
 app.notifications_collection.on('sync', function(collection) {
-  console.log('collection is loaded', collection);
+  console.log('collection is loaded', collection.models);
+  for(i in collection.models){
+    console.log(collection.models[i].attributes.content);
+  }
 });
