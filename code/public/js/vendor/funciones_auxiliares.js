@@ -63,3 +63,26 @@ function mostrar_modal_generico(contenido_header, titulo, contenido, imagen){
 	$('#modal_generico_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
 
 }
+
+
+var numeros="0123456789";
+
+function tiene_numeros(texto){
+   for(i=0; i<texto.length; i++){
+      if (numeros.indexOf(texto.charAt(i),0)!=-1){
+         return 1;
+      }
+   }
+   return 0;
+}
+
+var letras_mayusculas="ABCDEFGHYJKLMNÑOPQRSTUVWXYZ";
+
+function tiene_mayusculas(texto){
+   for(i=0; i<texto.length; i++){
+      if (letras_mayusculas.indexOf(texto.charAt(i),0)!=-1){
+         return 1;
+      }
+   }
+   return 0;
+} 

@@ -24,6 +24,7 @@ app.UserLogin_view = Backbone.View.extend({
 
 		var onDataHandler = function(collection, response, options) {
 		  if (options.xhr.status == 201){
+				console.log("Entro en registrar correctamente");
 				self.mostrar_correcto_registro();
 				$('#form_userreg')[0].reset();
 			} else {
@@ -33,6 +34,7 @@ app.UserLogin_view = Backbone.View.extend({
 		};
 
 		var onErrorHandler = function(collection, response, options) {
+			console.log("Entro en onErrorHandlers");
 			if(response.status == 422) {
 				self.mostrar_error_422_registro(response.responseText);
 			} else {

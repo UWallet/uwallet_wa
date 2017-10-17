@@ -22,6 +22,12 @@ app.Userreg_model = Backbone.Model.extend({
       errors.push({name: 'Contraseña', message: 'Es necesario que esté el campo contraseña'});
     } else if (attrs.user.password != attrs.user.password_confirmation){
       errors.push({name: 'Las contraseñas no coincide', message: 'Es necesario que las contraseñas coincidan'});
+    } else if (attrs.user.password.length < 8){
+      errors.push({name: 'Contraseña', message: 'Es necesario que la contraseña tenga al menos 8 caracteres'});
+    } else if (!tiene_numeros( attrs.user.password   ) ){
+      errors.push({name: 'Contraseña', message: 'Es necesario que la contraseña tenga al menos un número'});
+    } else if (!tiene_mayusculas( attrs.user.password   ) ){
+      errors.push({name: 'Contraseña', message: 'Es necesario que la contraseña tenga al menos una letra mayúscula'});
     }
     return errors.length > 0 ? errors : false;
   },

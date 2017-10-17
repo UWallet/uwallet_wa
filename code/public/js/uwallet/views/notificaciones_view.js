@@ -82,7 +82,7 @@ app.Notificaciones_view = Backbone.View.extend({
   		  "hideMethod": "fadeOut"
   		}
   	}
-    self.put_notificacion(notificacion);
+    //self.put_notificacion(notificacion);
   },
 
 	put_notificacion: function(notificacion){
