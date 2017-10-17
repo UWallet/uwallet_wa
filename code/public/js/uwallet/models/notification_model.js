@@ -1,7 +1,9 @@
 var app = app || {};
 
 app.Notification_model = Backbone.Model.extend({
-  autoSync: true,
+  url: function(){
+    return 'http://192.168.99.101:4000/notifications/' + this.get('id');
+  },
   defaults: {
       id:"",
       read:"",

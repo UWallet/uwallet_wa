@@ -57,6 +57,7 @@ app.Notificaciones_view = Backbone.View.extend({
   },
 
  nueva_notificacion: function(notificacion){
+    menuNavegacion_view.peticionusuario();  // Esta linea es mia es para actualizar los datos de la barra superior
     arreglo_notificaciones.push(notificacion);
     var self = this;
     self.pintar_notificacion();
@@ -81,18 +82,14 @@ app.Notificaciones_view = Backbone.View.extend({
   		  "hideMethod": "fadeOut"
   		}
   	}
+    self.put_notificacion(notificacion);
   },
 
-	put_notificacion: function(e){
-		var self = this;
-    e.preventDefault();
-		user = objectifyForm( $('#form_userlogin').serializeArray());  // Convierte todos los datos del formulario en un objeto
-		var login_usuario = new app.Userlogin_model(user);
-    is_error = login_usuario.validate(login_usuario.attributes);
-		if (is_error) {
-			mostrar_errores_modelo(is_error)
-		} else {
-      login_usuario.save({}, {
+	put_notificacion: function(notificacion){
+		var notificacion_put = new app.Notification_model(notificacion);
+    console.log(notificacion_put);
+
+      notificacion_put.save({}, {
 				dataType: 'text',
 				success: function (model, respuesta, options) {
 						token = respuesta.substr(15,147);
@@ -109,7 +106,6 @@ app.Notificaciones_view = Backbone.View.extend({
 					}
 			   }
 			});
-		}
 	},
 
 	mostrar_error_login: function(errores){
