@@ -18,7 +18,7 @@ app.notifications_collection.on('sync', function(collection) {
 
 app.notifications_collection.on('add', function(collection) {
   if (collection.attributes.id_user == sessionStorage.getItem("id_user")){
-    console.log("Nueva notificacion");
+  //  console.log("Nueva notificacion");
     //console.log(collection.attributes);
     notificaciones_view.nueva_notificacion(collection.attributes);
   }

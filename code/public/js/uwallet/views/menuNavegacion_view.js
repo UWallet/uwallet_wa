@@ -112,6 +112,7 @@ app.MenuNavegacion_view = Backbone.View.extend({
   },
 
   opc_lista_pagos: function(){
+		console.log("Opcion lista de pagos");
 		var self = this;
 		self.ocultar_menus();
 		var listaPagos_view = new app.ListaPagos_view();

@@ -48,9 +48,10 @@ app.Notificaciones_view = Backbone.View.extend({
 
   pintar_notificacion: function(){
   //  console.log("Entro en pintar_notificacion", notificacion);
+    $("#tbl_notificaciones").html("");
     for (var i = 0; i < arreglo_notificaciones.length; i++){
       notificacion = arreglo_notificaciones[i];
-      $("#tbl_notificaciones").append("<tr><td>"+ notificacion.subject +"</td>  <td> $"+ notificacion.content +
+      $("#tbl_notificaciones").append("<tr><td>"+ notificacion.subject +"</td>  <td>"+ notificacion.content +
                   "</td><td><button type='button' class='saldo btn btn-primary' id='"+notificacion.id +"'>Leer</button></td></tr>");
     }
   },
@@ -59,6 +60,27 @@ app.Notificaciones_view = Backbone.View.extend({
     arreglo_notificaciones.push(notificacion);
     var self = this;
     self.pintar_notificacion();
+  //  toastr.info('Are you the 6 fingered man?');
+  	if (notificacion.delivered == false){
+    	Command: toastr["success"](notificacion.content, notificacion.subject)
+  		toastr.options = {
+  		  "closeButton": true,
+  		  "debug": true,
+  		  "newestOnTop": true,
+  		  "progressBar": true,
+  		  "positionClass": "toast-top-right",
+  		  "preventDuplicates": false,
+  		  "onclick": null,
+  		  "showDuration": "300",
+  		  "hideDuration": "1000",
+  		  "timeOut": "5000",
+  		  "extendedTimeOut": "1000",
+  		  "showEasing": "swing",
+  		  "hideEasing": "linear",
+  		  "showMethod": "fadeIn",
+  		  "hideMethod": "fadeOut"
+  		}
+  	}
   },
 
 	put_notificacion: function(e){
