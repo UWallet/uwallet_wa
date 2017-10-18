@@ -78,6 +78,7 @@ app.ListaPagos_view = Backbone.View.extend({
         'click #create_pago': 'modal_pago',
         'click #btn_reintentar_agregar_pago': 'modal_pago',
         'submit #form_pago': 'create_pago',
+        'click .borrar-pago': 'eliminar_pago',
         // añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
     },
     initialize: function() {
@@ -99,7 +100,7 @@ app.ListaPagos_view = Backbone.View.extend({
                 $("#deudas").append("<tr><th>Acreedor</th><th>Descripción</th><th>Monto</th><th>Fecha</th><th>Operaciones</th>/tr>");
                 deudas = JSON.parse(options.xhr.responseText);
                 for (var i = 0; i < deudas.length; i++){
-                  $("#deudas").append("<tr><td>"+ deudas[i].target_account +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay+"</td></tr>");
+                  $("#deudas").append("<tr><td>"+ deudas[i].target_account +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay+"</td><td><button type='button' class='editar-pago btn btn-primary' id='"+deudas[i].id +"'>Actualizar</button><button type='button' class='borrar-pago btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
                         // +"</td><td><button type='button' class='saldo btn btn-primary' id='"+deudas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
                 }
          } else {
@@ -150,9 +151,8 @@ app.ListaPagos_view = Backbone.View.extend({
  		e.preventDefault();
  		console.log("entro a crear pago");
  		var pago = $('#form_pago').serializeArray();
- 		pago.push({name: "user_id", value: sessionStorage.getItem("id_user")});
     pago.push({name: "state_pay", value: "no"}); //editar cuando jimmy cambie esta mierda
- 		var pago2 = new app.Lists_model(objectifyForm(pago));
+ 		var pago2 = new app.Listscreate_model(objectifyForm(pago));
      is_error = pago2.validate(pago2.attributes);
  		$('#modal_pagos').modal('hide');
  		console.log(is_error);
@@ -167,6 +167,30 @@ app.ListaPagos_view = Backbone.View.extend({
  		    });
  			}
  	},
+
+  eliminar_pago: function(e){
+		 // Cuando falla la peticion se buscan en 'response'
+ 		var onErrorHandler = function(collection, response, options) {
+ 			if(response.status == 200) {
+				self.peticiondeudas();
+				mostrar_modal_generico('Eliminar pago pendiente', 'Se ha eliminado este pago de tu cuenta.', 'Ya no podras ver este pago.', 'confirmacion.png'  );
+ 			} else {
+ 				alert("Respuesta desconocida");
+ 				console.log(response.status + " - " + response.responseText);
+ 			}
+ 		};
+		var self = this;
+		console.log(e.target.id);
+		var listadel = new app.Listdelete_model({id: e.target.id}); //{id: e.target.id}
+	//thisDeal.destroy({data: { program_id: dealProgram.id }, processData: true})
+ 		listadel.destroy({
+			 //data: { id2: e.target.id },
+			 // processData: true,
+       headers: {
+         'Authorization': sessionStorage.getItem("token")
+       },error: onErrorHandler
+     });
+	},
 
    modal_pago: function(){
     var date = new Date();

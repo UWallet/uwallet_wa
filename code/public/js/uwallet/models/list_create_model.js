@@ -1,6 +1,6 @@
 var app = app || {};
-app.Lists_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/lists/by_user',
+app.Listscreate_model = Backbone.Model.extend({
+  urlRoot: 'http://192.168.99.101:4000/lists',
   validate: function (attrs) {
     var errors = [];
     //Validación cantidad de atributos = 5
@@ -19,7 +19,7 @@ app.Lists_model = Backbone.Model.extend({
     if (!attrs.target_account) {
       errors.push({name: 'Acreedor', message: 'Es necesario que esté el campo del usuario acreedor.'});    }
     //Validacion de campo de estado
-    if (!attrs.state) {
+    if (!attrs.state_pay) {
       errors.push({name: 'Estado', message: 'Es necesario que esté el campo del estado de la deuda.'});    }
     return errors.length > 0 ? errors : false;
   },
