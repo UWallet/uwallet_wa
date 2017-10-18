@@ -53,7 +53,7 @@
 
 	.navbar-minimal.open > .navbar-toggler,
 	.navbar-minimal > .navbar-toggler:hover {
-		background-color: rgb(158, 202, 59);
+		background-color: #16315b;
 	}
 
 	.navbar-minimal > .navbar-toggler > span {
@@ -112,7 +112,7 @@
 		border-bottom-width: 0px;
 	}
 	.navbar-minimal > .navbar-menu > li > a:hover {
-		background-color: rgb(158, 202, 59);
+		background-color: #049DBF;
 	}
 	.navbar-minimal > .navbar-menu > li > a > .glyphicon {
 		float: right;

@@ -165,11 +165,7 @@ app.MiPerfil_view = Backbone.View.extend({
 				$('.userEmail').text(usuario.email);
 				money = "$" + usuario.money.toLocaleString();
 				$('.userMoney').text(money);
-				var cuenta='';
-				for (var i = 0; i < 8 - ((usuario.id.toString()).length); i++){
-					cuenta+='0';
-				}
-				cuenta+=(usuario.id.toString());
+				cuenta = self.formato_cuenta(usuario.id);
 				$('.userCuenta').text(cuenta);
 				sessionStorage.setItem('id_user', usuario.id.toString());
 		 } else {
@@ -197,6 +193,14 @@ app.MiPerfil_view = Backbone.View.extend({
       },success: onDataHandler,
 					error: onErrorHandler
     });
+	},
+	formato_cuenta: function(id){
+		var cuenta='';
+		for (var i = 0; i < 8 - ((id.toString()).length); i++){
+			cuenta+='0';
+		}
+		cuenta+=(id.toString());
+		return cuenta;
 	},
 
 	peticiontarjetas: function(e){
