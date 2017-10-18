@@ -4,8 +4,10 @@ app.MiPerfil_view = Backbone.View.extend({
 	el: '#div_menu_mi_perfil',
 	//template: _.template($('#tpl_mi_perfil').html()),
 	template: '\
+	<div class="col-md-12" align="center">\
 		<h1> Mi perfil </h1>\
-		<div class="item-dpp">\
+		</div>\
+		<div class="item-dpp col-sm-6" align="center">\
 			<div class="personal-state">\
 				<div class="user_name_and_online">\
 					<span class="userName user_name"></span><br>\
@@ -22,9 +24,11 @@ app.MiPerfil_view = Backbone.View.extend({
 			</div>\
 		</div>\
 	</div>\
-	<h2> Mis tarjetas </h2>\
-	<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
-	<table class="flat-table" id="tarjetas">\
+	<div class="col-md-12" align="center">\
+		<h1> Mis tarjetas </h1>\
+			<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
+		</div>\
+	<table class="flat-table col-md-12" id="tarjetas" align="center">\
   <tbody>\
   </tbody>\
 	</table>\
@@ -156,7 +160,7 @@ app.MiPerfil_view = Backbone.View.extend({
 		var onDataHandler = function(collection, response, options) {
 			if (options.xhr.status == 200){
 				usuario = JSON.parse(options.xhr.responseText);
-				name = usuario.firstName + "" + usuario.lastName
+				name = usuario.firstName + " " + usuario.lastName
 				$('.userName').text(name);
 				$('.userEmail').text(usuario.email);
 				money = "$" + usuario.money.toLocaleString();
