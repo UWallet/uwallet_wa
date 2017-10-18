@@ -57,7 +57,7 @@ app.Notificaciones_view = Backbone.View.extend({
   },
 
  nueva_notificacion: function(notificacion){
-    menuNavegacion_view.peticionusuario();  // Esta linea es mia es para actualizar los datos de la barra superior
+   miPerfil_view.peticionusuario();
     arreglo_notificaciones.push(notificacion);
     var self = this;
     self.pintar_notificacion();

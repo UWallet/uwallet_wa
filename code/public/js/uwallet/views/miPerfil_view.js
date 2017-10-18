@@ -8,16 +8,16 @@ app.MiPerfil_view = Backbone.View.extend({
 		<div class="item-dpp">\
 			<div class="personal-state">\
 				<div class="user_name_and_online">\
-					<span class="user_name" id="firstName"></span><span class="user_name"> </span><span class="user_name" id="lastName"></span><br>\
+					<span class="userName user_name"></span><br>\
 				</div>\
 				<div class="one-info">\
-					<span class="span-state">Cuenta: <span class="span-state-2"  id="cuenta"></span></span>\
+					<span class="span-state">Cuenta: <span class="userCuenta span-state-2"></span></span>\
 				</div>\
 				<div class="one-info">\
-					<span class="span-state">Email: <span class="span-state-2"  id="email"></span></span>\
+					<span class="span-state">Email: <span class="userEmail span-state-2"></span></span>\
 				</div>\
 				<div class="one-info">\
-					<span class="span-state">Dinero: $<span class="span-state-2" id="money"></span></span>\
+					<span class="span-state">Dinero: <span class="userMoney span-state-2"></span></span>\
 				</div>\
 			</div>\
 		</div>\
@@ -145,30 +145,29 @@ app.MiPerfil_view = Backbone.View.extend({
 
 	render: function() {
 		var self = this;
-		self.peticionusuario();  /// Las cambie aqui para poder cuadrar otras cosas en la barra de datos superior
+		self.peticionusuario();
 		self.peticiontarjetas();
 		this.$el.show();
-		//this.$el.html(this.template());  // Se usaba cuando el template se importaba desde el html
 		this.$el.html(this.template);
 	},
 
 	peticionusuario: function(e){
 		// Cuando funciona la peticion se buscan en 'options'
 		var onDataHandler = function(collection, response, options) {
-			menuNavegacion_view.peticionusuario();  // Esta linea es mia es para actualizar los datos de la barra superior
 			if (options.xhr.status == 200){
 				usuario = JSON.parse(options.xhr.responseText);
-				$('#firstName').text(usuario.firstName);
-				$('#lastName').text(usuario.lastName);
-				$('#email').text(usuario.email);
-				$('#money').text(usuario.money.toLocaleString());
+				name = usuario.firstName + "" + usuario.lastName
+				$('.userName').text(name);
+				$('.userEmail').text(usuario.email);
+				money = "$" + usuario.money.toLocaleString();
+				$('.userMoney').text(money);
 				var cuenta='';
 				for (var i = 0; i < 8 - ((usuario.id.toString()).length); i++){
 					cuenta+='0';
 				}
 				cuenta+=(usuario.id.toString());
-				$('#cuenta').text(cuenta);
-				userid = usuario.id;
+				$('.userCuenta').text(cuenta);
+				sessionStorage.setItem('id_user', usuario.id.toString());
 		 } else {
 			 alert("Respuesta desconocida");
 			 console.log(response.status + " - " + response.responseText);

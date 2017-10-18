@@ -30,11 +30,11 @@ app.MenuInicio_view = Backbone.View.extend({
 			 <form role="form" id="form_transaction">\
 				 <div class="form-group">\
 					 <label for="input_email"> Monto: </label>\
-					 <input class="form-control" name="amount" min="1" id="input_amount" type="number" placeholder="Monto a enviar" required value="100"/>\
+					 <input class="form-control" name="amount" min="1" id="input_amount" type="number" placeholder="Monto a enviar" required/>\
 				 </div>\
 				 <div class="form-group">\
 					 <label for="input_email"> Cuenta: </label>\
-					 <input class="form-control" name="userid" id="input_userid" type="number" placeholder="Cuenta a enviar" required value="2"/>\
+					 <input class="form-control" name="userid" id="input_userid" type="number" placeholder="Cuenta a enviar" required/>\
 				 </div>\
 				  <div id="div_mensaje_campos_incompletos" class="alert alert-danger" style="display:none">\
 						<p> Llene los campos requeridos</p>\
@@ -197,6 +197,7 @@ app.MenuInicio_view = Backbone.View.extend({
 
 		transaccion1 = objectifyForm( $('#form_transaction').serializeArray());  // Convierte todos los datos del formulario en un objeto
 		$('#form_transaction')[0].reset();
+		console.log(transaccion1);
 
 		var verify = new app.Userverify_model({password: transaccion1.password});
 		is_error2 = verify.validate(verify.attributes);
@@ -222,7 +223,8 @@ app.MenuInicio_view = Backbone.View.extend({
 	},
 	mostrar_correcto_transaccion: function(errores){
 		var self = this;
-		menuNavegacion_view.peticionusuario();  // Esta linea es mia es para actualizar los datos de la barra superior
+		var miPerfil_view = new app.MiPerfil_view();
+		miPerfil_view.peticionusuario();
 		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
 	},
 
