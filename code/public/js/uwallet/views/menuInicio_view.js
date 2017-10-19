@@ -78,6 +78,40 @@ app.MenuInicio_view = Backbone.View.extend({
  </div>\
 </div>\
 <!-- Fin modal de  modal error_transaccion .-->\
+<!-- Inicio modal de  modal extracts .-->\
+<div class="modal fade" id="modal_extractos" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+<div class="modal-dialog">\
+<div class="modal-content">\
+ <div class="modal-header">\
+	 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+	 <h4 class="modal-title text-center" id="myModalLabel"> <strong>Generar extracto</strong> </h4>\
+ </div>\
+ \
+ <div class="modal-body">\
+	 <h2 class="text-center">Extracto</h2>\
+ </div>\
+ <form role="form" id="form_extracto">\
+ <div class="form-group">\
+	 <label for="input_date"> Fecha de inicio: </label>\
+	 <input name="date_initial" id="input_date1" type="date">\
+ </div>\
+ <div class="form-group">\
+	 <label for="input_date"> Fecha final: </label>\
+	 <input name="date_final" id="input_date2" type="date">\
+ </div>\
+	 <div id="div_btn_pago">\
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+		<input type="submit" class="btn btn-default" form="form_extracto" value="Generar">\
+	 </div>\
+ </form>\
+ <div class="modal-footer">\
+	<h4> Una frase chevere :v  </h4>\
+ </div>\
+</div>\
+</div>\
+</div>\
+<!-- Final modal de  modal extracts .-->\
+\
 	',
 
 	events: {
@@ -86,10 +120,11 @@ app.MenuInicio_view = Backbone.View.extend({
 		'click #btn_aceptar_valores': 'pedir_contraseña',
 		'click #btn_cancelar_valores': 'liberar_campos',
 		'click #div_iniciar_transaccion': 'mostrar_modal_transaccion',
+		'click #div_ir_extractos': 'mostrar_modal_extractos',
 		'click #btn_reintentar_transaccion': 'mostrar_modal_transaccion',
 		'submit #form_transaction': 'opc_enviar_dinero',
-		'click #div_ir_lista_pagos': 'opc_lista_pagos1',
-		'click #div_ir_extractos': 'opc_extractos1'
+		'submit #form_extracto': 'generar_extracto',
+		'click #div_ir_lista_pagos': 'opc_lista_pagos1'
 
   //  'click #': '',
 	},
@@ -113,6 +148,19 @@ app.MenuInicio_view = Backbone.View.extend({
 		$('#modal_aceptacion').modal('show');
 		$('#form_transaction input[name=password]').val("");
 		//$('#modal_error_transaccion').modal('show');
+	},
+	mostrar_modal_extractos: function(){
+		var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+    var today = year + "-" + month + "-" + day;
+    document.getElementById("input_date1").value = today;
+		document.getElementById("input_date2").value = today;
+		$('#modal_error_extracto').modal('hide');
+		$('#modal_extractos').modal('show');
 	},
 
 	pedir_contraseña: function(){
@@ -196,11 +244,11 @@ app.MenuInicio_view = Backbone.View.extend({
 		$('#form_transaction input[name=amount]').removeAttr("disabled");
 
 		transaccion1 = objectifyForm( $('#form_transaction').serializeArray());  // Convierte todos los datos del formulario en un objeto
-		$('#form_transaction')[0].reset();
 		console.log(transaccion1);
 
 		var verify = new app.Userverify_model({password: transaccion1.password});
 		is_error2 = verify.validate(verify.attributes);
+		$('#form_transaction')[0].reset();
 		if (is_error2) {
 			mostrar_errores_modelo(is_error2)
 		} else {
@@ -212,6 +260,51 @@ app.MenuInicio_view = Backbone.View.extend({
 			});
 		}
 	},
+
+	generar_extracto: function(e){
+			var onDataHandler = function(collection, response, options) {
+					if (options.xhr.status == 204){
+						console.log("puto");
+						//
+			 } else {
+					 alert("Respuesta desconocida");
+					 console.log(response.status + " - " + response.responseText);
+			 }
+			 };
+			 // Cuando falla la peticion se buscan en 'response'
+			 var onErrorHandler = function(collection, response, options) {
+					 console.log("Entro en error handle");
+					 if(response.status == 500) {
+							 console.log("Error 500¿? - en extractos.fetch ");
+							console.log(response);
+					 } else {
+							 alert("Respuesta desconocida");
+							 console.log(response.status + " - " + response.responseText);
+					 }
+			 };
+			 e.preventDefault();
+			 console.log("Entro en deudas");
+			 extracto = objectifyForm( $('#form_extracto').serializeArray());
+			 var dateinitial = new Date(extracto.date_initial);
+			 var datefinal = new Date(extracto.date_final);
+			 dateinitial.setDate(dateinitial.getDate() + 1);
+			 datefinal.setDate(datefinal.getDate() + 1);
+			 console.log(dateinitial<=datefinal);
+			 var d_0 = dateinitial.getDate();
+			 var m_0 = dateinitial.getMonth()+1;
+			 var a_0 = dateinitial.getFullYear();
+			 var d_1 = datefinal.getDate();
+			 var m_1 = datefinal.getMonth()+1;
+			 var a_1 = datefinal.getFullYear();
+			 var self = this;
+			 var extracto1 = new app.Extracto_model({d_0: d_0, m_0 : m_0, a_0: a_0,d_1: d_1, m_1 : m_1, a_1: a_1});
+			 extracto1.fetch({
+				 headers: {
+					 'Authorization': sessionStorage.getItem("token")
+				 },success: onDataHandler,
+											 error: onErrorHandler
+			 });
+ },
 
 	mostrar_error_400: function(errores){
 		var self = this;
