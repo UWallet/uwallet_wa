@@ -99,6 +99,10 @@ app.MenuInicio_view = Backbone.View.extend({
 	 <label for="input_date"> Fecha final: </label>\
 	 <input name="date_final" id="input_date2" type="date">\
  </div>\
+ <div class="form-group">\
+ <label for="input_date"> Extracto de todos los tiempos: </label>\
+ <button type="button" class="btn btn-success" id="generar_todos_extractos">Generar</button>\
+ </div>\
 	 <div id="div_btn_pago">\
 		<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
 		<input type="submit" class="btn btn-default" form="form_extracto" value="Generar">\
@@ -112,6 +116,25 @@ app.MenuInicio_view = Backbone.View.extend({
 </div>\
 <!-- Final modal de  modal extracts .-->\
 \
+<!-- Inicio de modal error_extracto -->\
+<div class="modal fade" id="modal_error_extracto" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+ <div class="modal-dialog">\
+   <div class="modal-content">\
+     <div class="modal-header">\
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+       <h4 class="modal-title text-center" id="modal_error_extracto_header"> </h4>\
+     </div>\
+\
+     <div class="modal-body" id="modal_error_extracto_body"> sin contenido</div>\
+\
+     <div class="modal-footer">\
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+			  <button type="button" class="btn btn-default" id="btn_reintentar_extracto">Reintentar</button>\
+     </div>\
+   </div>\
+ </div>\
+</div>\
+<!-- Fin modal de  modal error_transaccion .-->\
 	',
 
 	events: {
@@ -121,6 +144,8 @@ app.MenuInicio_view = Backbone.View.extend({
 		'click #btn_cancelar_valores': 'liberar_campos',
 		'click #div_iniciar_transaccion': 'mostrar_modal_transaccion',
 		'click #div_ir_extractos': 'mostrar_modal_extractos',
+		'click #btn_reintentar_extracto': 'mostrar_modal_extractos',
+		'click #generar_todos_extractos': 'generar_all',
 		'click #btn_reintentar_transaccion': 'mostrar_modal_transaccion',
 		'submit #form_transaction': 'opc_enviar_dinero',
 		'submit #form_extracto': 'generar_extracto',
@@ -264,8 +289,8 @@ app.MenuInicio_view = Backbone.View.extend({
 	generar_extracto: function(e){
 			var onDataHandler = function(collection, response, options) {
 					if (options.xhr.status == 204){
-						console.log("puto");
-						//
+						$('#modal_extractos').modal('hide');
+						mostrar_modal_generico('Generar extracto ', 'Extracto generado.', 'Un pdf con los extractos indicados a sido enviado a tu correo.', 'confirmacion.png'  );
 			 } else {
 					 alert("Respuesta desconocida");
 					 console.log(response.status + " - " + response.responseText);
@@ -283,6 +308,7 @@ app.MenuInicio_view = Backbone.View.extend({
 					 }
 			 };
 			 e.preventDefault();
+			 var self = this;
 			 console.log("Entro en deudas");
 			 extracto = objectifyForm( $('#form_extracto').serializeArray());
 			 var dateinitial = new Date(extracto.date_initial);
@@ -290,20 +316,60 @@ app.MenuInicio_view = Backbone.View.extend({
 			 dateinitial.setDate(dateinitial.getDate() + 1);
 			 datefinal.setDate(datefinal.getDate() + 1);
 			 console.log(dateinitial<=datefinal);
-			 var d_0 = dateinitial.getDate();
-			 var m_0 = dateinitial.getMonth()+1;
-			 var a_0 = dateinitial.getFullYear();
-			 var d_1 = datefinal.getDate();
-			 var m_1 = datefinal.getMonth()+1;
-			 var a_1 = datefinal.getFullYear();
-			 var self = this;
-			 var extracto1 = new app.Extracto_model({d_0: d_0, m_0 : m_0, a_0: a_0,d_1: d_1, m_1 : m_1, a_1: a_1});
-			 extracto1.fetch({
-				 headers: {
-					 'Authorization': sessionStorage.getItem("token")
-				 },success: onDataHandler,
-											 error: onErrorHandler
-			 });
+			 if(dateinitial<=datefinal){
+				 var d_0 = dateinitial.getDate();
+				 var m_0 = dateinitial.getMonth()+1;
+				 var a_0 = dateinitial.getFullYear();
+				 var d_1 = datefinal.getDate();
+				 var m_1 = datefinal.getMonth()+1;
+				 var a_1 = datefinal.getFullYear();
+				 var self = this;
+				 var extracto1 = new app.Extracto_model({d_0: d_0, m_0 : m_0, a_0: a_0,d_1: d_1, m_1 : m_1, a_1: a_1});
+				 extracto1.fetch({
+					 headers: {
+						 'Authorization': sessionStorage.getItem("token")
+					 },success: onDataHandler,
+												 error: onErrorHandler
+				 });
+			 }else{
+				 self.mostrar_error_dates();
+			 }
+ },
+ generar_all: function(e){
+		 var onDataHandler = function(collection, response, options) {
+				 if (options.xhr.status == 204){
+					 $('#modal_extractos').modal('hide');
+					 mostrar_modal_generico('Generar extracto ', 'Extracto generado.', 'Un pdf con todos tus extractos a sido enviado a tu correo.', 'confirmacion.png'  );
+			} else {
+					alert("Respuesta desconocida");
+					console.log(response.status + " - " + response.responseText);
+			}
+			};
+			// Cuando falla la peticion se buscan en 'response'
+			var onErrorHandler = function(collection, response, options) {
+					console.log("Entro en error handle");
+					if(response.status == 500) {
+							console.log("Error 500¿? - en extractos.fetch ");
+						 console.log(response);
+					} else {
+							alert("Respuesta desconocida");
+							console.log(response.status + " - " + response.responseText);
+					}
+			};
+			e.preventDefault();
+			var self = this;
+			console.log("Entro en deudas");
+			var extracto1 = new app.Extractoall_model();
+			extracto1.fetch({
+				headers: {
+					'Authorization': sessionStorage.getItem("token")
+				},success: onDataHandler,
+											error: onErrorHandler
+			});
+},
+ mostrar_error_dates: function(errores){
+	 var self = this;
+	 this.mostrar_modal_error_extracto('Extracto ', 'No es posible generar el extracto', 'La fecha inicial es mayor a la inicial', 'fallo.png'  );
  },
 
 	mostrar_error_400: function(errores){
@@ -332,6 +398,20 @@ app.MenuInicio_view = Backbone.View.extend({
 	  $('#modal_error_transaccion_body').append("<h1>"+ titulo+ "</h1>")
 	  $('#modal_error_transaccion_body').append("<h3>" + contenido + "</h3>")
 	  $('#modal_error_transaccion_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
+
+	},
+
+	mostrar_modal_error_extracto: function(contenido_header, titulo, contenido, imagen){
+	  // Limpiar el contenido del modal
+	  $("#modal_error_extracto_body").empty();
+	  $("#modal_error_extracto_header").empty();
+
+	  $('#modal_error_extracto').modal('show');   // Muestra el modal
+	  // Mostrar contenido
+	  $("#modal_error_extracto_header").append("<strong>"+ contenido_header + "</strong>");
+	  $('#modal_error_extracto_body').append("<h1>"+ titulo+ "</h1>")
+	  $('#modal_error_extracto_body').append("<h3>" + contenido + "</h3>")
+	  $('#modal_error_extracto_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
 
 	}
 
