@@ -59,7 +59,7 @@ function mostrar_modal_generico(contenido_header, titulo, contenido, imagen){
 	// Mostrar contenido
 	$("#modal_generico_header").append("<strong>"+ contenido_header + "</strong>");
 	$('#modal_generico_body').append("<h1>"+ titulo+ "</h1>")
-	$('#modal_generico_body').append("<h3>" + contenido + "</h3>")
+	$('#modal_generico_body').append("<center><h3>" + contenido + "</h3></center>")
 	$('#modal_generico_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
 
 }
@@ -85,4 +85,4 @@ function tiene_mayusculas(texto){
       }
    }
    return 0;
-} 
+}

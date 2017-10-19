@@ -47,7 +47,7 @@ app.ListaPagos_view = Backbone.View.extend({
       		 </div>\
       	 </form>\
       	 <div class="modal-footer">\
-      		<h4> Una frase chevere :v  </h4>\
+      		<h4> UWallet  </h4>\
       	 </div>\
        </div>\
       </div>\

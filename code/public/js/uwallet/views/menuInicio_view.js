@@ -54,7 +54,7 @@ app.MenuInicio_view = Backbone.View.extend({
 			 </form>\
      </div>\
      <div class="modal-footer">\
-		 	<h4> Una frase chevere :v  </h4>\
+		 	<h4> UWallet </h4>\
      </div>\
    </div>\
  </div>\
@@ -89,7 +89,6 @@ app.MenuInicio_view = Backbone.View.extend({
  \
  <div class="modal-body">\
 	 <h2 class="text-center">Extracto</h2>\
- </div>\
  <form role="form" id="form_extracto">\
  <div class="form-group">\
 	 <label for="input_date"> Fecha de inicio: </label>\
@@ -109,7 +108,7 @@ app.MenuInicio_view = Backbone.View.extend({
 	 </div>\
  </form>\
  <div class="modal-footer">\
-	<h4> Una frase chevere :v  </h4>\
+	<h4> UWallet </h4>\
  </div>\
 </div>\
 </div>\

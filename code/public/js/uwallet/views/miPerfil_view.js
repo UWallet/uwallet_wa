@@ -7,7 +7,7 @@ app.MiPerfil_view = Backbone.View.extend({
 	<div class="col-md-12" align="center">\
 		<h1> Mi perfil </h1>\
 		</div>\
-		<div class="item-dpp col-sm-6" align="center">\
+		<div class="item-dpp col-sm-5" align="center">\
 			<div class="personal-state">\
 				<div class="user_name_and_online">\
 					<span class="userName user_name"></span><br>\
@@ -76,7 +76,7 @@ app.MiPerfil_view = Backbone.View.extend({
 		 </div>\
 	 </form>\
 	 <div class="modal-footer">\
-		<h4> Una frase chevere :v  </h4>\
+		<h4> UWallet  </h4>\
 	 </div>\
  </div>\
 </div>\
@@ -124,7 +124,7 @@ app.MiPerfil_view = Backbone.View.extend({
 	 </div>\
  </form>\
  <div class="modal-footer">\
-	<h4> Una frase chevere :v  </h4>\
+	<h4> UWallet  </h4>\
  </div>\
 </div>\
 </div>\

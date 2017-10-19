@@ -6,7 +6,9 @@ app.MenuNavegacion_view = Backbone.View.extend({
 	<!-- HEADER-->\
 	<header id="header">\
 							<div class="row"  >\
-									 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
+									 <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
+									 </div>\
+									 <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
 											 <img src="public/img/logo_uwallet.png" alt="" />\
 									 </div>\
 										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >\
@@ -42,12 +44,6 @@ app.MenuNavegacion_view = Backbone.View.extend({
  		      <a class="animate" id="opc_lista_pagos">\
  		        <span class="desc animate"> lista de pagos</span>\
  		        <i class="fa fa-list-alt" arial-hidden="true"></i>\
- 		      </a>\
- 		    </li>\
- 		    <li>\
- 		      <a class="animate" id="opc_extractos">\
- 		        <span class="desc animate"> Extractos</span>\
- 		        <i class="fa fa-file-pdf-o" arial-hidden="true"></i>\
  		      </a>\
  		    </li>\
  		    <li>\
