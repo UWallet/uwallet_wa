@@ -53,7 +53,7 @@ app.ListaPagos_view = Backbone.View.extend({
       </div>\
       </div>\
       \
-      <!-- Inicio de modal error_card. -->\
+      <!-- Inicio de modal error_pago. -->\
       <div class="modal fade" id="modal_error_pago" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
        <div class="modal-dialog">\
          <div class="modal-content">\
@@ -71,7 +71,7 @@ app.ListaPagos_view = Backbone.View.extend({
          </div>\
        </div>\
       </div>\
-      <!-- Fin modal de  modal error_card .-->\
+      <!-- Fin modal de  modal error_pago.-->\
     ',
     events: {
         'click #btn_cualquiera': 'funcion1111',
@@ -138,11 +138,9 @@ app.ListaPagos_view = Backbone.View.extend({
  			if (options.xhr.status == 201){
  				self.peticiondeudas();
  				mostrar_modal_generico('Agregar Pago Pendiente', 'Se agrego este pago.', 'Ya tienes este pago disponible en Lista de pagos', 'confirmacion.png'  );
- 		  } else if(response.status == 400) {
- 				//self.mostrar_error_400();
- 			}	else if(response.status == 422) {
- 	 			//self.mostrar_error_422(response.responseJSON);
- 			} else {
+ 		  } else if(response.status == 404) {
+ 				self.mostrar_error_404();
+ 			}	else {
  				alert("Respuesta desconocida");
  				console.log(response.status + " - " + response.responseText);
  			}
@@ -204,7 +202,24 @@ app.ListaPagos_view = Backbone.View.extend({
 
  		$('#modal_error_pago').modal('hide');
  		$('#modal_pagos').modal('show');
- 	}
+ 	},
+  mostrar_error_404: function(errores){
+		var self = this;
+		this.mostrar_modal_error_pago('Agregar Pago Pendiente', 'No es posible agregar pago no existe el acreedor.'," ", 'fallo.png'  );
+	},
+	mostrar_modal_error_pago: function(contenido_header, titulo, contenido, imagen){
+	  // Limpiar el contenido del modal
+	  $("#modal_error_pago_body").empty();
+	  $("#modal_error_pago_header").empty();
+
+	  $('#modal_error_pago').modal('show');   // Muestra el modal
+	  // Mostrar contenido
+	  $("#modal_error_pago_header").append("<strong>"+ contenido_header + "</strong>");
+	  $('#modal_error_pago_body').append("<h1>"+ titulo+ "</h1>")
+	  $('#modal_error_pago_body').append("<h3>" + contenido + "</h3>")
+	  $('#modal_error_pago_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
+
+	}
 
 });
 //var listaPagos_view = new app.ListaPagos_view();
