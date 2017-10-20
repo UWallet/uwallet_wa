@@ -144,7 +144,7 @@ app.ListaPagos_view = Backbone.View.extend({
   	 					 <input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required value="foobar"/>\
   	 				 </div>\
   					   <input type="submit" class="btn btn-default" value="Enviar" form="form_pagar" />\
-  						 <button type="button" class="btn btn-default" id="btn_cancelar_valores">Atrás</button>\
+  						 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
   					</div>\
   			 </form>\
        <div class="modal-footer">\
