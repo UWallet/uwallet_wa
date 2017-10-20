@@ -10,7 +10,6 @@ app.UserLogin_view = Backbone.View.extend({
 	},
 
 	initialize: function() {
-		console.log("Entro en userReg_view");
 		var self = this;
 		self.render();
 	},
@@ -24,7 +23,6 @@ app.UserLogin_view = Backbone.View.extend({
 
 		var onDataHandler = function(collection, response, options) {
 		  if (options.xhr.status == 201){
-				console.log("Entro en registrar correctamente");
 				self.mostrar_correcto_registro();
 				$('#form_userreg')[0].reset();
 			} else {
@@ -34,7 +32,6 @@ app.UserLogin_view = Backbone.View.extend({
 		};
 
 		var onErrorHandler = function(collection, response, options) {
-			console.log("Entro en onErrorHandlers");
 			if(response.status == 422) {
 				self.mostrar_error_422_registro(response.responseText);
 			} else {
@@ -67,7 +64,6 @@ app.UserLogin_view = Backbone.View.extend({
 		};
 
 		var onErrorHandler = function(collection, response, options) {
-			console.log("Entro en error handle");
 			if(response.status == 401) {
 				$('#form_userlogin input[name=password]').val("");
 				self.mostrar_error_login();
@@ -84,14 +80,12 @@ app.UserLogin_view = Backbone.View.extend({
     is_error = login_usuario.validate(login_usuario.attributes);
 		if (is_error) {
 			mostrar_errores_modelo_2(is_error, '#form_userlogin_error');
-			console.log("Error en atributos login");
 		} else {
 				login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
 		}
 	},
 
 	loguear: function(token){
-		console.log("Entro en loguear");
 		sessionStorage.setItem('token', token);
 		$("#div_login").hide();
 		$("#div_registrar_usuario").hide();
@@ -125,7 +119,6 @@ app.UserLogin_view = Backbone.View.extend({
 	},
 
 	verificar_token: function(){
-		console.log("Entro en verificar token");
 	}
 
 });

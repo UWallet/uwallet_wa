@@ -89,7 +89,7 @@ app.ListaPagos_view = Backbone.View.extend({
         </div>\
       </form>\
       <div class="modal-footer">\
-       <h4> Una frase chevere :v  </h4>\
+       <h4> UWallet  </h4>\
       </div>\
     </div>\
    </div>\
@@ -114,19 +114,79 @@ app.ListaPagos_view = Backbone.View.extend({
        </div>\
       </div>\
       <!-- Fin modal de  modal error_pago.-->\
+      \
+      \
+      <!-- Inicio modal de  modal pagar.-->\
+      <div class="modal fade" id="modal_pagar" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+   <div class="modal-dialog">\
+     <div class="modal-content">\
+       <div class="modal-header">\
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+         <h4 class="modal-title text-center" id="myModalLabel"> <strong>Transacción - Pago de deudas</strong> </h4>\
+       </div>\
+  		 \
+       <div class="modal-body">\
+         <h2 class="text-center">Envío de dinero por pago de deuda</h2>\
+  			 <form role="form" id="form_pagar">\
+  				 <div class="form-group">\
+  					 <label for="input_email"> Monto de deuda: </label>\
+  					 <input class="form-control" name="amount" min="1" id="input_amount" type="number" placeholder="Monto a enviar" required/>\
+  				 </div>\
+  				 <div class="form-group">\
+  					 <label for="input_email"> Cuenta objetivo: </label>\
+  					 <input class="form-control" name="userid" id="input_userid" type="number" placeholder="Cuenta a enviar" required/>\
+  				 </div>\
+  				  <div id="div_mensaje_campos_incompletos" class="alert alert-danger" style="display:none">\
+  						<p> Llene los campos requeridos</p>\
+  					</div>\
+  					 <div class="form-group">\
+  	 					 <label for="input_password"> Contraseña: </label>\
+  	 					 <input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required value="foobar"/>\
+  	 				 </div>\
+  					   <input type="submit" class="btn btn-default" value="Enviar" form="form_pagar" />\
+  						 <button type="button" class="btn btn-default" id="btn_cancelar_valores">Atrás</button>\
+  					</div>\
+  			 </form>\
+       <div class="modal-footer">\
+  		 	<h4> UWallet </h4>\
+       </div>\
+     </div>\
+   </div>\
+  </div>\
+  <!-- Inicio de modal error_transaccion. -->\
+  <div class="modal fade" id="modal_error_transaccion1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+   <div class="modal-dialog">\
+     <div class="modal-content">\
+       <div class="modal-header">\
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+         <h4 class="modal-title text-center" id="modal_error_transaccion1_header"> </h4>\
+       </div>\
+  \
+       <div class="modal-body" id="modal_error_transaccion1_body"> sin contenido</div>\
+  \
+       <div class="modal-footer">\
+         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+  			  <button type="button" class="btn btn-default" id="btn_reintentar_transaccion1">Reintentar</button>\
+       </div>\
+     </div>\
+   </div>\
+  </div>\
+  <!-- Fin modal de  modal error_transaccion .-->\
     ',
     events: {
         'click #create_pago': 'modal_pago',
         'click #btn_reintentar_agregar_pago': 'modal_pago',
         'submit #form_pago': 'create_pago',
+        'submit #form_pagar': 'hacer_pago',
         'submit #form_pago_edicion': 'actualizar_pago',
         'click .borrar-pago': 'eliminar_pago',
+        'click .pagar-pago': 'modal_pagar_pago',
+        'click #btn_reintentar_transaccion1': 'modal_pagar_pago',
          'click .editar-pago' : 'modal_edicion_pago'
         // añadir headers https://stackoverflow.com/questions/38796670/backbone-js-setting-header-for-get-request
     },
 
     initialize: function() {
-			console.log("iniciando lista de pagos");
         var self = this;
 				self.render();
     },
@@ -145,7 +205,7 @@ app.ListaPagos_view = Backbone.View.extend({
               $("#deudas").append("<tr><th>Acreedor</th><th>Descripción</th><th>Monto</th><th>Fecha</th><th>Operaciones</th>/tr>");
               deudas = JSON.parse(options.xhr.responseText);
               for (var i = 0; i < deudas.length; i++){
-                $("#deudas").append("<tr><td>"+ miPerfil_view.formato_cuenta(deudas[i].target_account) +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay+"</td><td><button type='button' class='editar-pago btn btn-primary' id='"+deudas[i].id +"'>Actualizar</button><button type='button' class='borrar-pago btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
+                $("#deudas").append("<tr><td>"+ miPerfil_view.formato_cuenta(deudas[i].target_account) +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay+"</td><td><button type='button' class='pagar-pago btn btn-info' id='"+deudas[i].id +"'>Pagar</button><button type='button' class='editar-pago btn btn-primary' id='"+deudas[i].id +"'>Actualizar</button><button type='button' class='borrar-pago btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
                       // +"</td><td><button type='button' class='saldo btn btn-primary' id='"+deudas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
               }
          } else {
@@ -155,7 +215,6 @@ app.ListaPagos_view = Backbone.View.extend({
          };
          // Cuando falla la peticion se buscan en 'response'
          var onErrorHandler = function(collection, response, options) {
-             console.log("Entro en error handle");
              if(response.status == 500) {
                  console.log("Error 500¿? - en deudas.fetch ");
                 console.log(response);
@@ -164,7 +223,6 @@ app.ListaPagos_view = Backbone.View.extend({
                  console.log(response.status + " - " + response.responseText);
              }
          };
-         console.log("Entro en deudas");
 
          var self = this;
          var tajetas = new app.Lists_model();
@@ -192,13 +250,11 @@ app.ListaPagos_view = Backbone.View.extend({
  		};
 
  		e.preventDefault();
- 		console.log("entro a crear pago");
  		var pago = $('#form_pago').serializeArray();
     pago.push({name: "state_pay", value: "no"}); //editar cuando jimmy cambie esta mierda
  		var pago2 = new app.Listscreate_model(objectifyForm(pago));
      is_error = pago2.validate(pago2.attributes);
  		$('#modal_pagos').modal('hide');
- 		console.log(is_error);
  		if (is_error) {
  			mostrar_errores_modelo(is_error)
  		} else {
@@ -223,7 +279,6 @@ app.ListaPagos_view = Backbone.View.extend({
  			}
  		};
 		var self = this;
-		console.log(e.target.id);
 		var listadel = new app.Listdelete_model({id: e.target.id}); //{id: e.target.id}
 	//thisDeal.destroy({data: { program_id: dealProgram.id }, processData: true})
  		listadel.destroy({
@@ -234,8 +289,6 @@ app.ListaPagos_view = Backbone.View.extend({
        },error: onErrorHandler
      });
 	},
-
-
 
    modal_pago: function(){
     var date = new Date();
@@ -251,6 +304,27 @@ app.ListaPagos_view = Backbone.View.extend({
  		$('#modal_pagos').modal('show');
  	},
 
+  modal_pagar_pago: function(e){
+		$('#modal_error_transaccion1').modal('hide');
+		$('#modal_pagar').modal('show');
+    id_deuda =  e.target.id;
+    mi_deuda = null;
+  //   console.log(lista_deudas.length);
+    for (var i = 0; i < lista_deudas.length; i++) {
+      //console.log(lista_deudas[i]);
+      if (lista_deudas[i].id ==  id_deuda){
+        mi_deuda = lista_deudas[i];
+        $('#form_pagar input[name=userid]').val(mi_deuda.target_account);
+      //  $("#input_date").val(mi_deuda.date);
+        $('#form_pagar input[name=amount]').val(mi_deuda.cost);
+        break;
+      }
+    }
+		$('#form_pagar input[name=password]').val("");
+    $('#form_pagar input[name=userid]').attr('disabled', 'disabled');
+    $('#form_pagar input[name=amount]').attr('disabled', 'disabled');
+ },
+
   modal_edicion_pago: function(e){
   $('#modal_pagos_edicion').modal('show');
   bandera = true;
@@ -265,7 +339,6 @@ app.ListaPagos_view = Backbone.View.extend({
     //  $("#input_date").val(mi_deuda.date);
       $("#input_cost_1").val(mi_deuda.cost);
       $("#input_target_1").val(mi_deuda.target_account);
-      console.log(mi_deuda.date_pay);
       document.getElementById("input_date_1").value = mi_deuda.date_pay;
       deuda_en_edicion = id_deuda;
       break;
@@ -274,13 +347,12 @@ app.ListaPagos_view = Backbone.View.extend({
 },
   actualizar_pago: function(e){
   e.preventDefault();
-  console.log("Deuda_en_edicion");
+
   var self = this;
 
   var onDataHandler = function(collection, response, options) {
-    console.log(options);
+
     if (options.xhr.status == 204){
-      console.log("Peticion edicion correcta");
       self.peticiondeudas();
       mostrar_modal_generico('Editar Pago Pendiente', 'Se edito este pago.', 'Ya tienes este pago disponible en Lista de pagos', 'confirmacion.png'  );
     } else {
@@ -290,7 +362,6 @@ app.ListaPagos_view = Backbone.View.extend({
   };
 
   var onErrorHandler = function(collection, response, options) {
-    console.log(response, options);
     if (options.xhr.status == 201){
       self.peticiondeudas();
 
@@ -310,9 +381,7 @@ app.ListaPagos_view = Backbone.View.extend({
   pago.push ({name: "state_pay", value: null});
   pago.push ({name: "id", value: deuda_en_edicion});
   //pago.push({name: "state_pay", value: "no"}); //editar cuando jimmy cambie esta mierda
-  console.log(pago);
   var pago2 = new app.Listdelete_model(objectifyForm(pago));
-  console.log(pago2);
   // var user = new User({ id: 123 });
 //    is_error = pago2.validate(pago2.attributes);
   $('#modal_pagos_edicion').modal('hide');
@@ -332,6 +401,65 @@ app.ListaPagos_view = Backbone.View.extend({
     //}
 },
 
+hacer_pago: function(e){
+  var onDataHandler = function(collection, response, options) {
+    if (options.xhr.status == 200){
+      var transaccion2 = new app.Transaction_model(transaccion1);
+      is_error = transaccion2.validate(transaccion2.attributes);
+      $('#modal_pagar').modal('hide');
+      if (is_error) {
+        mostrar_errores_modelo(is_error)
+      } else {
+          //login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
+          transaccion2.save({},{
+            headers: {
+              'Authorization': sessionStorage.getItem("token")
+            },error: onErrorHandler
+          });
+        }
+   } else {
+     alert("Respuesta desconocida");
+     console.log(response.status + " - " + response.responseText);
+   }
+   };
+
+  // Cuando falla la peticion se buscan en 'response'
+  var onErrorHandler = function(collection, response, options) {
+    if(response.status == 401){
+      self.mostrar_error_401();
+    }else if (options.xhr.status == 201){
+      self.mostrar_correcto_transaccion();
+   }else if(response.status == 400) {
+      self.mostrar_error_400();
+    } else if(response.status == 404){
+      self.mostrar_error_404();
+    }else{
+      alert("Respuesta desconocida");
+      console.log(response.status + " - " + response.responseText);
+    }
+  };
+  var self = this;
+
+  e.preventDefault();
+  $('#form_pagar input[name=userid]').removeAttr("disabled");  // Se reactivan los campos para poder obtener sus valores
+  $('#form_pagar input[name=amount]').removeAttr("disabled");
+
+  transaccion1 = objectifyForm( $('#form_pagar').serializeArray());  // Convierte todos los datos del formulario en un objeto
+
+  var verify = new app.Userverify_model({password: transaccion1.password});
+  is_error2 = verify.validate(verify.attributes);
+  if (is_error2) {
+    mostrar_errores_modelo(is_error2);
+  } else {
+    verify.save({},{
+      headers: {
+        'Authorization': sessionStorage.getItem("token")
+      },success: onDataHandler,
+          error: onErrorHandler
+    });
+  }
+},
+
   mostrar_error_404: function(errores){
 		var self = this;
 		this.mostrar_modal_error_pago('Agregar Pago Pendiente', 'No es posible agregar pago no existe el acreedor.'," ", 'fallo.png'  );
@@ -348,7 +476,34 @@ app.ListaPagos_view = Backbone.View.extend({
 	  $('#modal_error_pago_body').append("<h3>" + contenido + "</h3>")
 	  $('#modal_error_pago_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
 
-	}
+	},
+
+  mostrar_error_400: function(errores){
+		var self = this;
+		this.mostrar_modal_error_transaccion('Transacción ', 'No es posible hacer la transacción', 'No tienes suficiente saldo.', 'fallo.png'  );
+	},
+	mostrar_error_401: function(errores){
+		var self = this;
+		this.mostrar_modal_error_transaccion('Transacción ', 'No es posible hacer la transacción', 'Es necesario poner tu contraseña.', 'fallo.png'  );
+	},
+	mostrar_correcto_transaccion: function(errores){
+		var self = this;
+		miPerfil_view.peticionusuario();
+		mostrar_modal_generico('Transacción ', 'Transacción finalizada.', 'La persona a la que le enviaste dinero recibira una notificación pronto.', 'confirmacion.png'  );
+	},
+  mostrar_modal_error_transaccion: function(contenido_header, titulo, contenido, imagen){
+	  // Limpiar el contenido del modal
+	  $("#modal_error_transaccion1_body").empty();
+	  $("#modal_error_transaccion1_header").empty();
+
+	  $('#modal_error_transaccion1').modal('show');   // Muestra el modal
+	  // Mostrar contenido
+	  $("#modal_error_transaccion1_header").append("<strong>"+ contenido_header + "</strong>");
+	  $('#modal_error_transaccion1_body').append("<h1>"+ titulo+ "</h1>")
+	  $('#modal_error_transaccion1_body').append("<h3>" + contenido + "</h3>")
+	  $('#modal_error_transaccion1_body').append("<img class='center-block' src='public/img/"+ imagen+ " ' alt=''>")
+
+	},
 
 });
 //var listaPagos_view = new app.ListaPagos_view();

@@ -187,7 +187,6 @@ app.MiPerfil_view = Backbone.View.extend({
 	};
 		// Cuando falla la peticion se buscan en 'response'
 		var onErrorHandler = function(collection, response, options) {
-			console.log("Entro en error handle");
 			if(response.status == 401) {
 				//
 			} else {
@@ -195,7 +194,6 @@ app.MiPerfil_view = Backbone.View.extend({
 				console.log(response.status + " - " + response.responseText);
 			}
 		};
-		console.log("Entro en profile");
 
 		var self = this;
 		var perfil = new app.Profile_model();
@@ -222,7 +220,6 @@ app.MiPerfil_view = Backbone.View.extend({
 				$("#tarjetas").html("");
 				$("#tarjetas").append("<tr><th>Número de tarjeta</th><th>Saldo</th><th>Mes de expiración</th><th>Año de expiración</th><th>Operaciones</th>/tr>");
 				tarjetas = JSON.parse(options.xhr.responseText);
-				console.log(tarjetas[0])
 				for (var i = 0; i < tarjetas.length; i++){
 							$("#tarjetas").append("<tr><td>"+ tarjetas[i].number +"</td>  <td> $"+ (tarjetas[i].amount).toLocaleString() +"</td><td>"+ tarjetas[i].expiration_month +"</td><td>"+ tarjetas[i].expiration_year +"</td><td><button type='button' class='saldo btn btn-primary' id='"+tarjetas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+tarjetas[i].id +"'>Eliminar</button></td></tr>");
 				}
@@ -234,7 +231,6 @@ app.MiPerfil_view = Backbone.View.extend({
 		 };
 		 // Cuando falla la peticion se buscan en 'response'
  		var onErrorHandler = function(collection, response, options) {
- 			console.log("Entro en error handle");
  			if(response.status == 500) {
  				console.log("Error 500¿? - en tajetas.fetch ");
 				console.log(response);
@@ -243,7 +239,6 @@ app.MiPerfil_view = Backbone.View.extend({
  				console.log(response.status + " - " + response.responseText);
  			}
  		};
- 		console.log("Entro en tarjetas");
 
  		var self = this;
  		var tajetas = new app.Cards_model();
@@ -288,15 +283,12 @@ app.MiPerfil_view = Backbone.View.extend({
 		};
 
 		e.preventDefault();
-		console.log("entro a crear tarjeta");
 		var card = $('#form_card').serializeArray();
 		card.push({name: "amount", value:Math.floor(Math.random() * 5000000) + 100})
 
 		var card2 = new app.Cards_create_model(objectifyForm(card));
     is_error = card2.validate(card2.attributes);
-		console.log(card2);
 		$('#modal_cards').modal('hide');
-		console.log(is_error);
 		if (is_error) {
 			mostrar_errores_modelo(is_error)
 		} else {
@@ -311,9 +303,6 @@ app.MiPerfil_view = Backbone.View.extend({
 
 	funcion_eliminar: function(e){
 		var onDataHandler = function(collection, response, options) {
-			console.log("bien");
-			console.log(options)
-			console.log(response)
 			if (options.xhr.status == 200){
 				//
 		 } else {
@@ -334,10 +323,9 @@ app.MiPerfil_view = Backbone.View.extend({
 		//traditional: true,
 		 //processData: true,
 		var self = this;
-		console.log(e.target.id);
 		var tajetadel = new app.Cards_model({id: e.target.id}); //{id: e.target.id}
 	//thisDeal.destroy({data: { program_id: dealProgram.id }, processData: true})
- 		au = tajetadel.destroy({
+ 		tajetadel.destroy({
 			 //data: { id2: e.target.id },
 			 // processData: true,
        headers: {
@@ -345,14 +333,12 @@ app.MiPerfil_view = Backbone.View.extend({
        },success: onDataHandler,
  					error: onErrorHandler
      });
-		 console.log(au);
 	},
 
 	funcion_saldo(e){
 		var self = this;
 		$('#modal_load').modal('show');
 		idcard=e.target.id;
-		console.log(idcard);
 	},
 
 	funcion_load(e){
@@ -375,15 +361,12 @@ app.MiPerfil_view = Backbone.View.extend({
 		};
 
 		e.preventDefault();
-		console.log("entro a agregar saldo");
 		var card = $('#form_load').serializeArray();
 		card.push({name: "cardId", value: idcard})
 
 		var card2 = new app.Cards_load_model(objectifyForm(card));
     is_error = card2.validate(card2.attributes);
-		console.log(card2);
 		$('#modal_load').modal('hide');
-		console.log(is_error);
 		if (is_error) {
 			mostrar_errores_modelo(is_error)
 		} else {

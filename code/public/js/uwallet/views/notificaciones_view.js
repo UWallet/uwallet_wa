@@ -28,7 +28,6 @@ app.Notificaciones_view = Backbone.View.extend({
   },
 
 	initialize: function() {
-		console.log("initialize de menuNotificaciones_view");
 		var self = this;
     //this.$el.hide()
     //this.$el.html(this.template);
@@ -36,7 +35,6 @@ app.Notificaciones_view = Backbone.View.extend({
 	},
 
   consola_simple(){
-    console.log("Entro en consola simple");
   },
 
 	render: function() {
@@ -87,7 +85,6 @@ app.Notificaciones_view = Backbone.View.extend({
 
 	put_notificacion: function(notificacion){
 		var notificacion_put = new app.Notification_model(notificacion);
-    console.log(notificacion_put);
 
       notificacion_put.save({}, {
 				dataType: 'text',

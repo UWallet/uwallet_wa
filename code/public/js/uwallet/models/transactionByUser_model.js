@@ -5,7 +5,7 @@ app.TransactionByUser_model = Backbone.Model.extend({
 
 	initialize: function() {
 		this.on('change', function(){
-			console.log('El modelo TransactionByUser_model ha sido modificado.');
+			//console.log('El modelo TransactionByUser_model ha sido modificado.');
 		});
 	}
 });

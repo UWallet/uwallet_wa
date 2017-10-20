@@ -209,7 +209,7 @@ app.MenuInicio_view = Backbone.View.extend({
   },
 
 	liberar_campos: function(){
-		console.log("entro a liberar campos");
+		//console.log("entro a liberar campos");
 		$("#div_btn_transaccion_1").fadeIn('slow');
 		$("#div_btn_transaccion_2").fadeOut('slow');
 		$('#form_transaction input[name=password]').val("");
@@ -268,12 +268,12 @@ app.MenuInicio_view = Backbone.View.extend({
 		var self = this;
 
 		e.preventDefault();
-		console.log("Entro a enviar dinero");
+		//console.log("Entro a enviar dinero");
 		$('#form_transaction input[name=userid]').removeAttr("disabled");  // Se reactivan los campos para poder obtener sus valores
 		$('#form_transaction input[name=amount]').removeAttr("disabled");
 
 		transaccion1 = objectifyForm( $('#form_transaction').serializeArray());  // Convierte todos los datos del formulario en un objeto
-		console.log(transaccion1);
+		//console.log(transaccion1);
 
 		var verify = new app.Userverify_model({password: transaccion1.password});
 		is_error2 = verify.validate(verify.attributes);
@@ -302,10 +302,10 @@ app.MenuInicio_view = Backbone.View.extend({
 			 };
 			 // Cuando falla la peticion se buscan en 'response'
 			 var onErrorHandler = function(collection, response, options) {
-					 console.log("Entro en error handle");
+					 //console.log("Entro en error handle");
 					 if(response.status == 500) {
 							 console.log("Error 500¿? - en extractos.fetch ");
-							console.log(response);
+							//console.log(response);
 					 } else {
 							 alert("Respuesta desconocida");
 							 console.log(response.status + " - " + response.responseText);
@@ -313,13 +313,13 @@ app.MenuInicio_view = Backbone.View.extend({
 			 };
 			 e.preventDefault();
 			 var self = this;
-			 console.log("Entro en deudas");
+			 //console.log("Entro en deudas");
 			 extracto = objectifyForm( $('#form_extracto').serializeArray());
 			 var dateinitial = new Date(extracto.date_initial);
 			 var datefinal = new Date(extracto.date_final);
 			 dateinitial.setDate(dateinitial.getDate() + 1);
 			 datefinal.setDate(datefinal.getDate() + 1);
-			 console.log(dateinitial<=datefinal);
+			 //console.log(dateinitial<=datefinal);
 			 if(dateinitial<=datefinal){
 				 var d_0 = dateinitial.getDate();
 				 var m_0 = dateinitial.getMonth()+1;
@@ -351,7 +351,7 @@ app.MenuInicio_view = Backbone.View.extend({
 			};
 			// Cuando falla la peticion se buscan en 'response'
 			var onErrorHandler = function(collection, response, options) {
-					console.log("Entro en error handle");
+					//console.log("Entro en error handle");
 					if(response.status == 500) {
 							console.log("Error 500¿? - en extractos.fetch ");
 						 console.log(response);
@@ -362,7 +362,7 @@ app.MenuInicio_view = Backbone.View.extend({
 			};
 			e.preventDefault();
 			var self = this;
-			console.log("Entro en deudas");
+			//console.log("Entro en deudas");
 			var extracto1 = new app.Extractoall_model();
 			extracto1.fetch({
 				headers: {

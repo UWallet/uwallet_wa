@@ -5,7 +5,7 @@ app.Profile_model = Backbone.Model.extend({
 
 	initialize: function() {
 		this.on('change', function(){
-			console.log('El modelo profile_model ha sido modificado.');
+			//console.log('El modelo profile_model ha sido modificado.');
 		});
 	}
 });

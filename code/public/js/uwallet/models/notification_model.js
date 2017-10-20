@@ -14,10 +14,10 @@ app.Notification_model = Backbone.Model.extend({
   },
 
   initialize: function() {
-    console.log('Se ha creado una nueva instancia del Modelo notificacion.');
+    //console.log('Se ha creado una nueva instancia del Modelo notificacion.');
 
     this.on('change', function(){
-      console.log('El modelo ha sido modificado.');
+      //console.log('El modelo ha sido modificado.');
     });
   }
 });

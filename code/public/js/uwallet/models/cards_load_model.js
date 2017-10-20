@@ -21,7 +21,7 @@ app.Cards_load_model = Backbone.Model.extend({
 
 	initialize: function() {
 		this.on('change', function(){
-			console.log('El modelo ha sido modificado.');
+			//console.log('El modelo ha sido modificado.');
 		});
 	}
 });

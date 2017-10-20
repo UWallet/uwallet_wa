@@ -36,7 +36,7 @@ app.Userreg_model = Backbone.Model.extend({
 		//console.log('Se ha creado una nueva instancia del Modelo Userreg.');
 
 		this.on('change', function(){
-			console.log('El modelo ha sido modificado.');
+			//console.log('El modelo ha sido modificado.');
 		});
 	}
 });
