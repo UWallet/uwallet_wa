@@ -11,7 +11,7 @@
 	<link href='public/css/landing_page.css' rel='stylesheet' type='text/css'>
 	<link href='public/css/ionicons.css' rel='stylesheet' type='text/css'>
 	<link href='public/css/toastr.min.css' rel='stylesheet'>
-	<link rel="manifest" href="public/manifest/manifest.json">
+	<link rel="manifest" href="manifest.json">
 
 </head>
 <body>
@@ -268,9 +268,15 @@
 	<script src = "public/js/vendor/bootstrap.min.js" type = "text/javascript"></script>
 	<script src = "public/js/vendor/toastr.min.js" type = "text/javascript"></script>
 	<!-- <script src = "public/js/vendor/firebase.js" type = "text/javascript"></script> -->
-	<script src = "public/js/vendor/firebase-app.js" type = "text/javascript"></script>
-	<script src = "public/js/vendor/firebase-messaging.js" type = "text/javascript"></script>
-	<script src = "public/js/vendor/firebase-init.js" type = "text/javascript"></script>
+	<!-- <script src = "public/js/vendor/firebase-app.js" type = "text/javascript"></script> -->
+	<!-- <script src = "public/js/vendor/firebase-messaging.js" type = "text/javascript"></script> -->
+
+	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js" type="text/javascript"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js" type="text/javascript"></script>
+	<!-- <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script> Firebase usado en el ejemplo basico de internet-->
+	<script src = "firebase-messaging-sw.js" type = "text/javascript"></script> <!-- En el link del firebase-init-2 muestran otra version de este archivo ademas de dejarlo en blanco, tampoco funciono :v -->
+
+	<script src = "public/js/vendor/firebase-init.js" type = "text/javascript"></script> <!-- Logica para conectarse a Firebase -->
 
 
 	<script src="public/js/vendor/menu_navegacion.js" type="text/javascript">	</script>
