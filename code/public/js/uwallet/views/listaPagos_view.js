@@ -6,7 +6,9 @@ app.ListaPagos_view = Backbone.View.extend({
     template: '\
     <div class="col-md-12" align="center">\
         <h1> Lista de pagos </h1>\
-        <button type="submit" class="btn btn-success" value="" id="create_pago"> Agregar tarjeta</button> <br><br>\
+        <button type="submit" class="btn btn-success" value="" id="create_pago"> Agregar recordatorio</button> <br><br>\
+      </div>\
+      <div class="col-md-2" align="center">\
       </div>\
         <table class="flat-table col-md-12" id="deudas" align="center">\
         <tbody>\

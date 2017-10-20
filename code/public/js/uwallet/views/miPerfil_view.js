@@ -38,7 +38,9 @@ app.MiPerfil_view = Backbone.View.extend({
 		<h1> Mis tarjetas </h1>\
 		<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
 	</div>\
-	<table class="flat-table col-md-12" id="tarjetas" align="center">\
+	<div class="col-md-1" align="center">\
+	</div>\
+	<table class="flat-table col-md-1" id="tarjetas" align="center">\
   <tbody>\
   </tbody>\
 	</table>\
