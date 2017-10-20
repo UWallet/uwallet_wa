@@ -202,11 +202,14 @@ app.ListaPagos_view = Backbone.View.extend({
             if (options.xhr.status == 200){
               lista_deudas = JSON.parse(options.xhr.responseText);
               $("#deudas").html("");
-              $("#deudas").append("<tr><th>Acreedor</th><th>Descripción</th><th>Monto</th><th>Fecha</th><th>Operaciones</th>/tr>");
+              $("#deudas").append("<tr><th>Acreedor</th><th>Descripción</th><th>Monto</th><th>Fecha</th><th>Estado</th><th>Operaciones</th>/tr>");
               deudas = JSON.parse(options.xhr.responseText);
               for (var i = 0; i < deudas.length; i++){
-                $("#deudas").append("<tr><td>"+ miPerfil_view.formato_cuenta(deudas[i].target_account) +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay+"</td><td><button type='button' class='pagar-pago btn btn-info' id='"+deudas[i].id +"'>Pagar</button><button type='button' class='editar-pago btn btn-primary' id='"+deudas[i].id +"'>Actualizar</button><button type='button' class='borrar-pago btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
-                      // +"</td><td><button type='button' class='saldo btn btn-primary' id='"+deudas[i].id +"'>Cargar</button><button type='button' class='borrar-tarjeta btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
+                if((deudas[i].state_pay).toString()=='true'){
+                  $("#deudas").append("<tr><td>"+ miPerfil_view.formato_cuenta(deudas[i].target_account) +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay +"</td><td>"+ self.estado(deudas[i].state_pay) + "</td><td><button type='button' class='pagar-pago btn btn-info' id='"+deudas[i].id +"'>Pagar</button><button type='button' class='editar-pago btn btn-primary' id='"+deudas[i].id +"'>Actualizar</button><button type='button' class='borrar-pago btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
+                }else{
+                  $("#deudas").append("<tr><td>"+ miPerfil_view.formato_cuenta(deudas[i].target_account) +"</td>  <td>"+ deudas[i].description +"</td><td>$"+ deudas[i].cost+"</td><td>"+ deudas[i].date_pay +"</td><td>"+ self.estado(deudas[i].state_pay) + "</td><td><button type='button' class='borrar-pago btn btn-danger' id='"+deudas[i].id +"'>Eliminar</button></td></tr>");
+                }
               }
          } else {
              alert("Respuesta desconocida");
@@ -234,6 +237,14 @@ app.ListaPagos_view = Backbone.View.extend({
      });
    },
 
+   estado: function(state){
+     if(state.toString() =='true'){
+       return 'Activo';
+     }else{
+       return 'Inactivo';
+     }
+   },
+
    create_pago: function(e){
  		var self = this;
  		// Cuando falla la peticion se buscan en 'response'
@@ -251,7 +262,7 @@ app.ListaPagos_view = Backbone.View.extend({
 
  		e.preventDefault();
  		var pago = $('#form_pago').serializeArray();
-    pago.push({name: "state_pay", value: "no"}); //editar cuando jimmy cambie esta mierda
+    pago.push({name: "state_pay", value: "true"}); //editar cuando jimmy cambie esta mierda
  		var pago2 = new app.Listscreate_model(objectifyForm(pago));
      is_error = pago2.validate(pago2.attributes);
  		$('#modal_pagos').modal('hide');
@@ -321,8 +332,8 @@ app.ListaPagos_view = Backbone.View.extend({
       if (lista_deudas[i].id ==  id_deuda){
         mi_deuda = lista_deudas[i];
         $('#form_pagar input[name=userid]').val(mi_deuda.target_account);
-      //  $("#input_date").val(mi_deuda.date);
         $('#form_pagar input[name=amount]').val(mi_deuda.cost);
+        deuda_en_edicion = id_deuda;
         break;
       }
     }
@@ -370,7 +381,6 @@ app.ListaPagos_view = Backbone.View.extend({
   var onErrorHandler = function(collection, response, options) {
     if (options.xhr.status == 201){
       self.peticiondeudas();
-
     } else if(response.status == 400) {
       //self.mostrar_error_400();
     }	else if(response.status == 422) {
@@ -384,18 +394,10 @@ app.ListaPagos_view = Backbone.View.extend({
 
 
   var pago = $('#form_pago_edicion').serializeArray();  // NO USAR Activa el envio del formulario
-  pago.push ({name: "state_pay", value: null});
+  pago.push ({name: "state_pay", value: "true"});
   pago.push ({name: "id", value: deuda_en_edicion});
-  //pago.push({name: "state_pay", value: "no"}); //editar cuando jimmy cambie esta mierda
   var pago2 = new app.Listdelete_model(objectifyForm(pago));
-  // var user = new User({ id: 123 });
-//    is_error = pago2.validate(pago2.attributes);
   $('#modal_pagos_edicion').modal('hide');
-  //console.log(is_error);
-  //if (is_error) {
-  //	mostrar_errores_modelo(is_error)
-  //} else {
-      //login_usuario.save({}, { dataType:'text', success : onDataHandler, error: onErrorHandler }); // El dataType:'text' a veces es necesario
       pago2.save({},{
         type: 'PUT',
         headers: {
@@ -403,11 +405,18 @@ app.ListaPagos_view = Backbone.View.extend({
         },success: onDataHandler,
   					error: onErrorHandler
       });
-
-    //}
 },
 
 hacer_pago: function(e){
+  var onDataHandler1 = function(collection, response, options) {
+
+    if (options.xhr.status == 204){
+      self.peticiondeudas();
+    } else {
+      alert("Respuesta desconocida");
+      console.log(response.status + " - " + response.responseText);
+    }
+  };
   var onDataHandler = function(collection, response, options) {
     if (options.xhr.status == 200){
       var transaccion2 = new app.Transaction_model(transaccion1);
@@ -422,6 +431,17 @@ hacer_pago: function(e){
               'Authorization': sessionStorage.getItem("token")
             },error: onErrorHandler
           });
+          var pago=[];
+          pago.push ({name: "state_pay", value: "false"});
+          pago.push ({name: "id", value: deuda_en_edicion});
+          var pago2 = new app.Listdelete_model(objectifyForm(pago));
+          $('#modal_pagos_edicion').modal('hide');
+              pago2.save({},{
+                type: 'PUT',
+                headers: {
+                  'Authorization': sessionStorage.getItem("token")
+                },success: onDataHandler1
+              });
         }
    } else {
      alert("Respuesta desconocida");
