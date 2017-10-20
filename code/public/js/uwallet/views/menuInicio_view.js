@@ -5,21 +5,21 @@ app.MenuInicio_view = Backbone.View.extend({
 		<div class="row">\
 			<h1>Bienvenido a UWallet</h1>\
 			<div class="col-md-4" id="div_iniciar_transaccion">\
+				<h1>Enviar dinero</h1>\
 				<HR width="0%">\
 				<center><img src="public/img/enviar_dinero.png" alt=""></center>\
-				<HR width="0%">\
-				<h1>Enviar dinero</h1>\
 			</div>\
 			<div class="col-md-4" id="div_ir_lista_pagos">\
+				<HR width="0%">\
+				<HR width="0%">\
 				<h1>Lista de pagos</h1>\
 				<HR width="0%">\
 				<center><img src="public/img/lista_pago.png" alt=""></center>\
 			</div>\
 			<div class="col-md-4" id="div_ir_extractos">\
+				<h1>Generar extractos</h1>\
 				<HR width="0%">\
 				<center><img src="public/img/pdf.png" alt=""></center>\
-				<HR width="0%">\
-				<h1>Generar extractos</h1>\
 			</div>\
 		</div>\
 		<div class="modal fade" id="modal_aceptacion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\

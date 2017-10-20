@@ -274,8 +274,14 @@ app.ListaPagos_view = Backbone.View.extend({
 				self.peticiondeudas();
 				mostrar_modal_generico('Eliminar pago pendiente', 'Se ha eliminado este pago de tu cuenta.', 'Ya no podras ver este pago.', 'confirmacion.png'  );
  			} else {
- 				alert("Respuesta desconocida");
- 				console.log(response.status + " - " + response.responseText);
+        if(response.status == 403) {
+          self.peticiondeudas();
+          mostrar_modal_generico('Lista de pago ', 'No es posible eliminar el recordatorio.', 'Este recordatorio ya fue eliminado.', 'fallo.png'  );
+        }
+        else{
+          alert("Respuesta desconocida");
+          console.log(response.status + " - " + response.responseText);
+        }
  			}
  		};
 		var self = this;

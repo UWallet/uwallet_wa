@@ -316,8 +316,14 @@ app.MiPerfil_view = Backbone.View.extend({
 				self.peticiontarjetas();
 				mostrar_modal_generico('Eliminar Tarjeta ', 'Se ha eliminado la tarjeta de tu cuenta.', 'Ya no podras usar esta tarjeta con UWallet.', 'confirmacion.png'  );
  			} else {
- 				alert("Respuesta desconocida");
- 				console.log(response.status + " - " + response.responseText);
+				if(response.status == 403) {
+				  self.peticiontarjetas();
+				  mostrar_modal_generico('Eliminar Tarjeta ', 'No es posible eliminar la tarjeta.', 'Esta tarjeta ya fue eliminada.', 'fallo.png'  );
+				}
+				else{
+				  alert("Respuesta desconocida");
+				  console.log(response.status + " - " + response.responseText);
+				}
  			}
  		};
 		//traditional: true,
@@ -392,6 +398,7 @@ app.MiPerfil_view = Backbone.View.extend({
 		    mensaje_error += "<strong>" + clave+ " </strong> " + errores[clave] + ".<br>";
 		  }
 		}
+		self.peticiontarjetas();
 		this.mostrar_modal_error_card('Agregar tarjeta', 'No fue posible agregar la tarjeta',mensaje_error, 'fallo.png'  );
 	},
 	mostrar_modal_error_card: function(contenido_header, titulo, contenido, imagen){
