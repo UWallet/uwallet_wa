@@ -31,10 +31,12 @@ app.MiPerfil_view = Backbone.View.extend({
 				<div class="one-info">\
 					<span class="span-state">Dinero:  <span class="userMoney span-state-2"></span></span>\
 				</div>\
+				<br>\
 			</div>\
 	  </div>\
 	</div>\
 	<div class="col-md-12" align="center">\
+	<button align="center" type="button" class="btn btn-info" id="change_pass"> Cambiar contraseña</button> <br><br>\
 		<h1> Mis tarjetas </h1>\
 		<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
 	</div>\
@@ -141,10 +143,45 @@ app.MiPerfil_view = Backbone.View.extend({
 </div>\
 </div>\
 </div>\
+\
+<!-- inicio modal de  modal pass.-->\
+<div class="modal fade" id="modal_password" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+<div class="modal-dialog">\
+<div class="modal-content">\
+ <div class="modal-header">\
+	 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>\
+	 <h4 class="modal-title text-center" id="myModalLabel"> <strong>Actualizar</strong> </h4>\
+ </div>\
+ \
+ <div class="modal-body">\
+	 <h2 class="text-center">Cambio de contraseña</h2>\
+ </div>\
+ <form role="form" id="form_pass">\
+	 <div class="form-group">\
+		 <label for="input_password"> Contraseña: </label>\
+		 <input class="form-control" name="password" id="input_password" type="password" placeholder="Contraseña" required/>\
+	 </div>\
+	 <div class="form-group">\
+		 <label for="input_password"> Confirmación de contraseña: </label>\
+		 <input class="form-control" name="password_confirmation" id="input_confirmation" type="password" placeholder="Confirmación de contraseña" required/>\
+	 </div>\
+	 <div id="div_btn_transaccion_1">\
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>\
+		<input type="submit" class="btn btn-default" form="form_pass" value="Confirmar">\
+	 </div>\
+ </form>\
+ <div class="modal-footer">\
+	<h4> UWallet  </h4>\
+ </div>\
+</div>\
+</div>\
+</div>\
 	',
 
 	events: {
 		'click #create_card': 'modal_card',
+		'click #change_pass': 'modal_pass',
+		'submit #form_pass': 'update_pass',
 		'click #btn_reintentar_agregar_card': 'modal_card',
 		'submit #form_card': 'create_card',
 		'click .borrar-tarjeta': 'funcion_eliminar',
@@ -250,6 +287,49 @@ app.MiPerfil_view = Backbone.View.extend({
      });
 	},
 
+	update_pass: function(e){
+	  e.preventDefault();
+	  var self = this;
+	  var onDataHandler = function(collection, response, options) {
+	    if (options.xhr.status == 204){
+	      mostrar_modal_generico('Cambio de contraseña', 'Se edito tu contraseña', 'Esa sera tu contraseña para la siguiente vez que accedas.', 'confirmacion.png'  );
+	    } else {
+	      alert("Respuesta desconocida");
+	      console.log(response.status + " - " + response.responseText);
+	    }
+	  };
+
+	  var onErrorHandler = function(collection, response, options) {
+	    if (options.xhr.status == 201){
+	      self.peticiondeudas();
+	    } else if(response.status == 400) {
+	      //self.mostrar_error_400();
+	    }	else if(response.status == 422) {
+	      //self.mostrar_error_422(response.responseJSON);
+	    } else {
+	      alert("Respuesta desconocida");
+	      console.log(response.status + " - " + response.responseText);
+	    }
+	  };
+	  var pass = $('#form_pass').serializeArray();
+		var pass2 = [];
+		pass2.push ({name: "user", value: objectifyForm(pass)});
+	  var pass3 = new app.Password_model(objectifyForm(pass2));
+		is_error = pass3.validate(pass3.attributes);
+		if (is_error) {
+			mostrar_errores_modelo(is_error)
+		} else {
+			$('#modal_password').modal('hide');
+		      pass3.save({},{
+		        type: 'PUT',
+		        headers: {
+		          'Authorization': sessionStorage.getItem("token")
+		        },success: onDataHandler,
+		  					error: onErrorHandler
+		      });
+		}
+},
+
 	modal_card: function(){
 		$('#modal_error_card').modal('hide');
 		$('#modal_cards').modal('show');
@@ -262,6 +342,11 @@ app.MiPerfil_view = Backbone.View.extend({
 		  options += "<option value="+ year + ">" + year+"</option>";
 		}
 		document.getElementById("input_año").innerHTML = options;
+	},
+
+	modal_pass: function(){
+		//$('#modal_error_card').modal('hide');
+		$('#modal_password').modal('show');
 	},
 
 	create_card: function(e){
