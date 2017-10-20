@@ -11,6 +11,8 @@ app.MiPerfil_view = Backbone.View.extend({
 		<HR width="0%">\
 		<HR width="0%">\
 		<HR width="0%">\
+		<div class="col-md-3" align="center">\
+		</div>\
 		<div class="col-md-6" align="center">\
 			<div class="personal-state">\
 				<div class="user_name_and_online">\
