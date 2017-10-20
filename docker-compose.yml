@@ -7,4 +7,3 @@ services:
       - "7000:80"
     volumes:
       - ./code:/code
-  
