@@ -5,16 +5,21 @@ app.MenuInicio_view = Backbone.View.extend({
 		<div class="row">\
 			<h1>Bienvenido a UWallet</h1>\
 			<div class="col-md-4" id="div_iniciar_transaccion">\
-				<h1>Enviar dinero</h1>\
+				<HR width="0%">\
 				<center><img src="public/img/enviar_dinero.png" alt=""></center>\
+				<HR width="0%">\
+				<h1>Enviar dinero</h1>\
 			</div>\
 			<div class="col-md-4" id="div_ir_lista_pagos">\
 				<h1>Lista de pagos</h1>\
+				<HR width="0%">\
 				<center><img src="public/img/lista_pago.png" alt=""></center>\
 			</div>\
 			<div class="col-md-4" id="div_ir_extractos">\
-				<h1>Extractos</h1>\
+				<HR width="0%">\
 				<center><img src="public/img/pdf.png" alt=""></center>\
+				<HR width="0%">\
+				<h1>Generar extractos</h1>\
 			</div>\
 		</div>\
 		<div class="modal fade" id="modal_aceptacion" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
@@ -26,7 +31,7 @@ app.MenuInicio_view = Backbone.View.extend({
      </div>\
 		 \
      <div class="modal-body">\
-       <h2 class="text-center">Envio de dinero</h2>\
+       <h2 class="text-center">Envío de dinero</h2>\
 			 <form role="form" id="form_transaction">\
 				 <div class="form-group">\
 					 <label for="input_email"> Monto: </label>\

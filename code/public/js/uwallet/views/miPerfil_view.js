@@ -5,9 +5,13 @@ app.MiPerfil_view = Backbone.View.extend({
 	//template: _.template($('#tpl_mi_perfil').html()),
 	template: '\
 	<div class="col-md-12" align="center">\
-		<h1> Mi perfil </h1>\
-		</div>\
-		<div class="item-dpp col-sm-5" align="center">\
+		<h1> Mi Perfil </h1>\
+	</div>\
+	<div class="col-md-12" align="center">\
+		<HR width="0%">\
+		<HR width="0%">\
+		<HR width="0%">\
+		<div class="col-md-6" align="center">\
 			<div class="personal-state">\
 				<div class="user_name_and_online">\
 					<span class="userName user_name"></span><br>\
@@ -15,19 +19,23 @@ app.MiPerfil_view = Backbone.View.extend({
 				<div class="one-info">\
 					<span class="span-state">Cuenta: <span class="userCuenta span-state-2"></span></span>\
 				</div>\
+				<HR width="0%">\
+				<HR width="0%">\
 				<div class="one-info">\
-					<span class="span-state">Email: <span class="userEmail span-state-2"></span></span>\
+					<span class="span-state">Email:    <span class="userEmail span-state-2"></span></span>\
 				</div>\
+				<HR width="0%">\
+				<HR width="0%">\
 				<div class="one-info">\
-					<span class="span-state">Dinero: <span class="userMoney span-state-2"></span></span>\
+					<span class="span-state">Dinero:  <span class="userMoney span-state-2"></span></span>\
 				</div>\
 			</div>\
-		</div>\
+	  </div>\
 	</div>\
 	<div class="col-md-12" align="center">\
 		<h1> Mis tarjetas </h1>\
-			<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
-		</div>\
+		<button type="submit" class="btn btn-success" value="" id="create_card"> Agregar tarjeta</button> <br><br>\
+	</div>\
 	<table class="flat-table col-md-12" id="tarjetas" align="center">\
   <tbody>\
   </tbody>\

@@ -8,10 +8,10 @@ app.MenuNavegacion_view = Backbone.View.extend({
 							<div class="row"  >\
 									 <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
 									 </div>\
-									 <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
+									 <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 logo-wrapper">\
 											 <img src="public/img/logo_uwallet.png" alt="" />\
 									 </div>\
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right" >\
+										<div class="col-lg-9 col-md-6 col-sm-6 col-xs-12 text-right" >\
 												<div class="menu-links scroll-me">\
 												<a class="userName"> Nombre </a>\
 												<a class="userMoney"> <i class="ion-ios-camera-outline"></i> </a>\
