@@ -94,7 +94,7 @@ app.UserLogin_view = Backbone.View.extend({
 		menuNavegacion_view.render();
 		var menuInicio_view = new app.MenuInicio_view();
 		notificaciones_view = new app.Notificaciones_view();
-		console.log(sessionStorage.getItem("token"));
+		//console.log(sessionStorage.getItem("token"));
 	},
 
 	mostrar_error_login: function(errores){

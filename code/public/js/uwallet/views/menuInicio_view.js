@@ -234,6 +234,7 @@ app.MenuInicio_view = Backbone.View.extend({
 				var transaccion2 = new app.Transaction_model(transaccion1);
 		    is_error = transaccion2.validate(transaccion2.attributes);
 				$('#modal_aceptacion').modal('hide');
+				$('#form_transaction')[0].reset();
 				if (is_error) {
 					mostrar_errores_modelo(is_error)
 				} else {
@@ -277,7 +278,6 @@ app.MenuInicio_view = Backbone.View.extend({
 
 		var verify = new app.Userverify_model({password: transaccion1.password});
 		is_error2 = verify.validate(verify.attributes);
-		$('#form_transaction')[0].reset();
 		if (is_error2) {
 			mostrar_errores_modelo(is_error2)
 		} else {

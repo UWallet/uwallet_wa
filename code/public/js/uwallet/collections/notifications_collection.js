@@ -6,26 +6,20 @@ var Notification_collection = Backbone.Firebase.Collection.extend({
   autoSync: true // Data will sync in realtime
 });
 
-/*app.notifications_collection = new Notification_collection();
-/*
+app.notifications_collection = new Notification_collection();
+
 app.notifications_collection.on('sync', function(collection) {
-  console.log('collection is loaded', collection.models);
+  //console.log('collection is loaded', collection.models);
   for(i in collection.models){
-    console.log(collection.models[i].attributes.content);
+    //console.log(collection.models[i].attributes.content);
   }
-});*/
+});
 
 
-/*app.notifications_collection.on('add', function(collection) {
+app.notifications_collection.on('add', function(collection) {
   if (collection.attributes.id_user == sessionStorage.getItem("id_user")){
   //  console.log("Nueva notificacion");
     //console.log(collection.attributes);
     notificaciones_view.nueva_notificacion(collection.attributes);
   }
-});*/
-
-/*
-Backbone.app.notifications_collection.prototype.on = function (options) {
-    //Backbone.sync("create", this, options);
-    console.log("Entroooo");
-};*/
+});

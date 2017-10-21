@@ -47,7 +47,7 @@ app.Notificaciones_view = Backbone.View.extend({
   pintar_notificacion: function(){
   //  console.log("Entro en pintar_notificacion", notificacion);
     $("#tbl_notificaciones").html("");
-    for (var i = 0; i < arreglo_notificaciones.length; i++){
+    for (var i = arreglo_notificaciones.length-1; i >= 0 ; i--){
       notificacion = arreglo_notificaciones[i];
       $("#tbl_notificaciones").append("<tr><td>"+ notificacion.subject +"</td>  <td>"+ notificacion.content +
                   "</td><td><button type='button' class='saldo btn btn-primary' id='"+notificacion.id +"'>Leer</button></td></tr>");
@@ -79,30 +79,43 @@ app.Notificaciones_view = Backbone.View.extend({
   		  "showMethod": "fadeIn",
   		  "hideMethod": "fadeOut"
   		}
+      notificacion.delivered="true";
+      self.put_notificacion(notificacion);
   	}
     //self.put_notificacion(notificacion);
   },
 
 	put_notificacion: function(notificacion){
-		var notificacion_put = new app.Notification_model(notificacion);
+    var onDataHandler = function(collection, response, options) {
+	    if (options.xhr.status == 204){
+	    }else if (options.xhr.status == 400){
+        console.log("Bien");
+      } else {
+	      alert("Respuesta desconocida");
+	      console.log(response.status + " - " + response.responseText);
+	    }
+	  };
+    var onErrorHandler = function(collection, response, options) {
+	    if (options.xhr.status == 201){
+	      self.peticiondeudas();
+	    } else if(response.status == 400) {
+	      //self.mostrar_error_400();
+	    }	else if(response.status == 422) {
+	      //self.mostrar_error_422(response.responseJSON);
+	    } else {
+	      alert("Respuesta desconocida");
+	      console.log(response.status + " - " + response.responseText);
+	    }
+	  };
 
-      notificacion_put.save({}, {
-				dataType: 'text',
-				success: function (model, respuesta, options) {
-						token = respuesta.substr(15,147);
-						self.loguear(token);
-				},
-			   error: function (model, respuesta, options) {
-					//console.log(model); console.log(options);
-					if(respuesta.status == 401) {
-						$('#form_userlogin input[name=password]').val("");
-		         self.mostrar_error_login();
-					} else {
-						alert("Respuesta desconocida");
-						console.log(respuesta.status + " - " + respuesta.responseText);
-					}
-			   }
-			});
+		var notificacion_put = new app.Notification_model(notificacion);
+    notificacion_put.save({},{
+      type: 'PUT',
+      headers: {
+        'Authorization': sessionStorage.getItem("token")
+      },success: onDataHandler,
+          error: onErrorHandler
+    });
 	},
 
 	mostrar_error_login: function(errores){
