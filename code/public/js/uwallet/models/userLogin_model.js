@@ -16,18 +16,14 @@ app.Userlogin_model = Backbone.Model.extend({
       errors.push({name: 'Contraseña', message: 'Es necesario que esté el campo contraseña'});
     }
     else{
-      var encrypt = new JSEncrypt();
-      encrypt.setPublicKey($('#pubkey').val());
-      var encrypted = encrypt.encrypt(attrs.password);
-      console.log("clave_cifrada:"+encrypted);
-
-
-      //var decrypt = new JSEncrypt();
-      //decrypt.setPrivateKey($('#privkey').val());
-      //var uncrypted = decrypt.decrypt(encrypted);
-      //attrs.password = (uncrypted);
-      //console.log("clave_descifrada:"+attrs.password);
+      if (attrs.password.length < 100){
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey("-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqAMvO0w5Lz3iyJObftSw8jFo/\n3CoyqaYLcWbA6A4mjCufMie8L+dA8kKO1M4JpmslU1h7W1fovOUDNc4ZukhMN/Pi\nvfaqROZ95GwQfLWjkKRBngSU5ITOBtqAuiBSeJgfZORe4C4NoiVkssfTUUgmYbs7\nwj1k5Jz0K0e1odGHzQIDAQAB\n-----END PUBLIC KEY-----");
+        var encrypted = encrypt.encrypt(attrs.password);
+        attrs.password = encrypted;
+      }
     }
+    console.log("clave"+attrs.password);
     return errors.length > 0 ? errors : false;
   },
 
