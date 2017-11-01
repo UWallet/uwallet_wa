@@ -15,6 +15,19 @@ app.Userlogin_model = Backbone.Model.extend({
     if (!attrs.password) {
       errors.push({name: 'Contraseña', message: 'Es necesario que esté el campo contraseña'});
     }
+    else{
+      var encrypt = new JSEncrypt();
+      encrypt.setPublicKey($('#pubkey').val());
+      var encrypted = encrypt.encrypt(attrs.password);
+      console.log("clave_cifrada:"+encrypted);
+
+
+      //var decrypt = new JSEncrypt();
+      //decrypt.setPrivateKey($('#privkey').val());
+      //var uncrypted = decrypt.decrypt(encrypted);
+      //attrs.password = (uncrypted);
+      //console.log("clave_descifrada:"+attrs.password);
+    }
     return errors.length > 0 ? errors : false;
   },
 

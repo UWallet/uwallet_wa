@@ -29,6 +29,18 @@ app.Userreg_model = Backbone.Model.extend({
     } else if (!tiene_mayusculas( attrs.user.password   ) ){
       errors.push({name: 'Contraseña', message: 'Es necesario que la contraseña tenga al menos una letra mayúscula'});
     }
+    else{
+      var encrypt = new JSEncrypt();
+      encrypt.setPublicKey($('#pubkey').val());
+      var encrypted = encrypt.encrypt(attrs.user.password_confirmation);
+      attrs.user.password_confirmation = (encrypted);
+      //console.log("clave_cifrada:"+attrs.user.password_confirmation);
+      //var decrypt = new JSEncrypt();
+      //decrypt.setPrivateKey($('#privkey').val());
+      //var uncrypted = decrypt.decrypt(encrypted);
+      //attrs.user.password_confirmation = (uncrypted);
+      //console.log("clave_descifrada:"+attrs.user.password_confirmation);
+    }
     return errors.length > 0 ? errors : false;
   },
 
