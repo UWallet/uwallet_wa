@@ -30,21 +30,22 @@ app.Userreg_model = Backbone.Model.extend({
       } else if (!tiene_mayusculas( attrs.user.password   ) ){
         errors.push({name: 'Contraseña', message: 'Es necesario que la contraseña tenga al menos una letra mayúscula'});
       }
-    }
-    else{
-      if (attrs.user.password.length < 100){
-        var encrypt = new JSEncrypt();
-        encrypt.setPublicKey("-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqAMvO0w5Lz3iyJObftSw8jFo/\n3CoyqaYLcWbA6A4mjCufMie8L+dA8kKO1M4JpmslU1h7W1fovOUDNc4ZukhMN/Pi\nvfaqROZ95GwQfLWjkKRBngSU5ITOBtqAuiBSeJgfZORe4C4NoiVkssfTUUgmYbs7\nwj1k5Jz0K0e1odGHzQIDAQAB\n-----END PUBLIC KEY-----");
-        var encrypted = encrypt.encrypt(attrs.user.password);
-        attrs.user.password = encrypted;
+      else{
+        if (attrs.user.password.length < 100){
+          var encrypt = new JSEncrypt();
+          encrypt.setPublicKey("-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqAMvO0w5Lz3iyJObftSw8jFo/\n3CoyqaYLcWbA6A4mjCufMie8L+dA8kKO1M4JpmslU1h7W1fovOUDNc4ZukhMN/Pi\nvfaqROZ95GwQfLWjkKRBngSU5ITOBtqAuiBSeJgfZORe4C4NoiVkssfTUUgmYbs7\nwj1k5Jz0K0e1odGHzQIDAQAB\n-----END PUBLIC KEY-----");
+          var encrypted = encrypt.encrypt(attrs.user.password);
+          attrs.user.password = encrypted;
+        }
+        if (attrs.user.password_confirmation.length < 100){
+          var encrypt = new JSEncrypt();
+          encrypt.setPublicKey("-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqAMvO0w5Lz3iyJObftSw8jFo/\n3CoyqaYLcWbA6A4mjCufMie8L+dA8kKO1M4JpmslU1h7W1fovOUDNc4ZukhMN/Pi\nvfaqROZ95GwQfLWjkKRBngSU5ITOBtqAuiBSeJgfZORe4C4NoiVkssfTUUgmYbs7\nwj1k5Jz0K0e1odGHzQIDAQAB\n-----END PUBLIC KEY-----");
+          var encrypted = encrypt.encrypt(attrs.user.password_confirmation);
+          attrs.user.password_confirmation = encrypted;
+        }
       }
-      if (attrs.user.password_confirmation.length < 100){
-        var encrypt = new JSEncrypt();
-        encrypt.setPublicKey("-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqAMvO0w5Lz3iyJObftSw8jFo/\n3CoyqaYLcWbA6A4mjCufMie8L+dA8kKO1M4JpmslU1h7W1fovOUDNc4ZukhMN/Pi\nvfaqROZ95GwQfLWjkKRBngSU5ITOBtqAuiBSeJgfZORe4C4NoiVkssfTUUgmYbs7\nwj1k5Jz0K0e1odGHzQIDAQAB\n-----END PUBLIC KEY-----");
-        var encrypted = encrypt.encrypt(attrs.user.password_confirmation);
-        attrs.user.password_confirmation = encrypted;
-      }
     }
+
     console.log("clave1"+attrs.user.password);
     console.log("clave2"+attrs.user.password_confirmation);
     console.log("errores"+errors.length);
