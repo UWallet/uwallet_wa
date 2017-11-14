@@ -1,10 +1,10 @@
 version: '2'
 services:
-  uwallet_web:
-    build: .
-    image: nginx:latest
+  uwallet-web:
+    # build: .
+    # image: nginx:latest
+    image: kmendezp/uwallet-web
     ports:
       - "7000:80"
-    volumes:
-      - ./code:/code
-  
+    # volumes:
+    #  - ./code:/code
