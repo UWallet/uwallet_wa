@@ -1,6 +1,6 @@
 var app = app || {};
 app.Listscreate_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/lists',
+  urlRoot: 'http://192.168.99.101:4060/lists',
   validate: function (attrs) {
     var errors = [];
     //Validación cantidad de atributos = 5

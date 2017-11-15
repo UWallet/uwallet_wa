@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.Userverify_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/users/verify_pass',
+  urlRoot: 'http://192.168.99.101:4060/users/verify_pass',
 
   validate: function (attrs) {
     var errors = [];

@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.Userreg_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/users/register',
+  urlRoot: 'http://192.168.99.101:4060/users/register',
 
   validate: function (attrs) {
     var errors = [];

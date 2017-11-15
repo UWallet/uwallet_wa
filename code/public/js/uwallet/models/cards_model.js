@@ -2,9 +2,9 @@ var app = app || {};
 //Modelo que deberia servir para update, get y delete
 
 app.Cards_model = Backbone.Model.extend({
-  //urlRoot: 'http://192.168.99.101:4000/credit_cards?',
+  //urlRoot: 'http://192.168.99.101:4060/credit_cards?',
   url: function(){
-    return 'http://192.168.99.101:4000/credit_cards/?id=' + this.get('id');
+    return 'http://192.168.99.101:4060/credit_cards/?id=' + this.get('id');
   },
 
 

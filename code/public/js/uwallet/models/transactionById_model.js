@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.TransactionById_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/transaction_by_id',
+  urlRoot: 'http://192.168.99.101:4060/transaction_by_id',
 
 	initialize: function() {
 		this.on('change', function(){

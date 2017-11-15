@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.Transaction_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/create_transaction',
+  urlRoot: 'http://192.168.99.101:4060/create_transaction',
 
   validate: function (attrs) {
     var errors = [];

@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.Password_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/users/update',
+  urlRoot: 'http://192.168.99.101:4060/users/update',
 
   validate: function (attrs) {
     var errors = [];

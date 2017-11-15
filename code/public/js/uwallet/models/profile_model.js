@@ -1,7 +1,7 @@
 var app = app || {};
 
 app.Profile_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/users/get_user',
+  urlRoot: 'http://192.168.99.101:4060/users/get_user',
 
 	initialize: function() {
 		this.on('change', function(){

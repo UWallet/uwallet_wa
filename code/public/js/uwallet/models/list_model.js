@@ -1,6 +1,6 @@
 var app = app || {};
 app.Lists_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/lists/by_user',
+  urlRoot: 'http://192.168.99.101:4060/lists/by_user',
 
     initialize: function() {
         this.on('change', function(){

@@ -2,7 +2,7 @@ var app = app || {};
 //Create cards
 
 app.Cards_create_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4000/credit_cards/registercard',
+  urlRoot: 'http://192.168.99.101:4060/credit_cards/registercard',
 
   validate: function (attrs) {
     var errors = [];

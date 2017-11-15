@@ -2,7 +2,7 @@ var app = app || {};
 
 app.Notification_model = Backbone.Model.extend({
   url: function(){
-    return 'http://192.168.99.101:4000/notifications/';
+    return 'http://192.168.99.101:4060/notifications/';
   },
   defaults: {
       id:"",
