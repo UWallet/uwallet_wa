@@ -46,6 +46,9 @@
 
 </div> <!-- Fin del div container-->
 
+<textarea id="input_id" name="input_name" type="text" rows=4 cols=70>This is a test!</textarea><br/>
+<input id="testme" type="button" value="Test Me!!!" /><br/>
+
 <!-- Template menu de navegación -->
 <script type="text/template" id="tpl_login_register">
 	<!-- HEADER-->
@@ -256,7 +259,7 @@
 
 	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="public/js/vendor/jsencrypt.min.js"></script>
-	
+
 	<script src = "public/js/vendor/jquery-3.2.1.min.js" type = "text/javascript"></script>
 	<script src = "public/js/vendor/underscore-min.js" type = "text/javascript"></script>
 	<script src = "public/js/vendor/backbone-min.js" type = "text/javascript"></script>
@@ -344,6 +347,15 @@
 		}
 	})
 
+	</script>
+
+	<script type="text/javascript">
+	$(function() {        // Run a quick encryption/decryption when they click.
+	        $('#testme').click(function() {
+							var nepe = document.getElementById('input_id').value;
+							localStorage.setItem("direccion_ip", nepe);
+						});
+	      });
 	</script>
 
 

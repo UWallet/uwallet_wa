@@ -1,8 +1,12 @@
 var app = app || {};
 
+var string = 'http://';
+string += localStorage.getItem("direccion_ip");
+string += ':4060/notifications/';
+
 app.Notification_model = Backbone.Model.extend({
   url: function(){
-    return 'http://192.168.99.101:4060/notifications/';
+    return string;
   },
   defaults: {
       id:"",

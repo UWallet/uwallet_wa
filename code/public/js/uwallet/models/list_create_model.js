@@ -1,6 +1,12 @@
 var app = app || {};
+
+var string = 'http://';
+string += localStorage.getItem("direccion_ip");
+string += ':4060/lists';
+
+
 app.Listscreate_model = Backbone.Model.extend({
-  urlRoot: 'http://192.168.99.101:4060/lists',
+  urlRoot: string,
   validate: function (attrs) {
     var errors = [];
     //Validación cantidad de atributos = 5
