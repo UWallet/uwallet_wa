@@ -1,11 +1,7 @@
 var app = app || {};
 
-var string = 'http://';
-string += localStorage.getItem("direccion_ip");
-string += ':4060/users/update';
-
 app.Password_model = Backbone.Model.extend({
-  urlRoot: string,
+  urlRoot:  'http://' + localStorage.getItem("direccion_ip") + ':4060/users/update',
 
   validate: function (attrs) {
     var errors = [];

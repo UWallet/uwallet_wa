@@ -3,7 +3,7 @@ services:
   uwallet-web:
     # build: .
     # image: nginx:latest
-    image: kmendezp/uwallet-web
+    image: jumcorredorro/uwallet-web
     ports:
       - "7000:80"
     # volumes:

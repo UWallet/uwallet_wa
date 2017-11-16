@@ -2,7 +2,7 @@ var app = app || {};
 //Modelo que deberia servir para update, get y delete
 var string = 'http://';
 string += localStorage.getItem("direccion_ip");
-string += ':4060/day_extracts?d_0='
+string += ':4060/day_extracts?d_0=';
 
 
 app.Extracto_model = Backbone.Model.extend({

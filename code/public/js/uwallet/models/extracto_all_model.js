@@ -3,7 +3,7 @@ var app = app || {};
 
 var string = 'http://';
 string += localStorage.getItem("direccion_ip");
-string += ':4060/all_extracts'
+string += ':4060/all_extracts';
 
 
 

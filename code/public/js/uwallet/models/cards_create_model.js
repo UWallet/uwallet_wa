@@ -2,7 +2,7 @@ var app = app || {};
 //Create cards
 var string = 'http://';
 string += localStorage.getItem("direccion_ip");
-string += ':4060/credit_cards/registercard'
+string += ':4060/credit_cards/registercard';
 
 
 app.Cards_create_model = Backbone.Model.extend({
