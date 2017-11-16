@@ -2,7 +2,7 @@ var app = app || {};
 //Modelo que deberia servir para update, get y delete
 var string = 'http://';
 string += localStorage.getItem("direccion_ip");
-string += ':4060/credit_cards/?id='
+string += ':4060/credit_cards/?id=';
 
 
 app.Cards_model = Backbone.Model.extend({
