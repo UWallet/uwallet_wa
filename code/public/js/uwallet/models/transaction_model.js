@@ -1,11 +1,11 @@
 var app = app || {};
 
-var string = 'http://';
-string += localStorage.getItem("direccion_ip");
-string += ':4060/create_transaction';
+//var string = 'http://';
+//string += localStorage.getItem("direccion_ip");
+//string += ':4060/create_transaction';
 
 app.Transaction_model = Backbone.Model.extend({
-  urlRoot: string,
+  urlRoot: 'http://'+localStorage.getItem("direccion_ip")+':4060/create_transaction',
 
   validate: function (attrs) {
     var errors = [];

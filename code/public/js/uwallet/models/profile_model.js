@@ -1,11 +1,11 @@
 var app = app || {};
 
-var string = 'http://';
-string += localStorage.getItem("direccion_ip");
-string += ':4060/users/get_user';
+//var string = 'http://';
+//string += localStorage.getItem("direccion_ip");
+//string += ':4060/users/get_user';
 
 app.Profile_model = Backbone.Model.extend({
-  urlRoot: string,
+  urlRoot: 'http://'+localStorage.getItem("direccion_ip")+':4060/users/get_user',
 
 	initialize: function() {
 		this.on('change', function(){

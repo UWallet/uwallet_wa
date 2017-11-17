@@ -1,12 +1,13 @@
 var app = app || {};
 //Create cards
-var string = 'http://';
-string += localStorage.getItem("direccion_ip");
-string += ':4060/credit_cards/registercard';
+
+//var string = 'http://';
+//string += localStorage.getItem("direccion_ip");
+//string += ':4060/credit_cards/registercard';
 
 
 app.Cards_create_model = Backbone.Model.extend({
-  urlRoot: string,
+  urlRoot: 'http://'+localStorage.getItem("direccion_ip")+ ':4060/credit_cards/registercard',
 
   validate: function (attrs) {
     var errors = [];

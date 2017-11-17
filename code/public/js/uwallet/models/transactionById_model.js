@@ -1,12 +1,12 @@
 var app = app || {};
 
-var string = 'http://';
-string += localStorage.getItem("direccion_ip");
-string += ':4060/transaction_by_id';
+//var string = 'http://';
+//string += localStorage.getItem("direccion_ip");
+//string += ':4060/transaction_by_id';
 
 
 app.TransactionById_model = Backbone.Model.extend({
-  urlRoot: string,
+  urlRoot: 'http://'+localStorage.getItem("direccion_ip")+':4060/transaction_by_id',
 
 	initialize: function() {
 		this.on('change', function(){

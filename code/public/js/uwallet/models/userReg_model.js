@@ -1,12 +1,12 @@
 var app = app || {};
 
-var string = 'http://';
-string += localStorage.getItem("direccion_ip");
-string += ':4060/users/register';
+//var string = 'http://';
+//string += localStorage.getItem("direccion_ip");
+//string += ':4060/users/register';
 
 
 app.Userreg_model = Backbone.Model.extend({
-  urlRoot: string,
+  urlRoot: 'http://'+localStorage.getItem("direccion_ip")+':4060/users/register',
 
   validate: function (attrs) {
     var errors = [];
